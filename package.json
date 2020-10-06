@@ -1,0 +1,15 @@
+{
+  "name": "localmost-react",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "highlight.js": "10.2.1",
+    "marked": "1.2.0",
+    "shadow-cljs": "2.11.4",
+    "create-react-class": "15.6.3",
+    "react": "16.13.0",
+    "react-dom": "16.13.0"
+  },
+  "dependencies": {
+  }
+}

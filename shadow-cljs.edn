@@ -1,0 +1,24 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src"
+  "example"
+  "test"]
+
+ :dependencies
+ [[devcards "0.2.7"]
+  [datascript "1.0.1"]
+  [reagent "1.0.0-alpha2"]
+  [rum "0.12.3"]
+  [sablono "0.8.6"]]
+
+ :dev-http {3000 "public"}
+ :nrepl {:port 3333}
+ :builds
+ {:dev {:target :browser
+        :output-dir "public/js"
+        :asset-path "/js"
+        :compiler-options {:devcards :true
+                           :output-feature-set :es6}
+        :modules {:main {:init-fn localmost.examples/init}}
+        :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
+                               "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}}}
