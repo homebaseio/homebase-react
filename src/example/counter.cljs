@@ -2,6 +2,7 @@
   (:require 
    [reagent.core :as r]
    [localmost.reagent :as lmr]
+   [localmost.react]
    ["../js_gen/counter-example" :as react-example])
   (:require-macros 
    [devcards.core :refer [defcard defcard-rg]]))
