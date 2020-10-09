@@ -1,8 +1,9 @@
 ;; shadow-cljs configuration
 {:source-paths
- ["src"
-  "example"
-  "test"]
+ ["src/localmost"
+  "src/example"
+  "src/test"
+  "src/js_gen"]
 
  :dependencies
  [[devcards "0.2.7"]
@@ -19,6 +20,6 @@
         :asset-path "/js"
         :compiler-options {:devcards :true
                            :output-feature-set :es6}
-        :modules {:main {:init-fn localmost.examples/init}}
+        :modules {:main {:init-fn example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
                                "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}}}

@@ -1,7 +1,6 @@
-(ns localmost.devcards-example
+(ns example.devcards
   (:require 
-   [reagent.core :as r]
-   [localmost.reagent :as lmr])
+   [reagent.core :as r])
   (:require-macros 
    [devcards.core :refer [defcard defcard-rg]]))
 

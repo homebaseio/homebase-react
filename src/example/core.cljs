@@ -1,12 +1,12 @@
-(ns localmost.examples
+(ns example.core
   (:require
    ["highlight.js" :as highlight]
    ["marked" :as marked]
    [cljsjs.react]
    [cljsjs.react.dom]
    [devcards.core :as dc]
-   [localmost.devcards-example]
-   [localmost.counter-example]))
+   [example.devcards]
+   [example.counter]))
 
 (js/goog.exportSymbol "marked" marked)
 (js/goog.exportSymbol "DevcardsMarked" marked)

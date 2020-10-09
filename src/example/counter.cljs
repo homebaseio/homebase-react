@@ -1,7 +1,8 @@
-(ns localmost.counter-example
+(ns example.counter
   (:require 
    [reagent.core :as r]
-   [localmost.reagent :as lmr])
+   [localmost.reagent :as lmr]
+   ["../js_gen/counter-example" :as react-example])
   (:require-macros 
    [devcards.core :refer [defcard defcard-rg]]))
 
@@ -26,3 +27,7 @@
 
 (defcard-rg reagent-localmost-counter
   [reagent-localmost-counter])
+
+(defcard-rg react-js-localmost-counter
+  [react-example/Counter])
+
