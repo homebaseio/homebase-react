@@ -1,9 +1,6 @@
 ;; shadow-cljs configuration
 {:source-paths
- ["src/localmost"
-  "src/example"
-  "src/test"
-  "src/js_gen"]
+ ["src"]
 
  :dependencies
  [[devcards "0.2.7"]
