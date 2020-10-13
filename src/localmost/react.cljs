@@ -1,24 +1,8 @@
 (ns localmost.react
   (:require
+   ["react" :as react]
    [reagent.core :as r]
    [datascript.core :as d]))
-
-(defn conn-from-db
-  "Monkeypatch conn-from-db in datascript to use an r/atom https://github.com/tonsky/datascript/blob/master/src/datascript/core.cljc#L411"
-  [db]
-  (r/atom db :meta {:listeners (atom {})}))
-
-(defn conn-from-datoms
-  "Creates an empty DB and a mutable reference to it. See [[create-conn]]."
-  ([datoms]        (conn-from-db (d/init-db datoms)))
-  ([datoms schema] (conn-from-db (d/init-db datoms schema))))
-
-(defn create-conn
-  "Creates a mutable reference (a “connection”) to an empty immutable database.
-   Connections are lightweight in-memory structures (~atoms) with direct support of transaction listeners ([[listen!]], [[unlisten!]]) and other handy DataScript APIs ([[transact!]], [[reset-conn!]], [[db]]).
-   To access underlying immutable DB value, deref: `@conn`."
-  ([]       (conn-from-db (d/empty-db)))
-  ([schema] (conn-from-db (d/empty-db schema))))
 
 (defn js-txs->clj [js-txs]
   (let [txs (js->clj js-txs :keywordize-keys true)]
@@ -33,22 +17,37 @@
   (d/transact! conn (js-txs->clj txs)))
 
 (defn new-db-conn [txs & {:keys [schema]}]
-  (let [conn (create-conn schema)]
+  (let [conn (d/create-conn schema)]
     (transact! conn txs)
     conn))
 
 (defn q [query conn & vars]
   (let [query (js->clj query)]
     (cond
-      (number? query) (d/entity (deref conn) query)
-      :else (apply d/q query (deref conn) vars))))
+      (number? query) (d/entity @conn query)
+      :else (apply d/q query @conn vars))))
 
+(defonce homebase-context (react/createContext))
 
-(defn ^:export HomebaseProvider [{:keys [] :as config}]
-  (+ 1 1))
+(defn ^:export HomebaseProvider [props]
+  (let [config (.-config props)
+        conn (new-db-conn (.-initialData config))]
+    (r/create-element
+     (.-Provider homebase-context) #js {:value conn}
+     (.-children props))))
 
 (defn ^:export useQuery [query]
-  (+ 1 1))
+  (let [conn (react/useContext homebase-context)
+        [result setResult] (react/useState (q query conn))]
+    (react/useEffect 
+     (fn []
+       (let [key (rand)
+             listener (fn [] (setResult (q query conn)))]
+         (d/listen! conn key listener)
+         (fn [] (d/unlisten! conn key)))))
+    [result]))
 
 (defn ^:export useTransact []
-  (+ 1 1))
+  (let [conn (react/useContext homebase-context)
+        transact (fn [txs] (transact! conn txs))]
+    [transact]))

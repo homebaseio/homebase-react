@@ -18,17 +18,24 @@
 (defcard-rg reagent-atom-counter
   [reagent-atom-counter])
 
-(defn reagent-localmost-counter []
+
+(defn lmr-count [conn]
+  [:<> "localmost.reagent count: " (:count (lmr/q 1 conn))])
+
+(defn lmr-inc-button [conn]
+  [:button {:on-click #(lmr/transact! conn [[:db/add 1 :count (inc (:count (lmr/q 1 conn)))]])}
+   "Increment"])
+
+(defn lmr-counter []
   (let [conn (lmr/new-db-conn [{:db/id 1, :count 0}])]
     (fn []
-      [:div "localmost.reagent count: " (:count (lmr/q 1 conn))
-       [:div
-        [:button {:on-click #(lmr/transact! conn [[:db/add 1 :count (inc (:count (lmr/q 1 conn)))]])}
-         "Increment"]]])))
+      [:div [lmr-count conn]
+       [:div [lmr-inc-button conn]]])))
 
 (defcard-rg reagent-localmost-counter
-  [reagent-localmost-counter])
+  [lmr-counter])
+
 
 (defcard-rg react-js-localmost-counter
-  [react-example/Counter])
+  [react-example/App])
 
