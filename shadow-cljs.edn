@@ -5,6 +5,7 @@
  :dependencies
  [[devcards "0.2.7"]
   [datascript "1.0.1"]
+  [lein-doo "0.1.10"]
   [reagent "1.0.0-alpha2"]
   [rum "0.12.3"]
   [sablono "0.8.6"]]
