@@ -18,7 +18,9 @@ jobs:
           persist-credentials: false
           
       - name: Install and Build 🔧 
-        run: npx shadow-cljs compile :dev
+        run: |
+          npm install
+          npx shadow-cljs compile :dev
           
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
