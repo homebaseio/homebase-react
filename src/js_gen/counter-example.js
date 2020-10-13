@@ -7,9 +7,19 @@ const {
   useQuery
 } = window.localmost.react;
 const config = {
+  schema: {
+    ':friend': {
+      ':db/valueType': ':db.type/ref' // 'db/cardinality': 'db.cardinality/one'
+
+    }
+  },
   initialData: [{
-    'db/id': 1,
-    'count': 0
+    ':db/id': 1,
+    ':count': 0,
+    ':friend': 2
+  }, {
+    ':db/id': 2,
+    ':name': 'test relationship'
   }]
 };
 export const App = () => {
@@ -18,14 +28,10 @@ export const App = () => {
   }, /*#__PURE__*/React.createElement(Counter, null));
 };
 export const Counter = () => {
-  const [result] = useQuery(1);
-  const count = result.get(cljs.core.keyword('count'));
-  const [transact] = useTransact(); // const [a, b] = React.useState(1);
-
-  return /*#__PURE__*/React.createElement("div", null, "localmost React JS count: ", count, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      transact([['db/add', 1, 'count', count + 1]]); // TODO: FIX: everything is working except for the r/atom deref. It's not triggering a rerender. But adding this useState shows that all the wiring is working as expected and the db is updating
-      //b(a+1)
-    }
+  const [entity] = useQuery(1);
+  const [transact] = useTransact();
+  window.e = entity;
+  return /*#__PURE__*/React.createElement("div", null, entity.get(':friend', ':name'), /*#__PURE__*/React.createElement("br", null), "localmost React JS count: ", entity.get(':count'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => transact([[':db/add', 1, ':count', entity.get(':count') + 1]])
   }, "Increment")));
 };

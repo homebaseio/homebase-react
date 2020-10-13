@@ -4,9 +4,23 @@ import React from 'react';
 const { HomebaseProvider, useTransact, useQuery } = window.localmost.react
 
 const config = {
+  schema: {
+    ':friend': {
+      ':db/valueType': ':db.type/ref',
+    },
+    ':friends': {
+      ':db/valueType': ':db.type/ref',
+      ':db/cardinality': ':db.cardinality/many',
+    },
+  },
   initialData: [{
-    'db/id': 1, 
-    'count': 0
+    ':db/id': 1, 
+    ':count': 0,
+    ':friend': 2,
+    ':friends': [2],
+  }, {
+    ':db/id': 2, 
+    ':name': 'test relationship',
   }]
 }
 
@@ -19,14 +33,15 @@ export const App = () => {
 }
 
 export const Counter = () => {
-  const [result] = useQuery(1);
-  const count = result.get(cljs.core.keyword('count'))
+  const [entity] = useQuery(1);
   const [transact] = useTransact();
+  window.e = entity
   return (
     <div>
-      localmost React JS count: {count}
+      {entity.get(':friend', ':name')}<br/>
+      localmost React JS count: {entity.get(':count')}
       <div>
-        <button onClick={() => transact([['db/add', 1, 'count', count + 1]])}>
+        <button onClick={() => transact([[':db/add', 1, ':count', entity.get(':count') + 1]])}>
           Increment
         </button>
       </div>

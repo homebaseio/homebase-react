@@ -2,36 +2,44 @@
   (:require
    ["react" :as react]
    [reagent.core :as r]
-   [datascript.core :as d]))
+   [clojure.walk :as walk]
+   [datascript.core :as d]
+   [datascript.db :as db]
+   [datascript.impl.entity :as de :refer [Entity]]))
 
-(defn js-txs->clj [js-txs]
-  (let [txs (js->clj js-txs :keywordize-keys true)]
-    (if (map? (first txs))
-      txs
-      (mapv (fn [[dbfn e a & more]]
-              (into [(keyword dbfn) e (keyword a)]
-                    more)) 
-            txs))))
+(defn keywordize [s]
+  (if (and (string? s) (= (subs s 0 1) ":"))
+    (keyword (subs s 1))
+    s))
+
+(defn keywordize-coll [coll]
+  (->> (js->clj coll)
+       (walk/postwalk keywordize)))
 
 (defn transact! [conn txs]
-  (d/transact! conn (js-txs->clj txs)))
-
-(defn new-db-conn [txs & {:keys [schema]}]
-  (let [conn (d/create-conn schema)]
-    (transact! conn txs)
-    conn))
+  (d/transact! conn (keywordize-coll txs)))
 
 (defn q [query conn & vars]
-  (let [query (js->clj query)]
+  (let [query (keywordize-coll query)]
     (cond
       (number? query) (d/entity @conn query)
       :else (apply d/q query @conn vars))))
+
+
+(extend-type Entity
+  Object
+  (get [this & keys]
+    (reduce 
+     (fn [acc key] (when acc (get acc (keywordize-coll key))))
+     this keys)))
+
 
 (defonce homebase-context (react/createContext))
 
 (defn ^:export HomebaseProvider [props]
   (let [config (.-config props)
-        conn (new-db-conn (.-initialData config))]
+        conn (d/create-conn (keywordize-coll (.-schema config)))]
+    (when (.-initialData config) (transact! conn (.-initialData config)))
     (r/create-element
      (.-Provider homebase-context) #js {:value conn}
      (.-children props))))
