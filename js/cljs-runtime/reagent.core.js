@@ -20,8 +20,8 @@ reagent.core.is_client = reagent.impl.util.is_client;
  *   ```
  */
 reagent.core.create_element = (function reagent$core$create_element(var_args){
-var G__18588 = arguments.length;
-switch (G__18588) {
+var G__18574 = arguments.length;
+switch (G__18574) {
 case 1:
 return reagent.core.create_element.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -88,15 +88,15 @@ return cljs.core.apply.cljs$core$IFn$_invoke$arity$5(module$node_modules$react$i
 }));
 
 /** @this {Function} */
-(reagent.core.create_element.cljs$lang$applyTo = (function (seq18584){
-var G__18585 = cljs.core.first(seq18584);
-var seq18584__$1 = cljs.core.next(seq18584);
-var G__18586 = cljs.core.first(seq18584__$1);
-var seq18584__$2 = cljs.core.next(seq18584__$1);
-var G__18587 = cljs.core.first(seq18584__$2);
-var seq18584__$3 = cljs.core.next(seq18584__$2);
+(reagent.core.create_element.cljs$lang$applyTo = (function (seq18563){
+var G__18564 = cljs.core.first(seq18563);
+var seq18563__$1 = cljs.core.next(seq18563);
+var G__18565 = cljs.core.first(seq18563__$1);
+var seq18563__$2 = cljs.core.next(seq18563__$1);
+var G__18566 = cljs.core.first(seq18563__$2);
+var seq18563__$3 = cljs.core.next(seq18563__$2);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18585,G__18586,G__18587,seq18584__$3);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18564,G__18565,G__18566,seq18563__$3);
 }));
 
 (reagent.core.create_element.cljs$lang$maxFixedArity = (3));
@@ -106,8 +106,8 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18585,G__18586
  *   unchanged if it is not a vector.
  */
 reagent.core.as_element = (function reagent$core$as_element(var_args){
-var G__18590 = arguments.length;
-switch (G__18590) {
+var G__18576 = arguments.length;
+switch (G__18576) {
 case 1:
 return reagent.core.as_element.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -150,8 +150,8 @@ return reagent.impl.template.adapt_react_class(c);
  *   the component, converted to a map.
  */
 reagent.core.reactify_component = (function reagent$core$reactify_component(var_args){
-var G__18592 = arguments.length;
-switch (G__18592) {
+var G__18586 = arguments.length;
+switch (G__18586) {
 case 1:
 return reagent.core.reactify_component.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -223,8 +223,8 @@ return reagent.impl.component.reactify_component(c,compiler);
  *   React built-in static methods or properties are automatically defined as statics.
  */
 reagent.core.create_class = (function reagent$core$create_class(var_args){
-var G__18594 = arguments.length;
-switch (G__18594) {
+var G__18588 = arguments.length;
+switch (G__18588) {
 case 1:
 return reagent.core.create_class.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
