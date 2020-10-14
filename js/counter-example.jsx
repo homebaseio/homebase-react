@@ -1,7 +1,7 @@
 import React from 'react';
 // TODO: for dev purposes this packages is being mounted on the window by example.counter in CLJS, but see if it's easy to build and import from node_modules instead so this example can look more like it would in production.
-// import { HomebaseProvider, useTransact, useQuery } from 'shadow-cljs/localmost.react';
-const { HomebaseProvider, useTransact, useQuery } = window.localmost.react
+// import { HomebaseProvider, useTransact, useQuery } from 'shadow-cljs/homebase.react';
+const { HomebaseProvider, useTransact, useQuery } = window.homebase.react
 
 const config = {
   schema: {
@@ -39,7 +39,7 @@ export const Counter = () => {
   return (
     <div>
       {entity.get(':friend', ':name')}<br/>
-      localmost React JS count: {entity.get(':count')}
+      homebase React JS count: {entity.get(':count')}
       <div>
         <button onClick={() => transact([[':db/add', 1, ':count', entity.get(':count') + 1]])}>
           Increment

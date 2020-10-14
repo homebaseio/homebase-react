@@ -1,4 +1,4 @@
-(ns localmost.reagent
+(ns homebase.reagent
   (:require 
    [reagent.core :as r]
    [datascript.core :as d]))

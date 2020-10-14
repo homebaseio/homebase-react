@@ -1,4 +1,4 @@
-(ns localmost.react
+(ns homebase.react
   (:require
    ["react" :as react]
    [reagent.core :as r]

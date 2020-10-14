@@ -1,8 +1,8 @@
 (ns example.counter
   (:require 
    [reagent.core :as r]
-   [localmost.reagent :as lmr]
-   [localmost.react]
+   [homebase.reagent :as lmr]
+   [homebase.react]
    ["../js_gen/counter-example" :as react-example])
   (:require-macros 
    [devcards.core :refer [defcard defcard-rg]]))
@@ -20,7 +20,7 @@
 
 
 (defn lmr-count [conn]
-  [:<> "localmost.reagent count: " (:count (lmr/q 1 conn))])
+  [:<> "homebase.reagent count: " (:count (lmr/q 1 conn))])
 
 (defn lmr-inc-button [conn]
   [:button {:on-click #(lmr/transact! conn [[:db/add 1 :count (inc (:count (lmr/q 1 conn)))]])}
@@ -32,10 +32,10 @@
       [:div [lmr-count conn]
        [:div [lmr-inc-button conn]]])))
 
-(defcard-rg reagent-localmost-counter
+(defcard-rg reagent-homebase-counter
   [lmr-counter])
 
 
-(defcard-rg react-js-localmost-counter
+(defcard-rg react-js-homebase-counter
   [react-example/App])
 
