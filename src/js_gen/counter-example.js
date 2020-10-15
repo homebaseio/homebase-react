@@ -1,41 +1,27 @@
-import React from 'react'; // TODO: for dev purposes this packages is being mounted on the window by example.counter in CLJS, but see if it's easy to build and import from node_modules instead so this example can look more like it would in production.
-// import { HomebaseProvider, useTransact, useQuery } from 'shadow-cljs/homebase.react';
+import React from 'react'; // import { HomebaseProvider, useTransact, useQuery } from 'homebase-react'
 
 const {
   HomebaseProvider,
   useTransact,
   useQuery
 } = window.homebase.react;
+const counterId = 1;
 const config = {
-  schema: {
-    ':friend': {
-      ':db/valueType': ':db.type/ref'
-    },
-    ':friends': {
-      ':db/valueType': ':db.type/ref',
-      ':db/cardinality': ':db.cardinality/many'
-    }
-  },
   initialData: [{
-    ':db/id': 1,
-    ':count': 0,
-    ':friend': 2,
-    ':friends': [2]
-  }, {
-    ':db/id': 2,
-    ':name': 'test relationship'
+    ':db/id': counterId,
+    ':count': 0
   }]
 };
-export const App = () => {
-  return /*#__PURE__*/React.createElement(HomebaseProvider, {
-    config: config
-  }, /*#__PURE__*/React.createElement(Counter, null));
-};
+export const App = () => /*#__PURE__*/React.createElement(HomebaseProvider, {
+  config: config
+}, /*#__PURE__*/React.createElement(Counter, null));
 export const Counter = () => {
-  const [entity] = useQuery(1);
+  const [counter] = useQuery(counterId);
   const [transact] = useTransact();
-  window.e = entity;
-  return /*#__PURE__*/React.createElement("div", null, entity.get(':friend', ':name'), /*#__PURE__*/React.createElement("br", null), "homebase React JS count: ", entity.get(':count'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
-    onClick: () => transact([[':db/add', 1, ':count', entity.get(':count') + 1]])
+  return /*#__PURE__*/React.createElement("div", null, "Count: ", counter.get(':count'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => transact([{
+      ':db/id': counterId,
+      ':count': counter.get(':count') + 1
+    }])
   }, "Increment")));
 };

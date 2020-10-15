@@ -12,7 +12,7 @@
 (defn reagent-atom-counter []
   (let [state (r/atom {:count 0})]
     (fn []
-      [:div "reagent.core/atom count: " (:count @state)
+      [:div "Count: " (:count @state)
        [:div
         [:button {:on-click #(swap! state update-in [:count] inc)}
          "Increment"]]])))
@@ -25,7 +25,7 @@
 
 
 (defn lmr-count [conn]
-  [:<> "homebase.reagent count: " (:count (lmr/q 1 conn))])
+  [:<> "Count: " (:count (lmr/q 1 conn))])
 
 (defn lmr-inc-button [conn]
   [:button {:on-click #(lmr/transact! conn [[:db/add 1 :count (inc (:count (lmr/q 1 conn)))]])}
