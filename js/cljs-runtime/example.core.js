@@ -4,6 +4,7 @@ var module$node_modules$marked$lib$marked=shadow.js.require("module$node_modules
 goog.exportSymbol("marked",module$node_modules$marked$lib$marked);
 goog.exportSymbol("DevcardsMarked",module$node_modules$marked$lib$marked);
 goog.exportSymbol("highlight",module$node_modules$highlight_DOT_js$lib$index);
+goog.exportSymbol("DevcardsSyntaxHighlighter",module$node_modules$highlight_DOT_js$lib$index);
 example.core.init = (function example$core$init(){
 return devcards.core.start_devcard_ui_BANG__STAR_.cljs$core$IFn$_invoke$arity$0();
 });
