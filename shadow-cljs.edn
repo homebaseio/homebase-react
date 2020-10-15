@@ -5,7 +5,6 @@
  :dependencies
  [[devcards "0.2.7"]
   [datascript "1.0.1"]
-  [lein-doo "0.1.10"]
   [reagent "1.0.0-alpha2"]
   [rum "0.12.3"]
   [sablono "0.8.6"]]
@@ -20,4 +19,25 @@
                            :output-feature-set :es6}
         :modules {:main {:init-fn example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
-                               "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}}}
+                               "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
+ :ci {:target :karma
+   :output-to  "out/ci.js"}
+ :browser-test {:target :browser-test
+        :test-dir  "resources/public/js/test"
+        :runner-ns test.localmost.runner
+        :compiler-options {:devcards :true
+                           :output-feature-set :es6}
+       :devtools  {:http-port          8021
+       :http-root          "resources/public/js/test"}
+        :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
+                               "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
+:node-test {:target :node-test
+        :test-dir  "resources/public/js/test"
+        :output-to "out/node-tests.js"
+        :autorun   true
+        :compiler-options {:devcards :true
+                           :output-feature-set :es6}
+        :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
+                               "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}}
+
+ }}

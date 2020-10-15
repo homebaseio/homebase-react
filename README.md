@@ -32,6 +32,7 @@ Open http://localhost:3000
 
 ## Tests
 
+### Karma
 ```bash
-TODO: run test
+cd src/test && karma start --single-run src/test/karma.conf.js
 ```
