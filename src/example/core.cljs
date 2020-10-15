@@ -5,12 +5,13 @@
    [cljsjs.react]
    [cljsjs.react.dom]
    [devcards.core :as dc]
-   [example.devcards]
+  ;;  [example.devcards]
    [example.counter]))
 
 (js/goog.exportSymbol "marked" marked)
 (js/goog.exportSymbol "DevcardsMarked" marked)
 (js/goog.exportSymbol "highlight" highlight)
+(js/goog.exportSymbol "DevcardsSyntaxHighlighter" highlight)
 
 (defn init []
   (dc/start-devcard-ui!))
