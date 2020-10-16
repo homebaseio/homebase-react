@@ -4,7 +4,7 @@ const { HomebaseProvider, useTransact, useQuery } = window.homebase.react
 
 const config = {
   schema: {
-    ':user/name': {
+    ':db/ident': {
       ':db/unique': ':db.unique/identity'
     },
     ':todo/project': {
@@ -17,6 +17,9 @@ const config = {
     },
   },
   initialData: [{
+    ':db/ident': ':settings/filters',
+    ':filter/show-completed?': true,
+  }, {
     ':db/id': -1,
     ':user/name': 'Stella'
   }, {
@@ -33,8 +36,7 @@ const config = {
     ':todo/owner': -1,
     ':todo/project': -3,
     ':todo/created-at': new Date('2003/11/10')
-  }
-  , {
+  }, {
     ':todo/name': 'Go home',
     ':todo/owner': -2,
     ':todo/project': -4,
@@ -54,6 +56,7 @@ const Todos = () => {
   return (
     <div>
       <TodoInput />
+      <Filters />
       <TodoList />
     </div>
   )
@@ -64,7 +67,6 @@ const TodoInput = () => {
   return (
     <form onSubmit={e => {
       e.preventDefault()
-      // transact([[].reduce.call(e.target.elements, (data, el) => ({ ...data, [el.name]: el.value}), {})])
       transact([{
         ':todo/name': e.target.elements[':todo/name'].value,
         ':todo/created-at': new Date
@@ -79,14 +81,36 @@ const TodoInput = () => {
         autoComplete="off"
         required 
       />
+      &nbsp;
+      <button type="submit">Create Todo</button>
     </form>
+  )
+}
+
+const Filters = () => {
+  const [filters] = useQuery([':db/ident', ':settings/filters'])
+  const [transact] = useTransact()
+  return (
+    <div>
+      <label htmlFor=":filter/show-completed?">Show Completed?</label>
+      <input 
+        type="checkbox" 
+        id=":filter/show-completed?"
+        checked={filters.get(':filter/show-completed?')}
+        onChange={e => transact([{ ':db/id': filters.get(':db/id'), ':filter/show-completed?': e.target.checked }])}
+      />
+    </div>
   )
 }
 
 const TodoList = () => {
   const [todos] = useQuery(
     `[:find ?todo
-      :where [?todo :todo/name]]`
+      :where 
+      [?todo :todo/name]
+      [?filter :db/ident :settings/filters]
+      (or [?filter :filter/show-completed? true]
+          (not [?todo :todo/completed? true]))]`
   )
   return (
     <div>
@@ -99,16 +123,17 @@ const TodoList = () => {
 
 const Todo = ({ todo }) => (
   <div>
-    <hr/>
-    <TodoCheck todo={todo} />
-    <span style={todo.get(':todo/completed?') ? { textDecoration: 'line-through '} : null}>
-      {todo.get(':todo/name')}
-    </span>
-    <br/>
-    <TodoProject todo={todo} />
-    &nbsp;|&nbsp;
-    <TodoOwner todo={todo} />
-    <br/>
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', paddingTop: 20}}>
+      <TodoCheck todo={todo} />
+      <TodoName todo={todo} />
+    </div>
+    <div>
+      <TodoProject todo={todo} />
+      &nbsp;·&nbsp;
+      <TodoOwner todo={todo} />
+      &nbsp;·&nbsp;
+      <TodoDelete todo={todo} />
+    </div>
     <small style={{ color: 'grey' }}>
       {todo.get(':todo/created-at').toLocaleString()}
     </small>
@@ -120,11 +145,26 @@ const TodoCheck = ({ todo }) => {
   return (
     <input 
       type="checkbox"
-      value={!!todo.get(':todo/completed?')}
+      style={{ width: 20, height: 20, cursor: 'pointer' }}
+      checked={!!todo.get(':todo/completed?')}
       onChange={e => transact([{ 
         ':db/id': todo.get(':db/id'), 
         ':todo/completed?': e.target.checked
       }])}
+    />
+  )
+}
+
+const TodoName = ({ todo }) => {
+  const [transact] = useTransact()
+  return (
+    <input 
+      style={{  
+        border: 'none',  fontSize: 20, marginTop: -2, cursor: 'pointer',
+        ...todo.get(':todo/completed?') && { textDecoration: 'line-through '}
+      }}
+      value={todo.get(':todo/name')}
+      onChange={e => transact([[':db/add', todo.get(':db/id'), ':todo/name', e.target.value]])}
     />
   )
 }
@@ -140,6 +180,7 @@ const TodoProject = ({ todo }) => {
       <label htmlFor={'todo-project-' + todo.get(':db/id')}>
         Project:
       </label>
+      &nbsp;
       <select 
         name="projects" 
         id={'todo-project-' + todo.get(':db/id')}
@@ -174,6 +215,7 @@ const TodoOwner = ({ todo }) => {
       <label htmlFor={'todo-owner-' + todo.get(':db/id')}>
         Owner:
       </label>
+      &nbsp;
       <select 
         name="users" 
         id={'todo-owner-' + todo.get(':db/id')}
@@ -194,5 +236,14 @@ const TodoOwner = ({ todo }) => {
         ))}
       </select>
     </>
+  )
+}
+
+const TodoDelete = ({ todo }) => {
+  const [transact] = useTransact()
+  return (
+    <button onClick={() => transact([[':db.fn/retractEntity', todo.get(':db/id')]])}>
+      Delete
+    </button>
   )
 }

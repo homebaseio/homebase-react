@@ -21,12 +21,14 @@
 
 (defn q [query conn & vars]
   (cond
-      ; Assume a :db/id lookup
+    ; Assume a :db/id lookup
     (number? query) (d/entity @conn (keywordize-coll query))
-      ; Assume datalog
+    ; Assume datalog
     (string? query) (->> (apply d/q (cljs.reader/read-string query) @conn vars)
                          (map (fn [[id]] (d/entity @conn id)))
                          to-array) 
+    ; Assume entity KV lookup
+    (array? query) (d/entity @conn (keywordize-coll query))
     :else nil))
 
 

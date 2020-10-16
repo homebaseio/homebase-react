@@ -7,7 +7,7 @@ const {
 } = window.homebase.react;
 const config = {
   schema: {
-    ':user/name': {
+    ':db/ident': {
       ':db/unique': ':db.unique/identity'
     },
     ':todo/project': {
@@ -20,6 +20,9 @@ const config = {
     }
   },
   initialData: [{
+    ':db/ident': ':settings/filters',
+    ':filter/show-completed?': true
+  }, {
     ':db/id': -1,
     ':user/name': 'Stella'
   }, {
@@ -50,15 +53,14 @@ export const App = () => {
 };
 
 const Todos = () => {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(TodoInput, null), /*#__PURE__*/React.createElement(TodoList, null));
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(TodoInput, null), /*#__PURE__*/React.createElement(Filters, null), /*#__PURE__*/React.createElement(TodoList, null));
 };
 
 const TodoInput = () => {
   const [transact] = useTransact();
   return /*#__PURE__*/React.createElement("form", {
     onSubmit: e => {
-      e.preventDefault(); // transact([[].reduce.call(e.target.elements, (data, el) => ({ ...data, [el.name]: el.value}), {})])
-
+      e.preventDefault();
       transact([{
         ':todo/name': e.target.elements[':todo/name'].value,
         ':todo/created-at': new Date()
@@ -72,12 +74,34 @@ const TodoInput = () => {
     placeholder: "What needs to be done?",
     autoComplete: "off",
     required: true
+  }), "\xA0", /*#__PURE__*/React.createElement("button", {
+    type: "submit"
+  }, "Create Todo"));
+};
+
+const Filters = () => {
+  const [filters] = useQuery([':db/ident', ':settings/filters']);
+  const [transact] = useTransact();
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    htmlFor: ":filter/show-completed?"
+  }, "Show Completed?"), /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    id: ":filter/show-completed?",
+    checked: filters.get(':filter/show-completed?'),
+    onChange: e => transact([{
+      ':db/id': filters.get(':db/id'),
+      ':filter/show-completed?': e.target.checked
+    }])
   }));
 };
 
 const TodoList = () => {
   const [todos] = useQuery(`[:find ?todo
-      :where [?todo :todo/name]]`);
+      :where 
+      [?todo :todo/name]
+      [?filter :db/ident :settings/filters]
+      (or [?filter :filter/show-completed? true]
+          (not [?todo :todo/completed? true]))]`);
   return /*#__PURE__*/React.createElement("div", null, todos.sort((a, b) => a.get(':todo/created-at') > b.get(':todo/created-at') ? -1 : 1).map(todo => /*#__PURE__*/React.createElement(Todo, {
     key: todo.get(':db/id'),
     todo: todo
@@ -86,17 +110,24 @@ const TodoList = () => {
 
 const Todo = ({
   todo
-}) => /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(TodoCheck, {
+}) => /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  style: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingTop: 20
+  }
+}, /*#__PURE__*/React.createElement(TodoCheck, {
   todo: todo
-}), /*#__PURE__*/React.createElement("span", {
-  style: todo.get(':todo/completed?') ? {
-    textDecoration: 'line-through '
-  } : null
-}, todo.get(':todo/name')), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(TodoProject, {
+}), /*#__PURE__*/React.createElement(TodoName, {
   todo: todo
-}), "\xA0|\xA0", /*#__PURE__*/React.createElement(TodoOwner, {
+})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(TodoProject, {
   todo: todo
-}), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("small", {
+}), "\xA0\xB7\xA0", /*#__PURE__*/React.createElement(TodoOwner, {
+  todo: todo
+}), "\xA0\xB7\xA0", /*#__PURE__*/React.createElement(TodoDelete, {
+  todo: todo
+})), /*#__PURE__*/React.createElement("small", {
   style: {
     color: 'grey'
   }
@@ -108,11 +139,35 @@ const TodoCheck = ({
   const [transact] = useTransact();
   return /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
-    value: !!todo.get(':todo/completed?'),
+    style: {
+      width: 20,
+      height: 20,
+      cursor: 'pointer'
+    },
+    checked: !!todo.get(':todo/completed?'),
     onChange: e => transact([{
       ':db/id': todo.get(':db/id'),
       ':todo/completed?': e.target.checked
     }])
+  });
+};
+
+const TodoName = ({
+  todo
+}) => {
+  const [transact] = useTransact();
+  return /*#__PURE__*/React.createElement("input", {
+    style: {
+      border: 'none',
+      fontSize: 20,
+      marginTop: -2,
+      cursor: 'pointer',
+      ...(todo.get(':todo/completed?') && {
+        textDecoration: 'line-through '
+      })
+    },
+    value: todo.get(':todo/name'),
+    onChange: e => transact([[':db/add', todo.get(':db/id'), ':todo/name', e.target.value]])
   });
 };
 
@@ -124,7 +179,7 @@ const TodoProject = ({
       :where [?project :project/name]]`);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: 'todo-project-' + todo.get(':db/id')
-  }, "Project:"), /*#__PURE__*/React.createElement("select", {
+  }, "Project:"), "\xA0", /*#__PURE__*/React.createElement("select", {
     name: "projects",
     id: 'todo-project-' + todo.get(':db/id'),
     value: todo.get(':todo/project', ':db/id') || '',
@@ -148,7 +203,7 @@ const TodoOwner = ({
       :where [?user :user/name]]`);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: 'todo-owner-' + todo.get(':db/id')
-  }, "Owner:"), /*#__PURE__*/React.createElement("select", {
+  }, "Owner:"), "\xA0", /*#__PURE__*/React.createElement("select", {
     name: "users",
     id: 'todo-owner-' + todo.get(':db/id'),
     value: todo.get(':todo/owner', ':db/id') || '',
@@ -162,4 +217,13 @@ const TodoOwner = ({
     key: user.get(':db/id'),
     value: user.get(':db/id')
   }, user.get(':user/name')))));
+};
+
+const TodoDelete = ({
+  todo
+}) => {
+  const [transact] = useTransact();
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: () => transact([[':db.fn/retractEntity', todo.get(':db/id')]])
+  }, "Delete");
 };
