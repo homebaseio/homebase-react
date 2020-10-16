@@ -35,21 +35,27 @@ return homebase.react.q.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),(a
 
 (homebase.react.q.cljs$core$IFn$_invoke$arity$variadic = (function (query,conn,vars){
 if(typeof query === 'number'){
-var G__23613 = cljs.core.deref(conn);
-var G__23614 = homebase.react.keywordize_coll(query);
-return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23613,G__23614) : datascript.core.entity.call(null,G__23613,G__23614));
+var G__23610 = cljs.core.deref(conn);
+var G__23611 = homebase.react.keywordize_coll(query);
+return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23610,G__23611) : datascript.core.entity.call(null,G__23610,G__23611));
 } else {
 if(typeof query === 'string'){
-return cljs.core.to_array(cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p__23615){
-var vec__23616 = p__23615;
-var id = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23616,(0),null);
-var G__23619 = cljs.core.deref(conn);
-var G__23620 = id;
-return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23619,G__23620) : datascript.core.entity.call(null,G__23619,G__23620));
+return cljs.core.to_array(cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p__23613){
+var vec__23614 = p__23613;
+var id = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23614,(0),null);
+var G__23617 = cljs.core.deref(conn);
+var G__23618 = id;
+return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23617,G__23618) : datascript.core.entity.call(null,G__23617,G__23618));
 }),cljs.core.apply.cljs$core$IFn$_invoke$arity$4(datascript.core.q,cljs.reader.read_string.cljs$core$IFn$_invoke$arity$1(query),cljs.core.deref(conn),vars)));
+} else {
+if(cljs.core.array_QMARK_(query)){
+var G__23619 = cljs.core.deref(conn);
+var G__23620 = homebase.react.keywordize_coll(query);
+return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23619,G__23620) : datascript.core.entity.call(null,G__23619,G__23620));
 } else {
 return null;
 
+}
 }
 }
 }));
@@ -57,13 +63,13 @@ return null;
 (homebase.react.q.cljs$lang$maxFixedArity = (2));
 
 /** @this {Function} */
-(homebase.react.q.cljs$lang$applyTo = (function (seq23610){
-var G__23611 = cljs.core.first(seq23610);
-var seq23610__$1 = cljs.core.next(seq23610);
-var G__23612 = cljs.core.first(seq23610__$1);
-var seq23610__$2 = cljs.core.next(seq23610__$1);
+(homebase.react.q.cljs$lang$applyTo = (function (seq23606){
+var G__23607 = cljs.core.first(seq23606);
+var seq23606__$1 = cljs.core.next(seq23606);
+var G__23608 = cljs.core.first(seq23606__$1);
+var seq23606__$2 = cljs.core.next(seq23606__$1);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23611,G__23612,seq23610__$2);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23607,G__23608,seq23606__$2);
 }));
 
 (datascript.impl.entity.Entity.prototype.get = (function() { 
