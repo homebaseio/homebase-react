@@ -122,8 +122,8 @@ reagent.impl.input.input_unmount = (function reagent$impl$input$input_unmount(th
 return (this$.cljsInputLive = null);
 });
 reagent.impl.input.input_component_QMARK_ = (function reagent$impl$input$input_component_QMARK_(x){
-var G__18522 = x;
-switch (G__18522) {
+var G__18519 = x;
+switch (G__18519) {
 case "input":
 case "textarea":
 return true;

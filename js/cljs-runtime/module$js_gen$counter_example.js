@@ -10,7 +10,6 @@ const Counter$$module$js_gen$counter_example = () => {
 };
 /** @const */ var module$js_gen$counter_example = {};
 /** @const */ module$js_gen$counter_example.App = App$$module$js_gen$counter_example;
-/** @const */ module$js_gen$counter_example.Counter = Counter$$module$js_gen$counter_example;
 
 $CLJS.module$js_gen$counter_example=module$js_gen$counter_example;
 //# sourceMappingURL=module$js_gen$counter_example.js.map
