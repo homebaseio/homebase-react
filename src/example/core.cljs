@@ -6,7 +6,8 @@
    [cljsjs.react.dom]
    [devcards.core :as dc]
   ;;  [example.devcards]
-   [example.counter]))
+   [example.counter]
+   [example.todo]))
 
 (js/goog.exportSymbol "marked" marked)
 (js/goog.exportSymbol "DevcardsMarked" marked)

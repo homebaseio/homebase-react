@@ -14,7 +14,7 @@ export const App = () => (
   </HomebaseProvider>
 )
 
-export const Counter = () => {
+const Counter = () => {
   const [counter] = useQuery(counterId)
   const [transact] = useTransact()
   return (
