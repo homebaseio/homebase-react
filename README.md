@@ -34,5 +34,6 @@ Open http://localhost:3000
 
 ### Karma
 ```bash
-cd src/test && karma start --single-run src/test/karma.conf.js
+npx shadow-cljs compile ci &&
+cd src/test && karma start --single-run karma.conf.js
 ```

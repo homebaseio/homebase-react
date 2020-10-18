@@ -5,11 +5,10 @@ module.exports = function (config) {
         basePath: '../../out',
         reporters: ['progress'],
         // The file itself
-        files: ['ci.js'],
+        files:  ['ci.js'],
         frameworks: ['cljs-test'],
         plugins: ['karma-cljs-test', 'karma-chrome-launcher'],
         colors: true,
-        concurrency: Infinity,
         logLevel: config.LOG_DEBUG,
         client: {
             args: ["shadow.test.karma.init"],

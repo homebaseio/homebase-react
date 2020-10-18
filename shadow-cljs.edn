@@ -21,16 +21,19 @@
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
                                "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
  :ci {:target :karma
+   :ns-regexp "-test$"
    :output-to  "out/ci.js"}
+ ; not in use
  :browser-test {:target :browser-test
         :test-dir  "resources/public/js/test"
-        :runner-ns test.localmost.runner
+        :runner-ns test.homebase.runner
         :compiler-options {:devcards :true
                            :output-feature-set :es6}
        :devtools  {:http-port          8021
        :http-root          "resources/public/js/test"}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
                                "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
+; not in use
 :node-test {:target :node-test
         :test-dir  "resources/public/js/test"
         :output-to "out/node-tests.js"
