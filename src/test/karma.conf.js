@@ -12,7 +12,8 @@ module.exports = function (config) {
         logLevel: config.LOG_DEBUG,
         client: {
             args: ["shadow.test.karma.init"],
-            singleRun: true
+            singleRun: true,
+            captureConsole: true
         }
     })
 };
