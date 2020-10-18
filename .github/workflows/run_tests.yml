@@ -15,6 +15,7 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
         with:
+          ref: benchmarks
           persist-credentials: false
 
       - name: Install and Build 🔧
@@ -23,7 +24,7 @@ jobs:
           npx shadow-cljs compile ci
 
 
-      - name: Test
+      - name: Test 🧪
         run: |
           cd src/test
           karma start
