@@ -1,16 +1,18 @@
 (ns example.counter
   (:require 
+   [devcards.core :as dc]
    [reagent.core :as r]
-   [localmost.reagent :as lmr]
-   [localmost.react]
+   [homebase.reagent :as lmr]
+   [homebase.react]
    ["../js_gen/counter-example" :as react-example])
-  (:require-macros 
-   [devcards.core :refer [defcard defcard-rg]]))
+  (:require-macros
+   [devcards.core :refer [defcard defcard-rg defcard-doc]]
+   [dev.macros :refer [inline-resource]]))
 
 (defn reagent-atom-counter []
   (let [state (r/atom {:count 0})]
     (fn []
-      [:div "reagent.core/atom count: " (:count @state)
+      [:div "Count: " (:count @state)
        [:div
         [:button {:on-click #(swap! state update-in [:count] inc)}
          "Increment"]]])))
@@ -18,17 +20,36 @@
 (defcard-rg reagent-atom-counter
   [reagent-atom-counter])
 
-(defn reagent-localmost-counter []
+(defcard-doc
+  (dc/mkdn-pprint-source reagent-atom-counter))
+
+
+(defn lmr-count [conn]
+  [:<> "Count: " (:count (lmr/q 1 conn))])
+
+(defn lmr-inc-button [conn]
+  [:button {:on-click #(lmr/transact! conn [[:db/add 1 :count (inc (:count (lmr/q 1 conn)))]])}
+   "Increment"])
+
+(defn lmr-counter []
   (let [conn (lmr/new-db-conn [{:db/id 1, :count 0}])]
     (fn []
-      [:div "localmost.reagent count: " (:count (lmr/q 1 conn))
-       [:div
-        [:button {:on-click #(lmr/transact! conn [[:db/add 1 :count (inc (:count (lmr/q 1 conn)))]])}
-         "Increment"]]])))
+      [:div [lmr-count conn]
+       [:div [lmr-inc-button conn]]])))
 
-(defcard-rg reagent-localmost-counter
-  [reagent-localmost-counter])
+(defcard-rg reagent-homebase-counter
+  [lmr-counter])
 
-(defcard-rg react-js-localmost-counter
-  [react-example/Counter])
+(defcard-doc
+  (dc/mkdn-pprint-source lmr-count)
+  (dc/mkdn-pprint-source lmr-inc-button)
+  (dc/mkdn-pprint-source lmr-counter))
+
+
+(defcard-rg react-js-homebase-counter
+  [react-example/App])
+
+(def code-snippet (inline-resource "js/counter-example.jsx"))
+(defcard-doc
+  (str "```javascript\n" code-snippet "\n```"))
 

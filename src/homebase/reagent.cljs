@@ -1,5 +1,5 @@
-(ns localmost.react
-  (:require
+(ns homebase.reagent
+  (:require 
    [reagent.core :as r]
    [datascript.core :as d]))
 
@@ -20,35 +20,16 @@
   ([]       (conn-from-db (d/empty-db)))
   ([schema] (conn-from-db (d/empty-db schema))))
 
-(defn js-txs->clj [js-txs]
-  (let [txs (js->clj js-txs :keywordize-keys true)]
-    (if (map? (first txs))
-      txs
-      (mapv (fn [[dbfn e a & more]]
-              (into [(keyword dbfn) e (keyword a)]
-                    more)) 
-            txs))))
-
-(defn transact! [conn txs]
-  (d/transact! conn (js-txs->clj txs)))
 
 (defn new-db-conn [txs & {:keys [schema]}]
   (let [conn (create-conn schema)]
-    (transact! conn txs)
+    (d/transact! conn txs)
     conn))
 
 (defn q [query conn & vars]
-  (let [query (js->clj query)]
-    (cond
-      (number? query) (d/entity (deref conn) query)
-      :else (apply d/q query (deref conn) vars))))
+  (cond
+    (number? query) (d/entity (deref conn) query)
+    :else (apply d/q query (deref conn) vars)))
 
-
-(defn ^:export HomebaseProvider [{:keys [] :as config}]
-  (+ 1 1))
-
-(defn ^:export useQuery [query]
-  (+ 1 1))
-
-(defn ^:export useTransact []
-  (+ 1 1))
+(defn transact! [conn txs]
+  (d/transact! conn txs))

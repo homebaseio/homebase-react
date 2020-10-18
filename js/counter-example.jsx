@@ -1,18 +1,30 @@
-import React from 'react';
-// TODO: for dev purposes this packages is being mounted on the window by example.counter in CLJS, but see if it's easy to build and import from node_modules instead so this example can look more like it would in production.
-// import { HomebaseProvider, useTransact, useQuery } from 'shadow-cljs/localmost.react';
-// const { HomebaseProvider, useTransact, useQuery } = window.localmost.react
+import React from 'react'
+// import { HomebaseProvider, useTransact, useQuery } from 'homebase-react'
+const { HomebaseProvider, useTransact, useQuery } = window.homebase.react
 
-const conn = localmost.react.new_db_conn([{'db/id': 1, 'count': 0}])
-window.conn = conn
+const counterId = 1
+const config = { initialData: [{
+  ':db/id': counterId, 
+  ':count': 0 
+}]}
 
-export const Counter = () => {
-  const count = localmost.react.q(1, conn).get(cljs.core.keyword('count'))
+export const App = () => (
+  <HomebaseProvider config={config}>
+    <Counter/>
+  </HomebaseProvider>
+)
+
+const Counter = () => {
+  const [counter] = useQuery(counterId)
+  const [transact] = useTransact()
   return (
     <div>
-      localmost React JS count: {count}
+      Count: {counter.get(':count')}
       <div>
-        <button onClick={() => localmost.react.transact_BANG_(conn, [['db/add', 1, 'count', count + 1]])}>
+        <button onClick={() => transact([{
+          ':db/id': counterId, 
+          ':count': counter.get(':count') + 1
+        }])}>
           Increment
         </button>
       </div>
