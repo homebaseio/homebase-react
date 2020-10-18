@@ -1,4 +1,4 @@
-(ns test.localmost.simple-test
+(ns test.homebase.simple-test
   (:require [cljs.test :refer [deftest is testing run-tests]]
           ))
 (defn is-positive? [x]

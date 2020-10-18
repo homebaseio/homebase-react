@@ -1,4 +1,4 @@
-(ns test.localmost.performance-test
+(ns test.homebase.performance-test
   (:require [reagent.core :as r]
             [reagent.impl.template :as tmpl]
             [reagent.impl.protocols :as p]

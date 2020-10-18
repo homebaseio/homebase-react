@@ -1,5 +1,5 @@
-(ns test.localmost.runner
-  (:require [test.localmost.simple-test :as simple-test]
+(ns test.homebase.runner
+  (:require [test.homebase.simple-test :as simple-test]
 ))
 
 (defn start []
