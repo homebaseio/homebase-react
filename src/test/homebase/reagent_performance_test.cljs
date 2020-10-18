@@ -15,7 +15,7 @@
   (dotimes [i 100000]
     (p/as-element functional-compiler [hello-world-component]))
   (js/performance.mark "functional-end")
-  (js/console.log (js/performance.measure "functional" "functional-start" "functional-end")))
+  (js/console.log (.stringify js/JSON  (js/performance.measure "functional" "functional-start" "functional-end"))))
 
 (defn test-class []
   (js/performance.mark "class-start")
@@ -23,7 +23,7 @@
   (dotimes [i 100000]
     (p/as-element tmpl/default-compiler* [hello-world-component]))
   (js/performance.mark "class-end")
-  (js/console.log (js/performance.measure "class" "class-start" "class-end")))
+  (js/console.log  (.stringify js/JSON  (js/performance.measure "class" "class-start" "class-end"))))
 
 (deftest create-element-test []
   (test-functional)
