@@ -29,4 +29,4 @@ jobs:
       - name: Test 🧪
         run: |
           cd src/test
-          karma start
+          karma start --single-run
