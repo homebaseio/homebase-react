@@ -19,17 +19,29 @@
 (defn transact! [conn txs]
   (d/transact! conn (keywordize-coll txs)))
 
-(defn q [query conn & vars]
-  (cond
+(defn json-query [query conn & args]
+  (->> (apply d/q (cljs.reader/read-string query) @conn args)
+       (map (fn [[id]] (d/entity @conn id)))
+       to-array))
+
+(defn q [query conn & args]
+  (let [keywordized-args (map keywordize args)]
+    (cond
     ; Assume a :db/id lookup
-    (number? query) (d/entity @conn (keywordize-coll query))
+      (number? query) (d/entity @conn (keywordize-coll query))
     ; Assume datalog
-    (string? query) (->> (apply d/q (cljs.reader/read-string query) @conn vars)
-                         (map (fn [[id]] (d/entity @conn id)))
-                         to-array) 
+    ; NOTE: this only supports the most basic find clauses
+    ;       E.g. `:find ?e`
+    ;       Not  `:find ?e ...` or `:find ?e .` or `:find ?e ?a ?b`
+    ; TODO: should this support more complex :find queries?
+      (string? query) (->> (apply d/q (cljs.reader/read-string query) @conn keywordized-args)
+                           (map (fn [[id]] (d/entity @conn id)))
+                           to-array) 
     ; Assume entity KV lookup
-    (array? query) (d/entity @conn (keywordize-coll query))
-    :else nil))
+      (array? query) (d/entity @conn (keywordize-coll query))
+    ; Assume JSON style query
+      (object? query) (apply json-query query conn keywordized-args)
+      :else nil)))
 
 
 (extend-type Entity
@@ -54,16 +66,14 @@
      (.-Provider homebase-context) #js {:value conn}
      (.-children props))))
 
-(defn ^:export useQuery [query]
+(defn ^:export useQuery [query & args]
   (let [conn (react/useContext homebase-context)
-        [result setResult] (react/useState (q query conn))]
+        [result setResult] (react/useState (apply q query conn args))]
     (react/useEffect 
-     (fn []
-       (let [key (rand)
-             listener (fn [] (setResult (q query conn)))]
-         (d/listen! conn key listener)
-         (fn [] (d/unlisten! conn key)))))
-    [result]))
+     (fn [] (let [key (rand)]
+              (d/listen! conn key #(setResult (apply q query conn args)))
+              (fn [] (d/unlisten! conn key)))))
+    [result query args]))
 
 (defn ^:export useTransact []
   (let [conn (react/useContext homebase-context)
