@@ -19,7 +19,9 @@ jobs:
           persist-credentials: false
 
       - name: NPM Install 🔧
-        run: npm install
+        run: |
+          npm install -g karma-cli
+          npm install
 
       - name: Shadow-cljs Build 🔨👻
         run: npx shadow-cljs compile ci
