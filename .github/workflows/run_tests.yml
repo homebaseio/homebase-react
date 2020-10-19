@@ -18,11 +18,11 @@ jobs:
           ref: refs/heads/benchmarks
           persist-credentials: false
 
-      - name: Install and Build 🔧
-        run: |
-          npm install
-          npx shadow-cljs compile ci
+      - name: NPM Install 🔧
+        run: npm install
 
+      - name: Shadow-cljs Build 🔨👻
+        run: npx shadow-cljs compile ci
 
       - name: Test 🧪
         run: |
