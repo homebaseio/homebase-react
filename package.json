@@ -10,6 +10,7 @@
     "highlight.js": "10.2.1",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",
+    "karma-cli": "^2.0.0",
     "karma-cljs-test": "^0.1.0",
     "marked": "1.2.0",
     "react": "16.13.0",
