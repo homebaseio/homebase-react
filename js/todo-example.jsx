@@ -19,6 +19,7 @@ const config = {
   initialData: [{
     ':db/ident': ':settings/filters',
     ':filter/show-completed?': true,
+    ':filter/project': 0,
   }, {
     ':db/id': -1,
     ':user/name': 'Stella'
@@ -35,6 +36,7 @@ const config = {
     ':todo/name': 'Fix ship',
     ':todo/owner': -1,
     ':todo/project': -3,
+    ':todo/completed?': true,
     ':todo/created-at': new Date('2003/11/10')
   }, {
     ':todo/name': 'Go home',
@@ -79,7 +81,7 @@ const TodoInput = () => {
         name=":todo/name" 
         placeholder="What needs to be done?" 
         autoComplete="off"
-        required 
+        required
       />
       &nbsp;
       <button type="submit">Create Todo</button>
@@ -99,7 +101,47 @@ const Filters = () => {
         checked={filters.get(':filter/show-completed?')}
         onChange={e => transact([{ ':db/id': filters.get(':db/id'), ':filter/show-completed?': e.target.checked }])}
       />
+      &nbsp;·&nbsp;
+      <ProjectSelect
+        value={filters.get(':filter/project')}
+        onChange={projectId => transact([{
+          ':db/id': filters.get(':db/id'),
+          ':filter/project': projectId,
+        }])}
+      />
     </div>
+  )
+}
+
+const ProjectSelect = ({ value, onChange }) => {
+  const [projects] = useQuery(
+    `[:find ?project
+      :where [?project :project/name]]`
+  )
+  const id = 'project-' + Math.random()
+  return (
+    <>
+      <label htmlFor={id}>
+        Project:
+      </label>
+      &nbsp;
+      <select 
+        name="projects" 
+        id={id}
+        value={value}
+        onChange={e => onChange && onChange(Number(e.target.value))}
+      >
+        <option value="0"></option>
+        {projects.map(project => (
+          <option 
+            key={project.get(':db/id')} 
+            value={project.get(':db/id')}
+          >
+            {project.get(':project/name')}
+          </option>
+        ))}
+      </select>
+    </>
   )
 }
 
@@ -110,7 +152,10 @@ const TodoList = () => {
       [?todo :todo/name]
       [?filter :db/ident :settings/filters]
       (or [?filter :filter/show-completed? true]
-          (not [?todo :todo/completed? true]))]`
+        (not [?todo :todo/completed? true]))
+      [?filter :filter/project ?project]
+      (or [(>= 0 ?project)]
+          [?todo :todo/project ?project])]`
   )
   return (
     <div>
@@ -171,36 +216,11 @@ const TodoName = ({ todo }) => {
 
 const TodoProject = ({ todo }) => {
   const [transact] = useTransact()
-  const [projects] = useQuery(
-    `[:find ?project
-      :where [?project :project/name]]`
-  )
   return (
-    <>
-      <label htmlFor={'todo-project-' + todo.get(':db/id')}>
-        Project:
-      </label>
-      &nbsp;
-      <select 
-        name="projects" 
-        id={'todo-project-' + todo.get(':db/id')}
-        value={todo.get(':todo/project', ':db/id') || ''}
-        onChange={e => transact([{ 
-          ':db/id': todo.get(':db/id'), 
-          ':todo/project': Number(e.target.value)
-        }])}
-      >
-        <option value=""></option>
-        {projects.map(project => (
-          <option 
-            key={project.get(':db/id')} 
-            value={project.get(':db/id')}
-          >
-            {project.get(':project/name')}
-          </option>
-        ))}
-      </select>
-    </>
+    <ProjectSelect
+      value={todo.get(':todo/project', ':db/id') || ''}
+      onChange={projectId => transact([[projectId ? ':db/add' : ':db/retract', todo.get(':db/id'), ':todo/project', projectId || null]])}
+    />    
   )
 }
 
@@ -220,10 +240,7 @@ const TodoOwner = ({ todo }) => {
         name="users" 
         id={'todo-owner-' + todo.get(':db/id')}
         value={todo.get(':todo/owner', ':db/id') || ''}
-        onChange={e => transact([{ 
-          ':db/id': todo.get(':db/id'), 
-          ':todo/owner': Number(e.target.value)
-        }])}
+        onChange={e => transact([[Number(e.target.value) ? ':db/add' : ':db/retract', todo.get(':db/id'), ':todo/owner', Number(e.target.value) || null]])}
       >
         <option value=""></option>
         {users.map(user => (
