@@ -118,16 +118,14 @@ const ProjectSelect = ({ value, onChange }) => {
     `[:find ?project
       :where [?project :project/name]]`
   )
-  const id = 'project-' + Math.random()
   return (
     <>
-      <label htmlFor={id}>
+      <label>
         Project:
       </label>
       &nbsp;
       <select 
         name="projects" 
-        id={id}
         value={value}
         onChange={e => onChange && onChange(Number(e.target.value))}
       >
@@ -232,13 +230,12 @@ const TodoOwner = ({ todo }) => {
   )
   return (
     <>
-      <label htmlFor={'todo-owner-' + todo.get(':db/id')}>
+      <label>
         Owner:
       </label>
       &nbsp;
       <select 
         name="users" 
-        id={'todo-owner-' + todo.get(':db/id')}
         value={todo.get(':todo/owner', ':db/id') || ''}
         onChange={e => transact([[Number(e.target.value) ? ':db/add' : ':db/retract', todo.get(':db/id'), ':todo/owner', Number(e.target.value) || null]])}
       >

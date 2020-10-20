@@ -109,12 +109,8 @@ const ProjectSelect = ({
 }) => {
   const [projects] = useQuery(`[:find ?project
       :where [?project :project/name]]`);
-  const id = 'project-' + Math.random();
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", {
-    htmlFor: id
-  }, "Project:"), "\xA0", /*#__PURE__*/React.createElement("select", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", null, "Project:"), "\xA0", /*#__PURE__*/React.createElement("select", {
     name: "projects",
-    id: id,
     value: value,
     onChange: e => onChange && onChange(Number(e.target.value))
   }, /*#__PURE__*/React.createElement("option", {
@@ -220,11 +216,8 @@ const TodoOwner = ({
   const [transact] = useTransact();
   const [users] = useQuery(`[:find ?user
       :where [?user :user/name]]`);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", {
-    htmlFor: 'todo-owner-' + todo.get(':db/id')
-  }, "Owner:"), "\xA0", /*#__PURE__*/React.createElement("select", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", null, "Owner:"), "\xA0", /*#__PURE__*/React.createElement("select", {
     name: "users",
-    id: 'todo-owner-' + todo.get(':db/id'),
     value: todo.get(':todo/owner', ':db/id') || '',
     onChange: e => transact([[Number(e.target.value) ? ':db/add' : ':db/retract', todo.get(':db/id'), ':todo/owner', Number(e.target.value) || null]])
   }, /*#__PURE__*/React.createElement("option", {

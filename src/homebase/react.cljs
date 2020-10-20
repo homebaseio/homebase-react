@@ -7,17 +7,17 @@
    [datascript.db :as db]
    [datascript.impl.entity :as de :refer [Entity]]))
 
-(defn keywordize [s]
+(defn keywordize-str [s]
   (if (and (string? s) (= (subs s 0 1) ":"))
     (keyword (subs s 1))
     s))
 
-(defn keywordize-coll [coll]
+(defn keywordize [coll]
   (->> (js->clj coll)
-       (walk/postwalk keywordize)))
+       (walk/postwalk keywordize-str)))
 
 (defn transact! [conn txs]
-  (d/transact! conn (keywordize-coll txs)))
+  (d/transact! conn (keywordize txs)))
 
 (defn json-query [query conn & args]
   (->> (apply d/q (cljs.reader/read-string query) @conn args)
@@ -25,23 +25,22 @@
        to-array))
 
 (defn q [query conn & args]
-  (let [keywordized-args (map keywordize args)]
-    (cond
+  (cond
     ; Assume a :db/id lookup
-      (number? query) (d/entity @conn (keywordize-coll query))
+    (number? query) (d/entity @conn query)
     ; Assume datalog
     ; NOTE: this only supports the most basic find clauses
     ;       E.g. `:find ?e`
     ;       Not  `:find ?e ...` or `:find ?e .` or `:find ?e ?a ?b`
     ; TODO: should this support more complex :find queries?
-      (string? query) (->> (apply d/q (cljs.reader/read-string query) @conn keywordized-args)
-                           (map (fn [[id]] (d/entity @conn id)))
-                           to-array) 
+    (string? query) (->> (apply d/q (cljs.reader/read-string query) @conn (keywordize args))
+                         (map (fn [[id]] (d/entity @conn id)))
+                         to-array)
     ; Assume entity KV lookup
-      (array? query) (d/entity @conn (keywordize-coll query))
+    (array? query) (d/entity @conn (keywordize query))
     ; Assume JSON style query
-      (object? query) (apply json-query query conn keywordized-args)
-      :else nil)))
+    (object? query) (apply json-query query conn (keywordize args))
+    :else nil))
 
 
 (extend-type Entity
@@ -50,8 +49,8 @@
     (reduce 
      (fn [acc key] 
        (cond 
-         (set? acc) (get (first acc) (keywordize-coll key))
-         acc (get acc (keywordize-coll key))
+         (set? acc) (get (first acc) (keywordize key))
+         acc (get acc (keywordize key))
          :else nil))
      this keys)))
 
@@ -60,7 +59,7 @@
 
 (defn ^:export HomebaseProvider [props]
   (let [config (.-config props)
-        conn (d/create-conn (keywordize-coll (.-schema config)))]
+        conn (d/create-conn (keywordize (.-schema config)))]
     (when (.-initialData config) (transact! conn (.-initialData config)))
     (r/create-element
      (.-Provider homebase-context) #js {:value conn}
