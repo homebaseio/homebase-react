@@ -26,16 +26,18 @@ const ProjectSelect$$module$js_gen$todo_example = $jscomp$destructuring$var0 => 
   value:project.get(":db/id")}, project.get(":project/name")))));
 };
 const TodoList$$module$js_gen$todo_example = () => {
-  const [todos] = useQuery$$module$js_gen$todo_example(`[:find ?todo
-      :where 
-      [?todo :todo/name]
-      [?filter :db/ident :settings/filters]
-      (or [?filter :filter/show-completed? true]
-        (not [?todo :todo/completed? true]))
-      [?filter :filter/project ?project]
-      (or [(= 0 ?project)]
-          [?todo :todo/project ?project])]`);
-  return module$node_modules$react$index.createElement("div", null, todos.sort((a, b) => a.get(":todo/created-at") > b.get(":todo/created-at") ? -1 : 1).map(todo => module$node_modules$react$index.createElement(Todo$$module$js_gen$todo_example, {key:todo.get(":db/id"), todo})));
+  const [filters] = useQuery$$module$js_gen$todo_example([":db/ident", ":settings/filters"]);
+  const [todos] = useQuery$$module$js_gen$todo_example(`[:find ?todo 
+      :where [?todo :todo/name]]`);
+  return module$node_modules$react$index.createElement("div", null, todos.filter(todo => {
+    if (!filters.get(":filter/show-completed?") && todo.get(":todo/completed?")) {
+      return false;
+    }
+    if (filters.get(":filter/project") && todo.get(":todo/project", ":db/id") !== filters.get(":filter/project")) {
+      return false;
+    }
+    return true;
+  }).sort((a, b) => a.get(":todo/created-at") > b.get(":todo/created-at") ? -1 : 1).map(todo => module$node_modules$react$index.createElement(Todo$$module$js_gen$todo_example, {key:todo.get(":db/id"), todo})));
 };
 const Todo$$module$js_gen$todo_example = $jscomp$destructuring$var1 => {
   var {todo} = $jscomp$destructuring$var1;
