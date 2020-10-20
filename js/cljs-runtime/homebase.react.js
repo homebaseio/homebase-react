@@ -120,7 +120,7 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23620,G__23621
 }));
 
 (datascript.impl.entity.Entity.prototype.get = (function() { 
-var G__23644__delegate = function (keys){
+var G__23650__delegate = function (keys){
 var this$ = this;
 return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (acc,key){
 if(cljs.core.set_QMARK_(acc)){
@@ -135,21 +135,21 @@ return null;
 }
 }),this$,keys);
 };
-var G__23644 = function (var_args){
+var G__23650 = function (var_args){
 var keys = null;
 if (arguments.length > 0) {
-var G__23645__i = 0, G__23645__a = new Array(arguments.length -  0);
-while (G__23645__i < G__23645__a.length) {G__23645__a[G__23645__i] = arguments[G__23645__i + 0]; ++G__23645__i;}
-  keys = new cljs.core.IndexedSeq(G__23645__a,0,null);
+var G__23651__i = 0, G__23651__a = new Array(arguments.length -  0);
+while (G__23651__i < G__23651__a.length) {G__23651__a[G__23651__i] = arguments[G__23651__i + 0]; ++G__23651__i;}
+  keys = new cljs.core.IndexedSeq(G__23651__a,0,null);
 } 
-return G__23644__delegate.call(this,keys);};
-G__23644.cljs$lang$maxFixedArity = 0;
-G__23644.cljs$lang$applyTo = (function (arglist__23646){
-var keys = cljs.core.seq(arglist__23646);
-return G__23644__delegate(keys);
+return G__23650__delegate.call(this,keys);};
+G__23650.cljs$lang$maxFixedArity = 0;
+G__23650.cljs$lang$applyTo = (function (arglist__23652){
+var keys = cljs.core.seq(arglist__23652);
+return G__23650__delegate(keys);
 });
-G__23644.cljs$core$IFn$_invoke$arity$variadic = G__23644__delegate;
-return G__23644;
+G__23650.cljs$core$IFn$_invoke$arity$variadic = G__23650__delegate;
+return G__23650;
 })()
 );
 if((typeof homebase !== 'undefined') && (typeof homebase.react !== 'undefined') && (typeof homebase.react.homebase_context !== 'undefined')){
@@ -169,14 +169,14 @@ return reagent.core.create_element.cljs$core$IFn$_invoke$arity$3(homebase.react.
 goog.exportSymbol('homebase.react.HomebaseProvider', homebase.react.HomebaseProvider);
 homebase.react.useQuery = (function homebase$react$useQuery(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23647 = arguments.length;
-var i__4737__auto___23648 = (0);
+var len__4736__auto___23657 = arguments.length;
+var i__4737__auto___23658 = (0);
 while(true){
-if((i__4737__auto___23648 < len__4736__auto___23647)){
-args__4742__auto__.push((arguments[i__4737__auto___23648]));
+if((i__4737__auto___23658 < len__4736__auto___23657)){
+args__4742__auto__.push((arguments[i__4737__auto___23658]));
 
-var G__23649 = (i__4737__auto___23648 + (1));
-i__4737__auto___23648 = G__23649;
+var G__23659 = (i__4737__auto___23658 + (1));
+i__4737__auto___23658 = G__23659;
 continue;
 } else {
 }
