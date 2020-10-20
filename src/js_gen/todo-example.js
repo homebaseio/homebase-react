@@ -5,6 +5,11 @@ const {
   useTransact,
   useQuery
 } = window.homebase.react;
+export const App = () => {
+  return /*#__PURE__*/React.createElement(HomebaseProvider, {
+    config: config
+  }, /*#__PURE__*/React.createElement(Todos, null));
+};
 const config = {
   schema: {
     ':db/ident': {
@@ -48,17 +53,12 @@ const config = {
     ':todo/created-at': new Date('2003/11/9')
   }]
 };
-export const App = () => {
-  return /*#__PURE__*/React.createElement(HomebaseProvider, {
-    config: config
-  }, /*#__PURE__*/React.createElement(Todos, null));
-};
 
 const Todos = () => {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(TodoInput, null), /*#__PURE__*/React.createElement(Filters, null), /*#__PURE__*/React.createElement(TodoList, null));
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(NewTodo, null), /*#__PURE__*/React.createElement(Filters, null), /*#__PURE__*/React.createElement(TodoList, null));
 };
 
-const TodoInput = () => {
+const NewTodo = () => {
   const [transact] = useTransact();
   return /*#__PURE__*/React.createElement("form", {
     onSubmit: e => {

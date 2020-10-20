@@ -2,6 +2,14 @@ import React from 'react'
 // import { HomebaseProvider, useTransact, useQuery } from 'homebase-react'
 const { HomebaseProvider, useTransact, useQuery } = window.homebase.react
 
+export const App = () => {
+  return (
+    <HomebaseProvider config={config}>
+      <Todos />
+    </HomebaseProvider>
+  )
+}
+
 const config = {
   schema: {
     ':db/ident': {
@@ -46,25 +54,17 @@ const config = {
   }]
 }
 
-export const App = () => {
-  return (
-    <HomebaseProvider config={config}>
-      <Todos />
-    </HomebaseProvider>
-  )
-}
-
 const Todos = () => {
   return (
     <div>
-      <TodoInput />
+      <NewTodo />
       <Filters />
       <TodoList />
     </div>
   )
 }
 
-const TodoInput = () => {
+const NewTodo = () => {
   const [transact] = useTransact()
   return (
     <form onSubmit={e => {
