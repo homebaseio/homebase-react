@@ -144,20 +144,30 @@ const ProjectSelect = ({ value, onChange }) => {
 }
 
 const TodoList = () => {
+  const [filters] = useQuery([':db/ident', ':settings/filters'])
   const [todos] = useQuery(
-    `[:find ?todo
-      :where 
-      [?todo :todo/name]
-      [?filter :db/ident :settings/filters]
-      (or [?filter :filter/show-completed? true]
-        (not [?todo :todo/completed? true]))
-      [?filter :filter/project ?project]
-      (or [(= 0 ?project)]
-          [?todo :todo/project ?project])]`
+    `[:find ?todo 
+      :where [?todo :todo/name]]`
   )
+  // const [todos] = useQuery(
+  //   `[:find ?todo
+  //     :where 
+  //     [?todo :todo/name]
+  //     [?filter :db/ident :settings/filters]
+  //     (or [?filter :filter/show-completed? true]
+  //       (not [?todo :todo/completed? true]))
+  //     [?filter :filter/project ?project]
+  //     (or [(= 0 ?project)]
+  //         [?todo :todo/project ?project])]`
+  // )
   return (
     <div>
       {todos
+      .filter(todo => {
+        if (!filters.get(':filter/show-completed?') && todo.get(':todo/completed?')) return false
+        if (filters.get(':filter/project') && todo.get(':todo/project', ':db/id') !== filters.get(':filter/project')) return false
+        return true
+      })
       .sort((a, b) => a.get(':todo/created-at') > b.get(':todo/created-at') ? -1 : 1)
       .map(todo => <Todo key={todo.get(':db/id')} todo={todo}/>)}
     </div>
