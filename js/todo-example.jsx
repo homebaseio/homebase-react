@@ -154,7 +154,7 @@ const TodoList = () => {
       (or [?filter :filter/show-completed? true]
         (not [?todo :todo/completed? true]))
       [?filter :filter/project ?project]
-      (or [(>= 0 ?project)]
+      (or [(> 0 ?project)]
           [?todo :todo/project ?project])]`
   )
   return (
