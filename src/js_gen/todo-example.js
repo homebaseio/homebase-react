@@ -108,11 +108,7 @@ const ProjectSelect = ({
   onChange
 }) => {
   const [projects] = useQuery(`[:find ?project
-      :where [?project :project/name]]`); // const [projects] = useQuery({
-  //   $find: 'project',
-  //   $where: { project: { name: '$exists' } }
-  // })
-
+      :where [?project :project/name]]`);
   const id = 'project-' + Math.random();
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: id
@@ -137,15 +133,8 @@ const TodoList = () => {
       (or [?filter :filter/show-completed? true]
         (not [?todo :todo/completed? true]))
       [?filter :filter/project ?project]
-      (or [(>= 0 ?project)]
-          [?todo :todo/project ?project])]`); // const [todos] = useQuery({
-  //   $find: 'todo',
-  //   $where: { 
-  //     todo: { name: '$exists' },
-  //     settings: {}
-  //   }
-  // })
-
+      (or [(= 0 ?project)]
+          [?todo :todo/project ?project])]`);
   return /*#__PURE__*/React.createElement("div", null, todos.sort((a, b) => a.get(':todo/created-at') > b.get(':todo/created-at') ? -1 : 1).map(todo => /*#__PURE__*/React.createElement(Todo, {
     key: todo.get(':db/id'),
     todo: todo
