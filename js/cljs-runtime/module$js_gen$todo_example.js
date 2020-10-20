@@ -34,7 +34,7 @@ const TodoList$$module$js_gen$todo_example = () => {
       (or [?filter :filter/show-completed? true]
         (not [?todo :todo/completed? true]))
       [?filter :filter/project ?project]
-      (or [(>= 0 ?project)]
+      (or [(= 0 ?project)]
           [?todo :todo/project ?project])]`);
   return module$node_modules$react$index.createElement("div", null, todos.sort((a, b) => a.get(":todo/created-at") > b.get(":todo/created-at") ? -1 : 1).map(todo => module$node_modules$react$index.createElement(Todo$$module$js_gen$todo_example, {key:todo.get(":db/id"), todo})));
 };
