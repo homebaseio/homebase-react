@@ -1,10 +1,10 @@
 var module$node_modules$react$index = shadow.js.require("module$node_modules$react$index", {});
 const {HomebaseProvider:HomebaseProvider$$module$js_gen$todo_example, useTransact:useTransact$$module$js_gen$todo_example, useQuery:useQuery$$module$js_gen$todo_example} = window.homebase.react;
+const App$$module$js_gen$todo_example = () => module$node_modules$react$index.createElement(HomebaseProvider$$module$js_gen$todo_example, {config:config$$module$js_gen$todo_example}, module$node_modules$react$index.createElement(Todos$$module$js_gen$todo_example, null));
 const config$$module$js_gen$todo_example = {schema:{":db/ident":{":db/unique":":db.unique/identity"}, ":todo/project":{":db/valueType":":db.type/ref", ":db/cardinality":":db.cardinality/one"}, ":todo/owner":{":db/valueType":":db.type/ref", ":db/cardinality":":db.cardinality/one"}}, initialData:[{":db/ident":":settings/filters", ":filter/show-completed?":true, ":filter/project":0}, {":db/id":-1, ":user/name":"Stella"}, {":db/id":-2, ":user/name":"Arpegius"}, {":db/id":-3, ":project/name":"Make it"}, 
 {":db/id":-4, ":project/name":"Do it"}, {":todo/name":"Fix ship", ":todo/owner":-1, ":todo/project":-3, ":todo/completed?":true, ":todo/created-at":new Date("2003/11/10")}, {":todo/name":"Go home", ":todo/owner":-2, ":todo/project":-4, ":todo/created-at":new Date("2003/11/9")}]};
-const App$$module$js_gen$todo_example = () => module$node_modules$react$index.createElement(HomebaseProvider$$module$js_gen$todo_example, {config:config$$module$js_gen$todo_example}, module$node_modules$react$index.createElement(Todos$$module$js_gen$todo_example, null));
-const Todos$$module$js_gen$todo_example = () => module$node_modules$react$index.createElement("div", null, module$node_modules$react$index.createElement(TodoInput$$module$js_gen$todo_example, null), module$node_modules$react$index.createElement(Filters$$module$js_gen$todo_example, null), module$node_modules$react$index.createElement(TodoList$$module$js_gen$todo_example, null));
-const TodoInput$$module$js_gen$todo_example = () => {
+const Todos$$module$js_gen$todo_example = () => module$node_modules$react$index.createElement("div", null, module$node_modules$react$index.createElement(NewTodo$$module$js_gen$todo_example, null), module$node_modules$react$index.createElement(Filters$$module$js_gen$todo_example, null), module$node_modules$react$index.createElement(TodoList$$module$js_gen$todo_example, null));
+const NewTodo$$module$js_gen$todo_example = () => {
   const [transact] = useTransact$$module$js_gen$todo_example();
   return module$node_modules$react$index.createElement("form", {onSubmit:e => {
     e.preventDefault();

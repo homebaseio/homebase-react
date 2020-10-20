@@ -169,14 +169,14 @@ return reagent.core.create_element.cljs$core$IFn$_invoke$arity$3(homebase.react.
 goog.exportSymbol('homebase.react.HomebaseProvider', homebase.react.HomebaseProvider);
 homebase.react.useQuery = (function homebase$react$useQuery(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23657 = arguments.length;
-var i__4737__auto___23658 = (0);
+var len__4736__auto___23654 = arguments.length;
+var i__4737__auto___23655 = (0);
 while(true){
-if((i__4737__auto___23658 < len__4736__auto___23657)){
-args__4742__auto__.push((arguments[i__4737__auto___23658]));
+if((i__4737__auto___23655 < len__4736__auto___23654)){
+args__4742__auto__.push((arguments[i__4737__auto___23655]));
 
-var G__23659 = (i__4737__auto___23658 + (1));
-i__4737__auto___23658 = G__23659;
+var G__23658 = (i__4737__auto___23655 + (1));
+i__4737__auto___23655 = G__23658;
 continue;
 } else {
 }
