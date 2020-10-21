@@ -1,4 +1,4 @@
-name: Run Cljs Tests
+name: Run JS Tests
 
 on:
   push:
@@ -20,13 +20,12 @@ jobs:
 
       - name: NPM Install 🔧
         run: |
-          sudo npm install -g karma-cli
+          sudo npm install -g jest
           npm install
 
       - name: Shadow-cljs Build 🔨👻
-        run: npx shadow-cljs compile ci
+        run: npx shadow-cljs compile dist
 
       - name: Test 🧪
-        run: |
-          cd src/test
-          karma start --single-run
+        run: npm test
+
