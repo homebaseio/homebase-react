@@ -20,6 +20,15 @@
         :modules {:main {:init-fn example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
                                "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
+ :dist {:target :npm-module
+  :output-dir "dist"
+  :asset-path "/js"
+  :entries [homebase.react]
+  :compiler-options {:devcards :true
+            :output-feature-set :es6}
+  :modules {:main {:init-fn example.core/init}}
+  :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
+                "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
  :ci {:target :karma
    :ns-regexp "-test$"
    :output-to  "out/ci.js"}
