@@ -9,8 +9,8 @@ return reagent.core.atom.cljs$core$IFn$_invoke$arity$variadic(db,cljs.core.prim_
  * Creates an empty DB and a mutable reference to it. See [[create-conn]].
  */
 homebase.reagent.conn_from_datoms = (function homebase$reagent$conn_from_datoms(var_args){
-var G__23587 = arguments.length;
-switch (G__23587) {
+var G__23589 = arguments.length;
+switch (G__23589) {
 case 1:
 return homebase.reagent.conn_from_datoms.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -41,8 +41,8 @@ return homebase.reagent.conn_from_db((datascript.core.init_db.cljs$core$IFn$_inv
  * To access underlying immutable DB value, deref: `@conn`.
  */
 homebase.reagent.create_conn = (function homebase$reagent$create_conn(var_args){
-var G__23589 = arguments.length;
-switch (G__23589) {
+var G__23594 = arguments.length;
+switch (G__23594) {
 case 0:
 return homebase.reagent.create_conn.cljs$core$IFn$_invoke$arity$0();
 
@@ -69,14 +69,14 @@ return homebase.reagent.conn_from_db((datascript.core.empty_db.cljs$core$IFn$_in
 
 homebase.reagent.new_db_conn = (function homebase$reagent$new_db_conn(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23604 = arguments.length;
-var i__4737__auto___23605 = (0);
+var len__4736__auto___23641 = arguments.length;
+var i__4737__auto___23642 = (0);
 while(true){
-if((i__4737__auto___23605 < len__4736__auto___23604)){
-args__4742__auto__.push((arguments[i__4737__auto___23605]));
+if((i__4737__auto___23642 < len__4736__auto___23641)){
+args__4742__auto__.push((arguments[i__4737__auto___23642]));
 
-var G__23606 = (i__4737__auto___23605 + (1));
-i__4737__auto___23605 = G__23606;
+var G__23643 = (i__4737__auto___23642 + (1));
+i__4737__auto___23642 = G__23643;
 continue;
 } else {
 }
@@ -87,10 +87,10 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return homebase.reagent.new_db_conn.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(homebase.reagent.new_db_conn.cljs$core$IFn$_invoke$arity$variadic = (function (txs,p__23593){
-var map__23595 = p__23593;
-var map__23595__$1 = (((((!((map__23595 == null))))?(((((map__23595.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__23595.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__23595):map__23595);
-var schema = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__23595__$1,new cljs.core.Keyword(null,"schema","schema",-1582001791));
+(homebase.reagent.new_db_conn.cljs$core$IFn$_invoke$arity$variadic = (function (txs,p__23603){
+var map__23604 = p__23603;
+var map__23604__$1 = (((((!((map__23604 == null))))?(((((map__23604.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__23604.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__23604):map__23604);
+var schema = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__23604__$1,new cljs.core.Keyword(null,"schema","schema",-1582001791));
 var conn = homebase.reagent.create_conn.cljs$core$IFn$_invoke$arity$1(schema);
 datascript.core.transact_BANG_.cljs$core$IFn$_invoke$arity$2(conn,txs);
 
@@ -100,23 +100,23 @@ return conn;
 (homebase.reagent.new_db_conn.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(homebase.reagent.new_db_conn.cljs$lang$applyTo = (function (seq23590){
-var G__23591 = cljs.core.first(seq23590);
-var seq23590__$1 = cljs.core.next(seq23590);
+(homebase.reagent.new_db_conn.cljs$lang$applyTo = (function (seq23599){
+var G__23600 = cljs.core.first(seq23599);
+var seq23599__$1 = cljs.core.next(seq23599);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23591,seq23590__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23600,seq23599__$1);
 }));
 
 homebase.reagent.q = (function homebase$reagent$q(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23607 = arguments.length;
-var i__4737__auto___23608 = (0);
+var len__4736__auto___23646 = arguments.length;
+var i__4737__auto___23647 = (0);
 while(true){
-if((i__4737__auto___23608 < len__4736__auto___23607)){
-args__4742__auto__.push((arguments[i__4737__auto___23608]));
+if((i__4737__auto___23647 < len__4736__auto___23646)){
+args__4742__auto__.push((arguments[i__4737__auto___23647]));
 
-var G__23609 = (i__4737__auto___23608 + (1));
-i__4737__auto___23608 = G__23609;
+var G__23648 = (i__4737__auto___23647 + (1));
+i__4737__auto___23647 = G__23648;
 continue;
 } else {
 }
@@ -129,9 +129,9 @@ return homebase.reagent.q.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),
 
 (homebase.reagent.q.cljs$core$IFn$_invoke$arity$variadic = (function (query,conn,vars){
 if(typeof query === 'number'){
-var G__23600 = cljs.core.deref(conn);
-var G__23601 = query;
-return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23600,G__23601) : datascript.core.entity.call(null,G__23600,G__23601));
+var G__23637 = cljs.core.deref(conn);
+var G__23638 = query;
+return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23637,G__23638) : datascript.core.entity.call(null,G__23637,G__23638));
 } else {
 return cljs.core.apply.cljs$core$IFn$_invoke$arity$4(datascript.core.q,query,cljs.core.deref(conn),vars);
 
@@ -141,13 +141,13 @@ return cljs.core.apply.cljs$core$IFn$_invoke$arity$4(datascript.core.q,query,clj
 (homebase.reagent.q.cljs$lang$maxFixedArity = (2));
 
 /** @this {Function} */
-(homebase.reagent.q.cljs$lang$applyTo = (function (seq23597){
-var G__23598 = cljs.core.first(seq23597);
-var seq23597__$1 = cljs.core.next(seq23597);
-var G__23599 = cljs.core.first(seq23597__$1);
-var seq23597__$2 = cljs.core.next(seq23597__$1);
+(homebase.reagent.q.cljs$lang$applyTo = (function (seq23630){
+var G__23631 = cljs.core.first(seq23630);
+var seq23630__$1 = cljs.core.next(seq23630);
+var G__23632 = cljs.core.first(seq23630__$1);
+var seq23630__$2 = cljs.core.next(seq23630__$1);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23598,G__23599,seq23597__$2);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23631,G__23632,seq23630__$2);
 }));
 
 homebase.reagent.transact_BANG_ = (function homebase$reagent$transact_BANG_(conn,txs){

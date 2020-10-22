@@ -20,15 +20,13 @@ const Filters$$module$js_gen$todo_example = () => {
 };
 const ProjectSelect$$module$js_gen$todo_example = $jscomp$destructuring$var0 => {
   var {value, onChange} = $jscomp$destructuring$var0;
-  const [projects] = useQuery$$module$js_gen$todo_example(`[:find ?project
-      :where [?project :project/name]]`);
+  const [projects] = useQuery$$module$js_gen$todo_example({$find:"project", $where:{project:{name:"$any"}}});
   return module$node_modules$react$index.createElement(module$node_modules$react$index.Fragment, null, module$node_modules$react$index.createElement("label", null, "Project:"), " ", module$node_modules$react$index.createElement("select", {name:"projects", value, onChange:e => onChange && onChange(Number(e.target.value))}, module$node_modules$react$index.createElement("option", {value:"0"}), projects.map(project => module$node_modules$react$index.createElement("option", {key:project.get(":db/id"), 
   value:project.get(":db/id")}, project.get(":project/name")))));
 };
 const TodoList$$module$js_gen$todo_example = () => {
   const [filters] = useQuery$$module$js_gen$todo_example([":db/ident", ":settings/filters"]);
-  const [todos] = useQuery$$module$js_gen$todo_example(`[:find ?todo 
-      :where [?todo :todo/name]]`);
+  const [todos] = useQuery$$module$js_gen$todo_example({$find:"todo", $where:{todo:{name:"$any"}}});
   return module$node_modules$react$index.createElement("div", null, todos.filter(todo => {
     if (!filters.get(":filter/show-completed?") && todo.get(":todo/completed?")) {
       return false;
@@ -62,8 +60,7 @@ const TodoProject$$module$js_gen$todo_example = $jscomp$destructuring$var4 => {
 const TodoOwner$$module$js_gen$todo_example = $jscomp$destructuring$var5 => {
   var {todo} = $jscomp$destructuring$var5;
   const [transact] = useTransact$$module$js_gen$todo_example();
-  const [users] = useQuery$$module$js_gen$todo_example(`[:find ?user
-      :where [?user :user/name]]`);
+  const [users] = useQuery$$module$js_gen$todo_example({$find:"user", $where:{user:{name:"$any"}}});
   return module$node_modules$react$index.createElement(module$node_modules$react$index.Fragment, null, module$node_modules$react$index.createElement("label", null, "Owner:"), " ", module$node_modules$react$index.createElement("select", {name:"users", value:todo.get(":todo/owner", ":db/id") || "", onChange:e => transact([[Number(e.target.value) ? ":db/add" : ":db/retract", todo.get(":db/id"), ":todo/owner", Number(e.target.value) || null]])}, module$node_modules$react$index.createElement("option", 
   {value:""}), users.map(user => module$node_modules$react$index.createElement("option", {key:user.get(":db/id"), value:user.get(":db/id")}, user.get(":user/name")))));
 };
