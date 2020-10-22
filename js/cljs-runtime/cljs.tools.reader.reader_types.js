@@ -117,7 +117,7 @@ return cljs$tools$reader$reader_types$IndexingReader$get_line_number$dyn_18707(r
 }
 });
 
-var cljs$tools$reader$reader_types$IndexingReader$get_column_number$dyn_18711 = (function (reader){
+var cljs$tools$reader$reader_types$IndexingReader$get_column_number$dyn_18708 = (function (reader){
 var x__4428__auto__ = (((reader == null))?null:reader);
 var m__4429__auto__ = (cljs.tools.reader.reader_types.get_column_number[goog.typeOf(x__4428__auto__)]);
 if((!((m__4429__auto__ == null)))){
@@ -138,11 +138,11 @@ cljs.tools.reader.reader_types.get_column_number = (function cljs$tools$reader$r
 if((((!((reader == null)))) && ((!((reader.cljs$tools$reader$reader_types$IndexingReader$get_column_number$arity$1 == null)))))){
 return reader.cljs$tools$reader$reader_types$IndexingReader$get_column_number$arity$1(reader);
 } else {
-return cljs$tools$reader$reader_types$IndexingReader$get_column_number$dyn_18711(reader);
+return cljs$tools$reader$reader_types$IndexingReader$get_column_number$dyn_18708(reader);
 }
 });
 
-var cljs$tools$reader$reader_types$IndexingReader$get_file_name$dyn_18712 = (function (reader){
+var cljs$tools$reader$reader_types$IndexingReader$get_file_name$dyn_18709 = (function (reader){
 var x__4428__auto__ = (((reader == null))?null:reader);
 var m__4429__auto__ = (cljs.tools.reader.reader_types.get_file_name[goog.typeOf(x__4428__auto__)]);
 if((!((m__4429__auto__ == null)))){
@@ -163,7 +163,7 @@ cljs.tools.reader.reader_types.get_file_name = (function cljs$tools$reader$reade
 if((((!((reader == null)))) && ((!((reader.cljs$tools$reader$reader_types$IndexingReader$get_file_name$arity$1 == null)))))){
 return reader.cljs$tools$reader$reader_types$IndexingReader$get_file_name$arity$1(reader);
 } else {
-return cljs$tools$reader$reader_types$IndexingReader$get_file_name$dyn_18712(reader);
+return cljs$tools$reader$reader_types$IndexingReader$get_file_name$dyn_18709(reader);
 }
 });
 
@@ -658,8 +658,8 @@ return (new cljs.tools.reader.reader_types.StringReader(s,cljs.core.count(s),(0)
  * Creates a PushbackReader from a given string
  */
 cljs.tools.reader.reader_types.string_push_back_reader = (function cljs$tools$reader$reader_types$string_push_back_reader(var_args){
-var G__18698 = arguments.length;
-switch (G__18698) {
+var G__18697 = arguments.length;
+switch (G__18697) {
 case 1:
 return cljs.tools.reader.reader_types.string_push_back_reader.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -773,10 +773,10 @@ while(true){
 if(cljs.tools.reader.impl.utils.newline_QMARK_(c)){
 return cljs.core.str.cljs$core$IFn$_invoke$arity$1(s);
 } else {
-var G__18724 = rdr.cljs$tools$reader$reader_types$Reader$read_char$arity$1(null);
-var G__18725 = s.append(c);
-c = G__18724;
-s = G__18725;
+var G__18722 = rdr.cljs$tools$reader$reader_types$Reader$read_char$arity$1(null);
+var G__18723 = s.append(c);
+c = G__18722;
+s = G__18723;
 continue;
 }
 break;

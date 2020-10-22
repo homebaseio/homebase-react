@@ -325,8 +325,8 @@ return "";
 } else {
 var ch = cljs.core.get.cljs$core$IFn$_invoke$arity$2(s,(index - (1)));
 if(((("\n" === ch)) || (("\r" === ch)))){
-var G__8594 = (index - (1));
-index = G__8594;
+var G__8585 = (index - (1));
+index = G__8585;
 continue;
 } else {
 return s.substring((0),index);
@@ -364,8 +364,8 @@ buffer.append(cljs.core.str.cljs$core$IFn$_invoke$arity$1(replacement));
 buffer.append(ch);
 }
 
-var G__8595 = (index + (1));
-index = G__8595;
+var G__8589 = (index + (1));
+index = G__8589;
 continue;
 }
 break;
