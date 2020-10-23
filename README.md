@@ -31,8 +31,14 @@ npx shadow-cljs watch :dev
 Open http://localhost:3000
 
 ## Tests
+### Jest
+Currently in use for benchmarks
+```
+npm test
+```
 
 ### Karma
+Currently not in use
 ```bash
 npx shadow-cljs compile ci &&
 cd src/test && karma start --single-run karma.conf.js
