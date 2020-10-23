@@ -41,8 +41,8 @@ return homebase.reagent.conn_from_db((datascript.core.init_db.cljs$core$IFn$_inv
  * To access underlying immutable DB value, deref: `@conn`.
  */
 homebase.reagent.create_conn = (function homebase$reagent$create_conn(var_args){
-var G__23504 = arguments.length;
-switch (G__23504) {
+var G__23503 = arguments.length;
+switch (G__23503) {
 case 0:
 return homebase.reagent.create_conn.cljs$core$IFn$_invoke$arity$0();
 
@@ -69,14 +69,14 @@ return homebase.reagent.conn_from_db((datascript.core.empty_db.cljs$core$IFn$_in
 
 homebase.reagent.new_db_conn = (function homebase$reagent$new_db_conn(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23556 = arguments.length;
-var i__4737__auto___23557 = (0);
+var len__4736__auto___23519 = arguments.length;
+var i__4737__auto___23520 = (0);
 while(true){
-if((i__4737__auto___23557 < len__4736__auto___23556)){
-args__4742__auto__.push((arguments[i__4737__auto___23557]));
+if((i__4737__auto___23520 < len__4736__auto___23519)){
+args__4742__auto__.push((arguments[i__4737__auto___23520]));
 
-var G__23562 = (i__4737__auto___23557 + (1));
-i__4737__auto___23557 = G__23562;
+var G__23521 = (i__4737__auto___23520 + (1));
+i__4737__auto___23520 = G__23521;
 continue;
 } else {
 }
@@ -87,10 +87,10 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return homebase.reagent.new_db_conn.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(homebase.reagent.new_db_conn.cljs$core$IFn$_invoke$arity$variadic = (function (txs,p__23508){
-var map__23509 = p__23508;
-var map__23509__$1 = (((((!((map__23509 == null))))?(((((map__23509.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__23509.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__23509):map__23509);
-var schema = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__23509__$1,new cljs.core.Keyword(null,"schema","schema",-1582001791));
+(homebase.reagent.new_db_conn.cljs$core$IFn$_invoke$arity$variadic = (function (txs,p__23506){
+var map__23507 = p__23506;
+var map__23507__$1 = (((((!((map__23507 == null))))?(((((map__23507.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__23507.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__23507):map__23507);
+var schema = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__23507__$1,new cljs.core.Keyword(null,"schema","schema",-1582001791));
 var conn = homebase.reagent.create_conn.cljs$core$IFn$_invoke$arity$1(schema);
 datascript.core.transact_BANG_.cljs$core$IFn$_invoke$arity$2(conn,txs);
 
@@ -100,23 +100,23 @@ return conn;
 (homebase.reagent.new_db_conn.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(homebase.reagent.new_db_conn.cljs$lang$applyTo = (function (seq23505){
-var G__23506 = cljs.core.first(seq23505);
-var seq23505__$1 = cljs.core.next(seq23505);
+(homebase.reagent.new_db_conn.cljs$lang$applyTo = (function (seq23504){
+var G__23505 = cljs.core.first(seq23504);
+var seq23504__$1 = cljs.core.next(seq23504);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23506,seq23505__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23505,seq23504__$1);
 }));
 
 homebase.reagent.q = (function homebase$reagent$q(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23605 = arguments.length;
-var i__4737__auto___23606 = (0);
+var len__4736__auto___23533 = arguments.length;
+var i__4737__auto___23534 = (0);
 while(true){
-if((i__4737__auto___23606 < len__4736__auto___23605)){
-args__4742__auto__.push((arguments[i__4737__auto___23606]));
+if((i__4737__auto___23534 < len__4736__auto___23533)){
+args__4742__auto__.push((arguments[i__4737__auto___23534]));
 
-var G__23607 = (i__4737__auto___23606 + (1));
-i__4737__auto___23606 = G__23607;
+var G__23539 = (i__4737__auto___23534 + (1));
+i__4737__auto___23534 = G__23539;
 continue;
 } else {
 }
@@ -129,9 +129,9 @@ return homebase.reagent.q.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),
 
 (homebase.reagent.q.cljs$core$IFn$_invoke$arity$variadic = (function (query,conn,vars){
 if(typeof query === 'number'){
-var G__23519 = cljs.core.deref(conn);
-var G__23520 = query;
-return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23519,G__23520) : datascript.core.entity.call(null,G__23519,G__23520));
+var G__23515 = cljs.core.deref(conn);
+var G__23516 = query;
+return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23515,G__23516) : datascript.core.entity.call(null,G__23515,G__23516));
 } else {
 return cljs.core.apply.cljs$core$IFn$_invoke$arity$4(datascript.core.q,query,cljs.core.deref(conn),vars);
 
@@ -141,13 +141,13 @@ return cljs.core.apply.cljs$core$IFn$_invoke$arity$4(datascript.core.q,query,clj
 (homebase.reagent.q.cljs$lang$maxFixedArity = (2));
 
 /** @this {Function} */
-(homebase.reagent.q.cljs$lang$applyTo = (function (seq23515){
-var G__23516 = cljs.core.first(seq23515);
-var seq23515__$1 = cljs.core.next(seq23515);
-var G__23517 = cljs.core.first(seq23515__$1);
-var seq23515__$2 = cljs.core.next(seq23515__$1);
+(homebase.reagent.q.cljs$lang$applyTo = (function (seq23512){
+var G__23513 = cljs.core.first(seq23512);
+var seq23512__$1 = cljs.core.next(seq23512);
+var G__23514 = cljs.core.first(seq23512__$1);
+var seq23512__$2 = cljs.core.next(seq23512__$1);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23516,G__23517,seq23515__$2);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23513,G__23514,seq23512__$2);
 }));
 
 homebase.reagent.transact_BANG_ = (function homebase$reagent$transact_BANG_(conn,txs){
