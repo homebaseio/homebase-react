@@ -8,15 +8,15 @@ const NewTodo$$module$js_gen$todo_example = () => {
   const [transact] = useTransact$$module$js_gen$todo_example();
   return module$node_modules$react$index.createElement("form", {onSubmit:e => {
     e.preventDefault();
-    transact([{":todo/name":e.target.elements["todo/name"].value, ":todo/created-at":new Date}]);
+    transact([{todo:{name:e.target.elements["todo/name"].value, createdAt:new Date}}]);
     e.target.reset();
   }}, module$node_modules$react$index.createElement("input", {autoFocus:true, type:"text", name:"todo/name", placeholder:"What needs to be done?", autoComplete:"off", required:true}), " ", module$node_modules$react$index.createElement("button", {type:"submit"}, "Create Todo"));
 };
 const TodoFilters$$module$js_gen$todo_example = () => {
   const [filters] = useEntity$$module$js_gen$todo_example({identity:"todoFilters"});
   const [transact] = useTransact$$module$js_gen$todo_example();
-  return module$node_modules$react$index.createElement("div", null, module$node_modules$react$index.createElement("label", {htmlFor:"show-completed"}, "Show Completed?"), module$node_modules$react$index.createElement("input", {type:"checkbox", id:"show-completed", checked:filters.get(":todo-filter/show-completed?"), onChange:e => transact([{":db/id":filters.get(":db/id"), ":todo-filter/show-completed?":e.target.checked}])}), " · ", module$node_modules$react$index.createElement(ProjectSelect$$module$js_gen$todo_example, 
-  {value:filters.get(":todo-filter/project"), onChange:projectId => transact([{":db/id":filters.get(":db/id"), ":todo-filter/project":projectId}])}));
+  return module$node_modules$react$index.createElement("div", null, module$node_modules$react$index.createElement("label", {htmlFor:"show-completed"}, "Show Completed?"), module$node_modules$react$index.createElement("input", {type:"checkbox", id:"show-completed", checked:filters.get(":todo-filter/show-completed?"), onChange:e => transact([{todoFilter:{id:filters.get(":db/id"), showCompleted:e.target.checked}}])}), " · ", module$node_modules$react$index.createElement(ProjectSelect$$module$js_gen$todo_example, 
+  {value:filters.get(":todo-filter/project"), onChange:project => transact([{todoFilter:{id:filters.get(":db/id"), project}}])}));
 };
 const ProjectSelect$$module$js_gen$todo_example = $jscomp$destructuring$var0 => {
   var {value, onChange} = $jscomp$destructuring$var0;
@@ -45,12 +45,12 @@ const Todo$$module$js_gen$todo_example = $jscomp$destructuring$var1 => {
 const TodoCheck$$module$js_gen$todo_example = $jscomp$destructuring$var2 => {
   var {todo} = $jscomp$destructuring$var2;
   const [transact] = useTransact$$module$js_gen$todo_example();
-  return module$node_modules$react$index.createElement("input", {type:"checkbox", style:{width:20, height:20, cursor:"pointer"}, checked:!!todo.get(":todo/completed?"), onChange:e => transact([{":db/id":todo.get(":db/id"), ":todo/completed?":e.target.checked}])});
+  return module$node_modules$react$index.createElement("input", {type:"checkbox", style:{width:20, height:20, cursor:"pointer"}, checked:!!todo.get(":todo/completed?"), onChange:e => transact([{todo:{id:todo.get(":db/id"), isCompleted:e.target.checked}}])});
 };
 const TodoName$$module$js_gen$todo_example = $jscomp$destructuring$var3 => {
   var {todo} = $jscomp$destructuring$var3;
   const [transact] = useTransact$$module$js_gen$todo_example();
-  return module$node_modules$react$index.createElement("input", {style:Object.assign({}, {border:"none", fontSize:20, marginTop:-2, cursor:"pointer"}, todo.get(":todo/completed?") && {textDecoration:"line-through "}), value:todo.get(":todo/name"), onChange:e => transact([[":db/add", todo.get(":db/id"), ":todo/name", e.target.value]])});
+  return module$node_modules$react$index.createElement("input", {style:Object.assign({}, {border:"none", fontSize:20, marginTop:-2, cursor:"pointer"}, todo.get(":todo/completed?") && {textDecoration:"line-through "}), value:todo.get(":todo/name"), onChange:e => transact([{todo:{id:todo.get(":db/id"), name:e.target.value}}])});
 };
 const TodoProject$$module$js_gen$todo_example = $jscomp$destructuring$var4 => {
   var {todo} = $jscomp$destructuring$var4;

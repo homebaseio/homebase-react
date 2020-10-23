@@ -72,14 +72,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23839,G__23840
 
 camel_snake_kebab.core.__GT_PascalCase = (function camel_snake_kebab$core$__GT_PascalCase(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23907 = arguments.length;
-var i__4737__auto___23908 = (0);
+var len__4736__auto___23902 = arguments.length;
+var i__4737__auto___23903 = (0);
 while(true){
-if((i__4737__auto___23908 < len__4736__auto___23907)){
-args__4742__auto__.push((arguments[i__4737__auto___23908]));
+if((i__4737__auto___23903 < len__4736__auto___23902)){
+args__4742__auto__.push((arguments[i__4737__auto___23903]));
 
-var G__23909 = (i__4737__auto___23908 + (1));
-i__4737__auto___23908 = G__23909;
+var G__23904 = (i__4737__auto___23903 + (1));
+i__4737__auto___23903 = G__23904;
 continue;
 } else {
 }
@@ -110,14 +110,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23844,seq23843
 
 camel_snake_kebab.core.__GT_PascalCaseString = (function camel_snake_kebab$core$__GT_PascalCaseString(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23910 = arguments.length;
-var i__4737__auto___23911 = (0);
+var len__4736__auto___23905 = arguments.length;
+var i__4737__auto___23906 = (0);
 while(true){
-if((i__4737__auto___23911 < len__4736__auto___23910)){
-args__4742__auto__.push((arguments[i__4737__auto___23911]));
+if((i__4737__auto___23906 < len__4736__auto___23905)){
+args__4742__auto__.push((arguments[i__4737__auto___23906]));
 
-var G__23912 = (i__4737__auto___23911 + (1));
-i__4737__auto___23911 = G__23912;
+var G__23907 = (i__4737__auto___23906 + (1));
+i__4737__auto___23906 = G__23907;
 continue;
 } else {
 }
@@ -145,14 +145,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23846,seq23845
 
 camel_snake_kebab.core.__GT_PascalCaseSymbol = (function camel_snake_kebab$core$__GT_PascalCaseSymbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23913 = arguments.length;
-var i__4737__auto___23914 = (0);
+var len__4736__auto___23908 = arguments.length;
+var i__4737__auto___23909 = (0);
 while(true){
-if((i__4737__auto___23914 < len__4736__auto___23913)){
-args__4742__auto__.push((arguments[i__4737__auto___23914]));
+if((i__4737__auto___23909 < len__4736__auto___23908)){
+args__4742__auto__.push((arguments[i__4737__auto___23909]));
 
-var G__23915 = (i__4737__auto___23914 + (1));
-i__4737__auto___23914 = G__23915;
+var G__23910 = (i__4737__auto___23909 + (1));
+i__4737__auto___23909 = G__23910;
 continue;
 } else {
 }
@@ -180,14 +180,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23848,seq23847
 
 camel_snake_kebab.core.__GT_PascalCaseKeyword = (function camel_snake_kebab$core$__GT_PascalCaseKeyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23916 = arguments.length;
-var i__4737__auto___23917 = (0);
+var len__4736__auto___23911 = arguments.length;
+var i__4737__auto___23912 = (0);
 while(true){
-if((i__4737__auto___23917 < len__4736__auto___23916)){
-args__4742__auto__.push((arguments[i__4737__auto___23917]));
+if((i__4737__auto___23912 < len__4736__auto___23911)){
+args__4742__auto__.push((arguments[i__4737__auto___23912]));
 
-var G__23918 = (i__4737__auto___23917 + (1));
-i__4737__auto___23917 = G__23918;
+var G__23916 = (i__4737__auto___23912 + (1));
+i__4737__auto___23912 = G__23916;
 continue;
 } else {
 }
@@ -214,14 +214,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23850,seq23849
 
 camel_snake_kebab.core.__GT_Camel_Snake_Case = (function camel_snake_kebab$core$__GT_Camel_Snake_Case(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23919 = arguments.length;
-var i__4737__auto___23920 = (0);
+var len__4736__auto___23917 = arguments.length;
+var i__4737__auto___23918 = (0);
 while(true){
-if((i__4737__auto___23920 < len__4736__auto___23919)){
-args__4742__auto__.push((arguments[i__4737__auto___23920]));
+if((i__4737__auto___23918 < len__4736__auto___23917)){
+args__4742__auto__.push((arguments[i__4737__auto___23918]));
 
-var G__23921 = (i__4737__auto___23920 + (1));
-i__4737__auto___23920 = G__23921;
+var G__23919 = (i__4737__auto___23918 + (1));
+i__4737__auto___23918 = G__23919;
 continue;
 } else {
 }
@@ -287,14 +287,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23854,seq23853
 
 camel_snake_kebab.core.__GT_Camel_Snake_Case_Symbol = (function camel_snake_kebab$core$__GT_Camel_Snake_Case_Symbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23931 = arguments.length;
-var i__4737__auto___23932 = (0);
+var len__4736__auto___23925 = arguments.length;
+var i__4737__auto___23926 = (0);
 while(true){
-if((i__4737__auto___23932 < len__4736__auto___23931)){
-args__4742__auto__.push((arguments[i__4737__auto___23932]));
+if((i__4737__auto___23926 < len__4736__auto___23925)){
+args__4742__auto__.push((arguments[i__4737__auto___23926]));
 
-var G__23933 = (i__4737__auto___23932 + (1));
-i__4737__auto___23932 = G__23933;
+var G__23927 = (i__4737__auto___23926 + (1));
+i__4737__auto___23926 = G__23927;
 continue;
 } else {
 }
@@ -322,14 +322,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23856,seq23855
 
 camel_snake_kebab.core.__GT_Camel_Snake_Case_Keyword = (function camel_snake_kebab$core$__GT_Camel_Snake_Case_Keyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23937 = arguments.length;
-var i__4737__auto___23938 = (0);
+var len__4736__auto___23934 = arguments.length;
+var i__4737__auto___23935 = (0);
 while(true){
-if((i__4737__auto___23938 < len__4736__auto___23937)){
-args__4742__auto__.push((arguments[i__4737__auto___23938]));
+if((i__4737__auto___23935 < len__4736__auto___23934)){
+args__4742__auto__.push((arguments[i__4737__auto___23935]));
 
-var G__23939 = (i__4737__auto___23938 + (1));
-i__4737__auto___23938 = G__23939;
+var G__23936 = (i__4737__auto___23935 + (1));
+i__4737__auto___23935 = G__23936;
 continue;
 } else {
 }
@@ -429,14 +429,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23862,seq23861
 
 camel_snake_kebab.core.__GT_camelCaseSymbol = (function camel_snake_kebab$core$__GT_camelCaseSymbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23950 = arguments.length;
-var i__4737__auto___23951 = (0);
+var len__4736__auto___23946 = arguments.length;
+var i__4737__auto___23947 = (0);
 while(true){
-if((i__4737__auto___23951 < len__4736__auto___23950)){
-args__4742__auto__.push((arguments[i__4737__auto___23951]));
+if((i__4737__auto___23947 < len__4736__auto___23946)){
+args__4742__auto__.push((arguments[i__4737__auto___23947]));
 
-var G__23952 = (i__4737__auto___23951 + (1));
-i__4737__auto___23951 = G__23952;
+var G__23948 = (i__4737__auto___23947 + (1));
+i__4737__auto___23947 = G__23948;
 continue;
 } else {
 }
@@ -464,14 +464,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23864,seq23863
 
 camel_snake_kebab.core.__GT_camelCaseKeyword = (function camel_snake_kebab$core$__GT_camelCaseKeyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23953 = arguments.length;
-var i__4737__auto___23954 = (0);
+var len__4736__auto___23949 = arguments.length;
+var i__4737__auto___23950 = (0);
 while(true){
-if((i__4737__auto___23954 < len__4736__auto___23953)){
-args__4742__auto__.push((arguments[i__4737__auto___23954]));
+if((i__4737__auto___23950 < len__4736__auto___23949)){
+args__4742__auto__.push((arguments[i__4737__auto___23950]));
 
-var G__23955 = (i__4737__auto___23954 + (1));
-i__4737__auto___23954 = G__23955;
+var G__23951 = (i__4737__auto___23950 + (1));
+i__4737__auto___23950 = G__23951;
 continue;
 } else {
 }
@@ -498,14 +498,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23866,seq23865
 
 camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE = (function camel_snake_kebab$core$__GT_SCREAMING_SNAKE_CASE(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23956 = arguments.length;
-var i__4737__auto___23957 = (0);
+var len__4736__auto___23952 = arguments.length;
+var i__4737__auto___23953 = (0);
 while(true){
-if((i__4737__auto___23957 < len__4736__auto___23956)){
-args__4742__auto__.push((arguments[i__4737__auto___23957]));
+if((i__4737__auto___23953 < len__4736__auto___23952)){
+args__4742__auto__.push((arguments[i__4737__auto___23953]));
 
-var G__23958 = (i__4737__auto___23957 + (1));
-i__4737__auto___23957 = G__23958;
+var G__23954 = (i__4737__auto___23953 + (1));
+i__4737__auto___23953 = G__23954;
 continue;
 } else {
 }
@@ -536,14 +536,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23868,seq23867
 
 camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_STRING = (function camel_snake_kebab$core$__GT_SCREAMING_SNAKE_CASE_STRING(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23959 = arguments.length;
-var i__4737__auto___23960 = (0);
+var len__4736__auto___23955 = arguments.length;
+var i__4737__auto___23956 = (0);
 while(true){
-if((i__4737__auto___23960 < len__4736__auto___23959)){
-args__4742__auto__.push((arguments[i__4737__auto___23960]));
+if((i__4737__auto___23956 < len__4736__auto___23955)){
+args__4742__auto__.push((arguments[i__4737__auto___23956]));
 
-var G__23961 = (i__4737__auto___23960 + (1));
-i__4737__auto___23960 = G__23961;
+var G__23957 = (i__4737__auto___23956 + (1));
+i__4737__auto___23956 = G__23957;
 continue;
 } else {
 }
@@ -571,14 +571,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23870,seq23869
 
 camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_SYMBOL = (function camel_snake_kebab$core$__GT_SCREAMING_SNAKE_CASE_SYMBOL(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23962 = arguments.length;
-var i__4737__auto___23963 = (0);
+var len__4736__auto___23958 = arguments.length;
+var i__4737__auto___23959 = (0);
 while(true){
-if((i__4737__auto___23963 < len__4736__auto___23962)){
-args__4742__auto__.push((arguments[i__4737__auto___23963]));
+if((i__4737__auto___23959 < len__4736__auto___23958)){
+args__4742__auto__.push((arguments[i__4737__auto___23959]));
 
-var G__23964 = (i__4737__auto___23963 + (1));
-i__4737__auto___23963 = G__23964;
+var G__23960 = (i__4737__auto___23959 + (1));
+i__4737__auto___23959 = G__23960;
 continue;
 } else {
 }
@@ -606,14 +606,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23872,seq23871
 
 camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_KEYWORD = (function camel_snake_kebab$core$__GT_SCREAMING_SNAKE_CASE_KEYWORD(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23965 = arguments.length;
-var i__4737__auto___23966 = (0);
+var len__4736__auto___23961 = arguments.length;
+var i__4737__auto___23962 = (0);
 while(true){
-if((i__4737__auto___23966 < len__4736__auto___23965)){
-args__4742__auto__.push((arguments[i__4737__auto___23966]));
+if((i__4737__auto___23962 < len__4736__auto___23961)){
+args__4742__auto__.push((arguments[i__4737__auto___23962]));
 
-var G__23967 = (i__4737__auto___23966 + (1));
-i__4737__auto___23966 = G__23967;
+var G__23963 = (i__4737__auto___23962 + (1));
+i__4737__auto___23962 = G__23963;
 continue;
 } else {
 }
@@ -820,14 +820,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23884,seq23883
 
 camel_snake_kebab.core.__GT_kebab_case_string = (function camel_snake_kebab$core$__GT_kebab_case_string(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23994 = arguments.length;
-var i__4737__auto___23995 = (0);
+var len__4736__auto___23992 = arguments.length;
+var i__4737__auto___23993 = (0);
 while(true){
-if((i__4737__auto___23995 < len__4736__auto___23994)){
-args__4742__auto__.push((arguments[i__4737__auto___23995]));
+if((i__4737__auto___23993 < len__4736__auto___23992)){
+args__4742__auto__.push((arguments[i__4737__auto___23993]));
 
-var G__23996 = (i__4737__auto___23995 + (1));
-i__4737__auto___23995 = G__23996;
+var G__23994 = (i__4737__auto___23993 + (1));
+i__4737__auto___23993 = G__23994;
 continue;
 } else {
 }
@@ -855,14 +855,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23886,seq23885
 
 camel_snake_kebab.core.__GT_kebab_case_symbol = (function camel_snake_kebab$core$__GT_kebab_case_symbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23997 = arguments.length;
-var i__4737__auto___23998 = (0);
+var len__4736__auto___23995 = arguments.length;
+var i__4737__auto___23996 = (0);
 while(true){
-if((i__4737__auto___23998 < len__4736__auto___23997)){
-args__4742__auto__.push((arguments[i__4737__auto___23998]));
+if((i__4737__auto___23996 < len__4736__auto___23995)){
+args__4742__auto__.push((arguments[i__4737__auto___23996]));
 
-var G__23999 = (i__4737__auto___23998 + (1));
-i__4737__auto___23998 = G__23999;
+var G__23997 = (i__4737__auto___23996 + (1));
+i__4737__auto___23996 = G__23997;
 continue;
 } else {
 }
@@ -890,14 +890,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23888,seq23887
 
 camel_snake_kebab.core.__GT_kebab_case_keyword = (function camel_snake_kebab$core$__GT_kebab_case_keyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___24000 = arguments.length;
-var i__4737__auto___24001 = (0);
+var len__4736__auto___23998 = arguments.length;
+var i__4737__auto___23999 = (0);
 while(true){
-if((i__4737__auto___24001 < len__4736__auto___24000)){
-args__4742__auto__.push((arguments[i__4737__auto___24001]));
+if((i__4737__auto___23999 < len__4736__auto___23998)){
+args__4742__auto__.push((arguments[i__4737__auto___23999]));
 
-var G__24002 = (i__4737__auto___24001 + (1));
-i__4737__auto___24001 = G__24002;
+var G__24000 = (i__4737__auto___23999 + (1));
+i__4737__auto___23999 = G__24000;
 continue;
 } else {
 }
@@ -924,14 +924,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23890,seq23889
 
 camel_snake_kebab.core.__GT_HTTP_Header_Case = (function camel_snake_kebab$core$__GT_HTTP_Header_Case(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___24003 = arguments.length;
-var i__4737__auto___24004 = (0);
+var len__4736__auto___24001 = arguments.length;
+var i__4737__auto___24002 = (0);
 while(true){
-if((i__4737__auto___24004 < len__4736__auto___24003)){
-args__4742__auto__.push((arguments[i__4737__auto___24004]));
+if((i__4737__auto___24002 < len__4736__auto___24001)){
+args__4742__auto__.push((arguments[i__4737__auto___24002]));
 
-var G__24005 = (i__4737__auto___24004 + (1));
-i__4737__auto___24004 = G__24005;
+var G__24003 = (i__4737__auto___24002 + (1));
+i__4737__auto___24002 = G__24003;
 continue;
 } else {
 }
@@ -962,14 +962,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23892,seq23891
 
 camel_snake_kebab.core.__GT_HTTP_Header_Case_String = (function camel_snake_kebab$core$__GT_HTTP_Header_Case_String(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___24006 = arguments.length;
-var i__4737__auto___24007 = (0);
+var len__4736__auto___24004 = arguments.length;
+var i__4737__auto___24005 = (0);
 while(true){
-if((i__4737__auto___24007 < len__4736__auto___24006)){
-args__4742__auto__.push((arguments[i__4737__auto___24007]));
+if((i__4737__auto___24005 < len__4736__auto___24004)){
+args__4742__auto__.push((arguments[i__4737__auto___24005]));
 
-var G__24008 = (i__4737__auto___24007 + (1));
-i__4737__auto___24007 = G__24008;
+var G__24006 = (i__4737__auto___24005 + (1));
+i__4737__auto___24005 = G__24006;
 continue;
 } else {
 }
@@ -997,14 +997,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23894,seq23893
 
 camel_snake_kebab.core.__GT_HTTP_Header_Case_Symbol = (function camel_snake_kebab$core$__GT_HTTP_Header_Case_Symbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___24009 = arguments.length;
-var i__4737__auto___24010 = (0);
+var len__4736__auto___24007 = arguments.length;
+var i__4737__auto___24008 = (0);
 while(true){
-if((i__4737__auto___24010 < len__4736__auto___24009)){
-args__4742__auto__.push((arguments[i__4737__auto___24010]));
+if((i__4737__auto___24008 < len__4736__auto___24007)){
+args__4742__auto__.push((arguments[i__4737__auto___24008]));
 
-var G__24011 = (i__4737__auto___24010 + (1));
-i__4737__auto___24010 = G__24011;
+var G__24009 = (i__4737__auto___24008 + (1));
+i__4737__auto___24008 = G__24009;
 continue;
 } else {
 }
@@ -1033,13 +1033,13 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23896,seq23895
 camel_snake_kebab.core.__GT_HTTP_Header_Case_Keyword = (function camel_snake_kebab$core$__GT_HTTP_Header_Case_Keyword(var_args){
 var args__4742__auto__ = [];
 var len__4736__auto___24012 = arguments.length;
-var i__4737__auto___24017 = (0);
+var i__4737__auto___24013 = (0);
 while(true){
-if((i__4737__auto___24017 < len__4736__auto___24012)){
-args__4742__auto__.push((arguments[i__4737__auto___24017]));
+if((i__4737__auto___24013 < len__4736__auto___24012)){
+args__4742__auto__.push((arguments[i__4737__auto___24013]));
 
-var G__24024 = (i__4737__auto___24017 + (1));
-i__4737__auto___24017 = G__24024;
+var G__24014 = (i__4737__auto___24013 + (1));
+i__4737__auto___24013 = G__24014;
 continue;
 } else {
 }
