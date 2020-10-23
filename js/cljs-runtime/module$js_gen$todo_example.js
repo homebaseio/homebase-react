@@ -1,8 +1,8 @@
 var module$node_modules$react$index = shadow.js.require("module$node_modules$react$index", {});
 const {HomebaseProvider:HomebaseProvider$$module$js_gen$todo_example, useTransact:useTransact$$module$js_gen$todo_example, useQuery:useQuery$$module$js_gen$todo_example, useEntity:useEntity$$module$js_gen$todo_example} = window.homebase.react;
 const App$$module$js_gen$todo_example = () => module$node_modules$react$index.createElement(HomebaseProvider$$module$js_gen$todo_example, {config:config$$module$js_gen$todo_example}, module$node_modules$react$index.createElement(Todos$$module$js_gen$todo_example, null));
-const config$$module$js_gen$todo_example = {schema:{":todo/project":{":db/valueType":":db.type/ref", ":db/cardinality":":db.cardinality/one"}, ":todo/owner":{":db/valueType":":db.type/ref", ":db/cardinality":":db.cardinality/one"}}, initialData:[{":db/ident":"todoFilters", ":todoFilter/show-completed?":true, ":todoFilter/project":0}, {":db/id":-1, ":user/name":"Stella"}, {":db/id":-2, ":user/name":"Arpegius"}, {":db/id":-3, ":project/name":"Make it"}, {":db/id":-4, ":project/name":"Do it"}, {":todo/name":"Fix ship", 
-":todo/owner":-1, ":todo/project":-3, ":todo/completed?":true, ":todo/created-at":new Date("2003/11/10")}, {":todo/name":"Go home", ":todo/owner":-2, ":todo/project":-4, ":todo/created-at":new Date("2003/11/9")}]};
+const config$$module$js_gen$todo_example = {schema:{user:{name:{unique:"identity"}}, project:{name:{unique:"identity"}}, todo:{project:{type:"ref"}, owner:{type:"ref"}}}, initialData:[{todoFilter:{identity:"todoFilters", showCompleted:true, project:0}}, {user:{id:-1, name:"Stella"}}, {user:{id:-2, name:"Arpegius"}}, {project:{id:-3, name:"Make it"}}, {project:{id:-4, name:"Do it"}}, {todo:{name:"Fix ship", owner:-1, project:-3, isCompleted:true, createdAt:new Date("2003/11/10")}}, {todo:{name:"Go home", 
+owner:-2, project:-4, createdAt:new Date("2003/11/10")}}]};
 const Todos$$module$js_gen$todo_example = () => module$node_modules$react$index.createElement("div", null, module$node_modules$react$index.createElement(NewTodo$$module$js_gen$todo_example, null), module$node_modules$react$index.createElement(TodoFilters$$module$js_gen$todo_example, null), module$node_modules$react$index.createElement(TodoList$$module$js_gen$todo_example, null));
 const NewTodo$$module$js_gen$todo_example = () => {
   const [transact] = useTransact$$module$js_gen$todo_example();
@@ -15,8 +15,8 @@ const NewTodo$$module$js_gen$todo_example = () => {
 const TodoFilters$$module$js_gen$todo_example = () => {
   const [filters] = useEntity$$module$js_gen$todo_example({identity:"todoFilters"});
   const [transact] = useTransact$$module$js_gen$todo_example();
-  return module$node_modules$react$index.createElement("div", null, module$node_modules$react$index.createElement("label", {htmlFor:"show-completed"}, "Show Completed?"), module$node_modules$react$index.createElement("input", {type:"checkbox", id:"show-completed", checked:filters.get(":todoFilter/show-completed?"), onChange:e => transact([{":db/id":filters.get(":db/id"), ":todoFilter/show-completed?":e.target.checked}])}), " · ", module$node_modules$react$index.createElement(ProjectSelect$$module$js_gen$todo_example, 
-  {value:filters.get(":todoFilter/project"), onChange:projectId => transact([{":db/id":filters.get(":db/id"), ":todoFilter/project":projectId}])}));
+  return module$node_modules$react$index.createElement("div", null, module$node_modules$react$index.createElement("label", {htmlFor:"show-completed"}, "Show Completed?"), module$node_modules$react$index.createElement("input", {type:"checkbox", id:"show-completed", checked:filters.get(":todo-filter/show-completed?"), onChange:e => transact([{":db/id":filters.get(":db/id"), ":todo-filter/show-completed?":e.target.checked}])}), " · ", module$node_modules$react$index.createElement(ProjectSelect$$module$js_gen$todo_example, 
+  {value:filters.get(":todo-filter/project"), onChange:projectId => transact([{":db/id":filters.get(":db/id"), ":todo-filter/project":projectId}])}));
 };
 const ProjectSelect$$module$js_gen$todo_example = $jscomp$destructuring$var0 => {
   var {value, onChange} = $jscomp$destructuring$var0;
@@ -28,10 +28,10 @@ const TodoList$$module$js_gen$todo_example = () => {
   const [filters] = useEntity$$module$js_gen$todo_example({identity:"todoFilters"});
   const [todos] = useQuery$$module$js_gen$todo_example({$find:"todo", $where:{todo:{name:"$any"}}});
   return module$node_modules$react$index.createElement("div", null, todos.filter(todo => {
-    if (!filters.get(":todoFilter/show-completed?") && todo.get(":todo/completed?")) {
+    if (!filters.get(":todo-filter/show-completed?") && todo.get(":todo/completed?")) {
       return false;
     }
-    if (filters.get(":todoFilter/project") && todo.get(":todo/project", ":db/id") !== filters.get(":todoFilter/project")) {
+    if (filters.get(":todo-filter/project") && todo.get(":todo/project", ":db/id") !== filters.get(":todo-filter/project")) {
       return false;
     }
     return true;

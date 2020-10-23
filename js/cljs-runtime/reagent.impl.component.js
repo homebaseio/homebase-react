@@ -127,24 +127,24 @@ return reagent.impl.protocols.as_element(compiler,res);
 if(cljs.core.ifn_QMARK_(res)){
 var f__$1 = ((reagent.impl.component.reagent_class_QMARK_(res))?((function (c,compiler,f,_,res){
 return (function() { 
-var G__18509__delegate = function (args){
+var G__18512__delegate = function (args){
 return reagent.impl.protocols.as_element(compiler,cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.vector,res,args));
 };
-var G__18509 = function (var_args){
+var G__18512 = function (var_args){
 var args = null;
 if (arguments.length > 0) {
-var G__18512__i = 0, G__18512__a = new Array(arguments.length -  0);
-while (G__18512__i < G__18512__a.length) {G__18512__a[G__18512__i] = arguments[G__18512__i + 0]; ++G__18512__i;}
-  args = new cljs.core.IndexedSeq(G__18512__a,0,null);
+var G__18513__i = 0, G__18513__a = new Array(arguments.length -  0);
+while (G__18513__i < G__18513__a.length) {G__18513__a[G__18513__i] = arguments[G__18513__i + 0]; ++G__18513__i;}
+  args = new cljs.core.IndexedSeq(G__18513__a,0,null);
 } 
-return G__18509__delegate.call(this,args);};
-G__18509.cljs$lang$maxFixedArity = 0;
-G__18509.cljs$lang$applyTo = (function (arglist__18514){
+return G__18512__delegate.call(this,args);};
+G__18512.cljs$lang$maxFixedArity = 0;
+G__18512.cljs$lang$applyTo = (function (arglist__18514){
 var args = cljs.core.seq(arglist__18514);
-return G__18509__delegate(args);
+return G__18512__delegate(args);
 });
-G__18509.cljs$core$IFn$_invoke$arity$variadic = G__18509__delegate;
-return G__18509;
+G__18512.cljs$core$IFn$_invoke$arity$variadic = G__18512__delegate;
+return G__18512;
 })()
 ;})(c,compiler,f,_,res))
 :res);
