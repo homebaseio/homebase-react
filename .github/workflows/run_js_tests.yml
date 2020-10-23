@@ -2,9 +2,9 @@ name: Run JS Tests
 
 on:
   push:
-    branches: [ benchmarks ]
+    branches: [ master ]
   pull_request:
-    branches: [ benchmarks]
+    branches: [ master ]
 
 jobs:
   build:
