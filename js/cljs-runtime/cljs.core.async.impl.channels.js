@@ -640,29 +640,29 @@ return cljs.core.async.impl.channels.chan.cljs$core$IFn$_invoke$arity$3(buf,xfor
 (cljs.core.async.impl.channels.chan.cljs$core$IFn$_invoke$arity$3 = (function (buf,xform,exh){
 return (new cljs.core.async.impl.channels.ManyToManyChannel(cljs.core.async.impl.buffers.ring_buffer((32)),(0),cljs.core.async.impl.buffers.ring_buffer((32)),(0),buf,false,(function (){var add_BANG_ = (cljs.core.truth_(xform)?(xform.cljs$core$IFn$_invoke$arity$1 ? xform.cljs$core$IFn$_invoke$arity$1(cljs.core.async.impl.protocols.add_BANG_) : xform.call(null,cljs.core.async.impl.protocols.add_BANG_)):cljs.core.async.impl.protocols.add_BANG_);
 return (function() {
-var G__8862 = null;
-var G__8862__1 = (function (buf__$1){
+var G__8869 = null;
+var G__8869__1 = (function (buf__$1){
 try{return (add_BANG_.cljs$core$IFn$_invoke$arity$1 ? add_BANG_.cljs$core$IFn$_invoke$arity$1(buf__$1) : add_BANG_.call(null,buf__$1));
 }catch (e8806){var t = e8806;
 return cljs.core.async.impl.channels.handle(buf__$1,exh,t);
 }});
-var G__8862__2 = (function (buf__$1,val){
+var G__8869__2 = (function (buf__$1,val){
 try{return (add_BANG_.cljs$core$IFn$_invoke$arity$2 ? add_BANG_.cljs$core$IFn$_invoke$arity$2(buf__$1,val) : add_BANG_.call(null,buf__$1,val));
 }catch (e8807){var t = e8807;
 return cljs.core.async.impl.channels.handle(buf__$1,exh,t);
 }});
-G__8862 = function(buf__$1,val){
+G__8869 = function(buf__$1,val){
 switch(arguments.length){
 case 1:
-return G__8862__1.call(this,buf__$1);
+return G__8869__1.call(this,buf__$1);
 case 2:
-return G__8862__2.call(this,buf__$1,val);
+return G__8869__2.call(this,buf__$1,val);
 }
 throw(new Error('Invalid arity: ' + arguments.length));
 };
-G__8862.cljs$core$IFn$_invoke$arity$1 = G__8862__1;
-G__8862.cljs$core$IFn$_invoke$arity$2 = G__8862__2;
-return G__8862;
+G__8869.cljs$core$IFn$_invoke$arity$1 = G__8869__1;
+G__8869.cljs$core$IFn$_invoke$arity$2 = G__8869__2;
+return G__8869;
 })()
 })()));
 }));

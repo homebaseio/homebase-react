@@ -81,9 +81,9 @@ return x;
  */
 clojure.walk.stringify_keys = (function clojure$walk$stringify_keys(m){
 var f = (function (p__17582){
-var vec__17588 = p__17582;
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__17588,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__17588,(1),null);
+var vec__17583 = p__17582;
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__17583,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__17583,(1),null);
 if((k instanceof cljs.core.Keyword)){
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.name(k),v], null);
 } else {

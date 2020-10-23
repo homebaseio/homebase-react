@@ -133,14 +133,14 @@ return reagent.impl.protocols.as_element(compiler,cljs.core.apply.cljs$core$IFn$
 var G__18509 = function (var_args){
 var args = null;
 if (arguments.length > 0) {
-var G__18510__i = 0, G__18510__a = new Array(arguments.length -  0);
-while (G__18510__i < G__18510__a.length) {G__18510__a[G__18510__i] = arguments[G__18510__i + 0]; ++G__18510__i;}
-  args = new cljs.core.IndexedSeq(G__18510__a,0,null);
+var G__18512__i = 0, G__18512__a = new Array(arguments.length -  0);
+while (G__18512__i < G__18512__a.length) {G__18512__a[G__18512__i] = arguments[G__18512__i + 0]; ++G__18512__i;}
+  args = new cljs.core.IndexedSeq(G__18512__a,0,null);
 } 
 return G__18509__delegate.call(this,args);};
 G__18509.cljs$lang$maxFixedArity = 0;
-G__18509.cljs$lang$applyTo = (function (arglist__18511){
-var args = cljs.core.seq(arglist__18511);
+G__18509.cljs$lang$applyTo = (function (arglist__18514){
+var args = cljs.core.seq(arglist__18514);
 return G__18509__delegate(args);
 });
 G__18509.cljs$core$IFn$_invoke$arity$variadic = G__18509__delegate;
@@ -150,10 +150,10 @@ return G__18509;
 :res);
 (c.reagentRender = f__$1);
 
-var G__18512 = c;
-var G__18513 = compiler;
-c = G__18512;
-compiler = G__18513;
+var G__18515 = c;
+var G__18516 = compiler;
+c = G__18515;
+compiler = G__18516;
 continue;
 } else {
 return res;
@@ -344,10 +344,10 @@ break;
 case "componentWillUnmount":
 return (function reagent$impl$component$custom_wrapper_$_componentWillUnmount(){
 var c = this;
-var G__18498_18519 = goog.object.get(c,"cljsRatom");
-if((G__18498_18519 == null)){
+var G__18498_18518 = goog.object.get(c,"cljsRatom");
+if((G__18498_18518 == null)){
 } else {
-reagent.ratom.dispose_BANG_(G__18498_18519);
+reagent.ratom.dispose_BANG_(G__18498_18518);
 }
 
 reagent.impl.batching.mark_rendered(c);
