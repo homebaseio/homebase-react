@@ -69,14 +69,14 @@ return homebase.reagent.conn_from_db((datascript.core.empty_db.cljs$core$IFn$_in
 
 homebase.reagent.new_db_conn = (function homebase$reagent$new_db_conn(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23608 = arguments.length;
-var i__4737__auto___23609 = (0);
+var len__4736__auto___23613 = arguments.length;
+var i__4737__auto___23614 = (0);
 while(true){
-if((i__4737__auto___23609 < len__4736__auto___23608)){
-args__4742__auto__.push((arguments[i__4737__auto___23609]));
+if((i__4737__auto___23614 < len__4736__auto___23613)){
+args__4742__auto__.push((arguments[i__4737__auto___23614]));
 
-var G__23610 = (i__4737__auto___23609 + (1));
-i__4737__auto___23609 = G__23610;
+var G__23615 = (i__4737__auto___23614 + (1));
+i__4737__auto___23614 = G__23615;
 continue;
 } else {
 }
@@ -109,14 +109,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23593,seq23592
 
 homebase.reagent.q = (function homebase$reagent$q(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23611 = arguments.length;
-var i__4737__auto___23612 = (0);
+var len__4736__auto___23618 = arguments.length;
+var i__4737__auto___23619 = (0);
 while(true){
-if((i__4737__auto___23612 < len__4736__auto___23611)){
-args__4742__auto__.push((arguments[i__4737__auto___23612]));
+if((i__4737__auto___23619 < len__4736__auto___23618)){
+args__4742__auto__.push((arguments[i__4737__auto___23619]));
 
-var G__23613 = (i__4737__auto___23612 + (1));
-i__4737__auto___23612 = G__23613;
+var G__23620 = (i__4737__auto___23619 + (1));
+i__4737__auto___23619 = G__23620;
 continue;
 } else {
 }
@@ -129,9 +129,9 @@ return homebase.reagent.q.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),
 
 (homebase.reagent.q.cljs$core$IFn$_invoke$arity$variadic = (function (query,conn,vars){
 if(typeof query === 'number'){
-var G__23604 = cljs.core.deref(conn);
-var G__23605 = query;
-return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23604,G__23605) : datascript.core.entity.call(null,G__23604,G__23605));
+var G__23600 = cljs.core.deref(conn);
+var G__23601 = query;
+return (datascript.core.entity.cljs$core$IFn$_invoke$arity$2 ? datascript.core.entity.cljs$core$IFn$_invoke$arity$2(G__23600,G__23601) : datascript.core.entity.call(null,G__23600,G__23601));
 } else {
 return cljs.core.apply.cljs$core$IFn$_invoke$arity$4(datascript.core.q,query,cljs.core.deref(conn),vars);
 
