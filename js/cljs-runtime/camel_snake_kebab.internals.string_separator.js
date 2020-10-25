@@ -43,8 +43,8 @@ goog.object.set(camel_snake_kebab.internals.string_separator.split,"string",(fun
 return clojure.string.split.cljs$core$IFn$_invoke$arity$2(s,this$);
 }));
 camel_snake_kebab.internals.string_separator.classify_char = (function camel_snake_kebab$internals$string_separator$classify_char(c){
-var G__23610 = c;
-switch (G__23610) {
+var G__23600 = c;
+switch (G__23600) {
 case "0":
 case "1":
 case "2":
@@ -158,12 +158,12 @@ return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMP
 }
 } else {
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(cljs.core.nth.cljs$core$IFn$_invoke$arity$2(cs,current),new cljs.core.Keyword(null,"whitespace","whitespace",-1340035483))){
-var G__23638 = result_PLUS_new(current);
-var G__23639 = next;
-var G__23640 = next;
-result = G__23638;
-start = G__23639;
-current = G__23640;
+var G__23622 = result_PLUS_new(current);
+var G__23623 = next;
+var G__23624 = next;
+result = G__23622;
+start = G__23623;
+current = G__23624;
 continue;
 } else {
 if((function (){var vec__23614 = cljs.core.subvec.cljs$core$IFn$_invoke$arity$2(cs,current);
@@ -172,20 +172,20 @@ var b = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23614,(1),null);
 var c = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23614,(2),null);
 return ((((cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(a,new cljs.core.Keyword(null,"upper","upper",246243906))) && (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(b,new cljs.core.Keyword(null,"upper","upper",246243906))))) || (((cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(a,new cljs.core.Keyword(null,"number","number",1570378438))) && (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(b,new cljs.core.Keyword(null,"number","number",1570378438))))) || (((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(a,new cljs.core.Keyword(null,"upper","upper",246243906))) && (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(b,new cljs.core.Keyword(null,"upper","upper",246243906))) && (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(c,new cljs.core.Keyword(null,"lower","lower",1120320821))))));
 })()){
-var G__23641 = result_PLUS_new(next);
-var G__23642 = next;
-var G__23643 = next;
-result = G__23641;
-start = G__23642;
-current = G__23643;
+var G__23625 = result_PLUS_new(next);
+var G__23626 = next;
+var G__23627 = next;
+result = G__23625;
+start = G__23626;
+current = G__23627;
 continue;
 } else {
-var G__23644 = result;
-var G__23645 = start;
-var G__23646 = next;
-result = G__23644;
-start = G__23645;
-current = G__23646;
+var G__23628 = result;
+var G__23629 = start;
+var G__23630 = next;
+result = G__23628;
+start = G__23629;
+current = G__23630;
 continue;
 
 }

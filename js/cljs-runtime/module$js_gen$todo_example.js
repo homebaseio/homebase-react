@@ -15,7 +15,6 @@ const NewTodo$$module$js_gen$todo_example = () => {
 const TodoFilters$$module$js_gen$todo_example = () => {
   const [filters] = useEntity$$module$js_gen$todo_example({identity:"todoFilters"});
   const [transact] = useTransact$$module$js_gen$todo_example();
-  window.t = filters;
   return module$node_modules$react$index.createElement("div", null, module$node_modules$react$index.createElement("label", {htmlFor:"show-completed"}, "Show Completed?"), module$node_modules$react$index.createElement("input", {type:"checkbox", id:"show-completed", checked:filters.get("showCompleted"), onChange:e => transact([{todoFilter:{id:filters.get("id"), showCompleted:e.target.checked}}])}), " · ", module$node_modules$react$index.createElement(ProjectSelect$$module$js_gen$todo_example, {value:filters.get("project"), 
   onChange:project => transact([{todoFilter:{id:filters.get("id"), project}}])}));
 };
@@ -56,19 +55,19 @@ const TodoName$$module$js_gen$todo_example = $jscomp$destructuring$var3 => {
 const TodoProject$$module$js_gen$todo_example = $jscomp$destructuring$var4 => {
   var {todo} = $jscomp$destructuring$var4;
   const [transact] = useTransact$$module$js_gen$todo_example();
-  return module$node_modules$react$index.createElement(ProjectSelect$$module$js_gen$todo_example, {value:todo.get("project", "id") || "", onChange:projectId => transact([[projectId ? ":db/add" : ":db/retract", todo.get("id"), ":todo/project", projectId || null]])});
+  return module$node_modules$react$index.createElement(ProjectSelect$$module$js_gen$todo_example, {value:todo.get("project", "id") || "", onChange:projectId => transact([{todo:{id:todo.get("id"), "project":projectId || null}}])});
 };
 const TodoOwner$$module$js_gen$todo_example = $jscomp$destructuring$var5 => {
   var {todo} = $jscomp$destructuring$var5;
   const [transact] = useTransact$$module$js_gen$todo_example();
   const [users] = useQuery$$module$js_gen$todo_example({$find:"user", $where:{user:{name:"$any"}}});
-  return module$node_modules$react$index.createElement(module$node_modules$react$index.Fragment, null, module$node_modules$react$index.createElement("label", null, "Owner:"), " ", module$node_modules$react$index.createElement("select", {name:"users", value:todo.get("owner", "id") || "", onChange:e => transact([[Number(e.target.value) ? ":db/add" : ":db/retract", todo.get("id"), ":todo/owner", Number(e.target.value) || null]])}, module$node_modules$react$index.createElement("option", {value:""}), 
-  users.map(user => module$node_modules$react$index.createElement("option", {key:user.get("id"), value:user.get("id")}, user.get("name")))));
+  return module$node_modules$react$index.createElement(module$node_modules$react$index.Fragment, null, module$node_modules$react$index.createElement("label", null, "Owner:"), " ", module$node_modules$react$index.createElement("select", {name:"users", value:todo.get("owner", "id") || "", onChange:e => transact([{todo:{id:todo.get("id"), owner:Number(e.target.value) || null}}])}, module$node_modules$react$index.createElement("option", {value:""}), users.map(user => module$node_modules$react$index.createElement("option", 
+  {key:user.get("id"), value:user.get("id")}, user.get("name")))));
 };
 const TodoDelete$$module$js_gen$todo_example = $jscomp$destructuring$var6 => {
   var {todo} = $jscomp$destructuring$var6;
   const [transact] = useTransact$$module$js_gen$todo_example();
-  return module$node_modules$react$index.createElement("button", {onClick:() => transact([[":db.fn/retractEntity", todo.get("id")]])}, "Delete");
+  return module$node_modules$react$index.createElement("button", {onClick:() => transact([["retractEntity", todo.get("id")]])}, "Delete");
 };
 /** @const */ var module$js_gen$todo_example = {};
 /** @const */ module$js_gen$todo_example.App = App$$module$js_gen$todo_example;
