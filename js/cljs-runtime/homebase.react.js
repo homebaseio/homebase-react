@@ -38,14 +38,14 @@ return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMP
 goog.exportSymbol('homebase.react.useEntity', homebase.react.useEntity);
 homebase.react.useQuery = (function homebase$react$useQuery(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___24059 = arguments.length;
-var i__4737__auto___24060 = (0);
+var len__4736__auto___24041 = arguments.length;
+var i__4737__auto___24042 = (0);
 while(true){
-if((i__4737__auto___24060 < len__4736__auto___24059)){
-args__4742__auto__.push((arguments[i__4737__auto___24060]));
+if((i__4737__auto___24042 < len__4736__auto___24041)){
+args__4742__auto__.push((arguments[i__4737__auto___24042]));
 
-var G__24061 = (i__4737__auto___24060 + (1));
-i__4737__auto___24060 = G__24061;
+var G__24043 = (i__4737__auto___24042 + (1));
+i__4737__auto___24042 = G__24043;
 continue;
 } else {
 }
