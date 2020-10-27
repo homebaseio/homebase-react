@@ -127,33 +127,33 @@ return reagent.impl.protocols.as_element(compiler,res);
 if(cljs.core.ifn_QMARK_(res)){
 var f__$1 = ((reagent.impl.component.reagent_class_QMARK_(res))?((function (c,compiler,f,_,res){
 return (function() { 
-var G__18513__delegate = function (args){
+var G__18514__delegate = function (args){
 return reagent.impl.protocols.as_element(compiler,cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.vector,res,args));
 };
-var G__18513 = function (var_args){
+var G__18514 = function (var_args){
 var args = null;
 if (arguments.length > 0) {
-var G__18514__i = 0, G__18514__a = new Array(arguments.length -  0);
-while (G__18514__i < G__18514__a.length) {G__18514__a[G__18514__i] = arguments[G__18514__i + 0]; ++G__18514__i;}
-  args = new cljs.core.IndexedSeq(G__18514__a,0,null);
+var G__18515__i = 0, G__18515__a = new Array(arguments.length -  0);
+while (G__18515__i < G__18515__a.length) {G__18515__a[G__18515__i] = arguments[G__18515__i + 0]; ++G__18515__i;}
+  args = new cljs.core.IndexedSeq(G__18515__a,0,null);
 } 
-return G__18513__delegate.call(this,args);};
-G__18513.cljs$lang$maxFixedArity = 0;
-G__18513.cljs$lang$applyTo = (function (arglist__18515){
-var args = cljs.core.seq(arglist__18515);
-return G__18513__delegate(args);
+return G__18514__delegate.call(this,args);};
+G__18514.cljs$lang$maxFixedArity = 0;
+G__18514.cljs$lang$applyTo = (function (arglist__18516){
+var args = cljs.core.seq(arglist__18516);
+return G__18514__delegate(args);
 });
-G__18513.cljs$core$IFn$_invoke$arity$variadic = G__18513__delegate;
-return G__18513;
+G__18514.cljs$core$IFn$_invoke$arity$variadic = G__18514__delegate;
+return G__18514;
 })()
 ;})(c,compiler,f,_,res))
 :res);
 (c.reagentRender = f__$1);
 
-var G__18516 = c;
-var G__18517 = compiler;
-c = G__18516;
-compiler = G__18517;
+var G__18517 = c;
+var G__18518 = compiler;
+c = G__18517;
+compiler = G__18518;
 continue;
 } else {
 return res;
@@ -344,10 +344,10 @@ break;
 case "componentWillUnmount":
 return (function reagent$impl$component$custom_wrapper_$_componentWillUnmount(){
 var c = this;
-var G__18498_18520 = goog.object.get(c,"cljsRatom");
-if((G__18498_18520 == null)){
+var G__18498_18521 = goog.object.get(c,"cljsRatom");
+if((G__18498_18521 == null)){
 } else {
-reagent.ratom.dispose_BANG_(G__18498_18520);
+reagent.ratom.dispose_BANG_(G__18498_18521);
 }
 
 reagent.impl.batching.mark_rendered(c);
@@ -406,26 +406,26 @@ reagent.impl.component.add_obligatory = (function reagent$impl$component$add_obl
 return cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([reagent.impl.component.obligatory,fun_map], 0));
 });
 reagent.impl.component.wrap_funs = (function reagent$impl$component$wrap_funs(fmap,compiler){
-var renders_18521 = cljs.core.select_keys(fmap,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"render","render",-1408033454),new cljs.core.Keyword(null,"reagentRender","reagentRender",-358306383)], null));
-var render_fun_18522 = cljs.core.first(cljs.core.vals(renders_18521));
+var renders_18522 = cljs.core.select_keys(fmap,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"render","render",-1408033454),new cljs.core.Keyword(null,"reagentRender","reagentRender",-358306383)], null));
+var render_fun_18523 = cljs.core.first(cljs.core.vals(renders_18522));
 if(cljs.core.not(new cljs.core.Keyword(null,"componentFunction","componentFunction",825866104).cljs$core$IFn$_invoke$arity$1(fmap))){
 } else {
 throw (new Error(["Assert failed: ",":component-function is no longer supported, use :reagent-render instead.","\n","(not (:componentFunction fmap))"].join('')));
 }
 
-if((cljs.core.count(renders_18521) > (0))){
+if((cljs.core.count(renders_18522) > (0))){
 } else {
 throw (new Error(["Assert failed: ","Missing reagent-render","\n","(pos? (count renders))"].join('')));
 }
 
-if(((1) === cljs.core.count(renders_18521))){
+if(((1) === cljs.core.count(renders_18522))){
 } else {
 throw (new Error(["Assert failed: ","Too many render functions supplied","\n","(== 1 (count renders))"].join('')));
 }
 
-if(cljs.core.ifn_QMARK_(render_fun_18522)){
+if(cljs.core.ifn_QMARK_(render_fun_18523)){
 } else {
-throw (new Error(["Assert failed: ",["Expected something callable, not ",cljs.core.pr_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([render_fun_18522], 0))].join(''),"\n","(clojure.core/ifn? render-fun)"].join('')));
+throw (new Error(["Assert failed: ",["Expected something callable, not ",cljs.core.pr_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([render_fun_18523], 0))].join(''),"\n","(clojure.core/ifn? render-fun)"].join('')));
 }
 
 

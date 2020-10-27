@@ -1,14 +1,14 @@
 goog.provide('camel_snake_kebab.internals.misc');
 camel_snake_kebab.internals.misc.convert_case = (function camel_snake_kebab$internals$misc$convert_case(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18707 = arguments.length;
-var i__4737__auto___18708 = (0);
+var len__4736__auto___18710 = arguments.length;
+var i__4737__auto___18711 = (0);
 while(true){
-if((i__4737__auto___18708 < len__4736__auto___18707)){
-args__4742__auto__.push((arguments[i__4737__auto___18708]));
+if((i__4737__auto___18711 < len__4736__auto___18710)){
+args__4742__auto__.push((arguments[i__4737__auto___18711]));
 
-var G__18709 = (i__4737__auto___18708 + (1));
-i__4737__auto___18708 = G__18709;
+var G__18712 = (i__4737__auto___18711 + (1));
+i__4737__auto___18711 = G__18712;
 continue;
 } else {
 }
@@ -55,8 +55,8 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18695,G__18696
 
 camel_snake_kebab.internals.misc.upper_case_http_headers = new cljs.core.PersistentHashSet(null, new cljs.core.PersistentArrayMap(null, 13, ["WWW",null,"TE",null,"CSP",null,"CPU",null,"IP",null,"WAP",null,"HTTP",null,"DNT",null,"UA",null,"ATT",null,"SSL",null,"MD5",null,"XSS",null], null), null);
 camel_snake_kebab.internals.misc.capitalize_http_header = (function camel_snake_kebab$internals$misc$capitalize_http_header(s){
-var or__4126__auto__ = (function (){var G__18706 = clojure.string.upper_case(s);
-return (camel_snake_kebab.internals.misc.upper_case_http_headers.cljs$core$IFn$_invoke$arity$1 ? camel_snake_kebab.internals.misc.upper_case_http_headers.cljs$core$IFn$_invoke$arity$1(G__18706) : camel_snake_kebab.internals.misc.upper_case_http_headers.call(null,G__18706));
+var or__4126__auto__ = (function (){var G__18709 = clojure.string.upper_case(s);
+return (camel_snake_kebab.internals.misc.upper_case_http_headers.cljs$core$IFn$_invoke$arity$1 ? camel_snake_kebab.internals.misc.upper_case_http_headers.cljs$core$IFn$_invoke$arity$1(G__18709) : camel_snake_kebab.internals.misc.upper_case_http_headers.call(null,G__18709));
 })();
 if(cljs.core.truth_(or__4126__auto__)){
 return or__4126__auto__;
