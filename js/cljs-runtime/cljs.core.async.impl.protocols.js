@@ -301,8 +301,8 @@ return cljs$core$async$impl$protocols$Buffer$close_buf_BANG_$dyn_8781(b);
 });
 
 cljs.core.async.impl.protocols.add_BANG_ = (function cljs$core$async$impl$protocols$add_BANG_(var_args){
-var G__8770 = arguments.length;
-switch (G__8770) {
+var G__8769 = arguments.length;
+switch (G__8769) {
 case 1:
 return cljs.core.async.impl.protocols.add_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 

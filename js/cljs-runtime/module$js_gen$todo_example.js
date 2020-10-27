@@ -8,9 +8,9 @@ const NewTodo$$module$js_gen$todo_example = () => {
   const [transact] = useTransact$$module$js_gen$todo_example();
   return module$node_modules$react$index.createElement("form", {onSubmit:e => {
     e.preventDefault();
-    transact([{todo:{name:e.target.elements["todo/name"].value, createdAt:new Date}}]);
+    transact([{todo:{name:e.target.elements["todo-name"].value, createdAt:new Date}}]);
     e.target.reset();
-  }}, module$node_modules$react$index.createElement("input", {autoFocus:true, type:"text", name:"todo/name", placeholder:"What needs to be done?", autoComplete:"off", required:true}), " ", module$node_modules$react$index.createElement("button", {type:"submit"}, "Create Todo"));
+  }}, module$node_modules$react$index.createElement("input", {autoFocus:true, type:"text", name:"todo-name", placeholder:"What needs to be done?", autoComplete:"off", required:true}), " ", module$node_modules$react$index.createElement("button", {type:"submit"}, "Create Todo"));
 };
 const TodoFilters$$module$js_gen$todo_example = () => {
   const [filters] = useEntity$$module$js_gen$todo_example({identity:"todoFilters"});
