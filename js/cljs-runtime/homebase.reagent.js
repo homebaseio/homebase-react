@@ -69,14 +69,14 @@ return homebase.reagent.conn_from_db((datascript.core.empty_db.cljs$core$IFn$_in
 
 homebase.reagent.new_db_conn = (function homebase$reagent$new_db_conn(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23613 = arguments.length;
-var i__4737__auto___23614 = (0);
+var len__4736__auto___23604 = arguments.length;
+var i__4737__auto___23605 = (0);
 while(true){
-if((i__4737__auto___23614 < len__4736__auto___23613)){
-args__4742__auto__.push((arguments[i__4737__auto___23614]));
+if((i__4737__auto___23605 < len__4736__auto___23604)){
+args__4742__auto__.push((arguments[i__4737__auto___23605]));
 
-var G__23615 = (i__4737__auto___23614 + (1));
-i__4737__auto___23614 = G__23615;
+var G__23606 = (i__4737__auto___23605 + (1));
+i__4737__auto___23605 = G__23606;
 continue;
 } else {
 }
@@ -109,14 +109,14 @@ return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__23593,seq23592
 
 homebase.reagent.q = (function homebase$reagent$q(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___23618 = arguments.length;
-var i__4737__auto___23619 = (0);
+var len__4736__auto___23607 = arguments.length;
+var i__4737__auto___23608 = (0);
 while(true){
-if((i__4737__auto___23619 < len__4736__auto___23618)){
-args__4742__auto__.push((arguments[i__4737__auto___23619]));
+if((i__4737__auto___23608 < len__4736__auto___23607)){
+args__4742__auto__.push((arguments[i__4737__auto___23608]));
 
-var G__23620 = (i__4737__auto___23619 + (1));
-i__4737__auto___23619 = G__23620;
+var G__23609 = (i__4737__auto___23608 + (1));
+i__4737__auto___23608 = G__23609;
 continue;
 } else {
 }

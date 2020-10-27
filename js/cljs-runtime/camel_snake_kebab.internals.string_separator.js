@@ -158,12 +158,12 @@ return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMP
 }
 } else {
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(cljs.core.nth.cljs$core$IFn$_invoke$arity$2(cs,current),new cljs.core.Keyword(null,"whitespace","whitespace",-1340035483))){
-var G__23633 = result_PLUS_new(current);
-var G__23634 = next;
-var G__23635 = next;
-result = G__23633;
-start = G__23634;
-current = G__23635;
+var G__23641 = result_PLUS_new(current);
+var G__23642 = next;
+var G__23643 = next;
+result = G__23641;
+start = G__23642;
+current = G__23643;
 continue;
 } else {
 if((function (){var vec__23625 = cljs.core.subvec.cljs$core$IFn$_invoke$arity$2(cs,current);
@@ -172,20 +172,20 @@ var b = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23625,(1),null);
 var c = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23625,(2),null);
 return ((((cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(a,new cljs.core.Keyword(null,"upper","upper",246243906))) && (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(b,new cljs.core.Keyword(null,"upper","upper",246243906))))) || (((cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(a,new cljs.core.Keyword(null,"number","number",1570378438))) && (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(b,new cljs.core.Keyword(null,"number","number",1570378438))))) || (((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(a,new cljs.core.Keyword(null,"upper","upper",246243906))) && (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(b,new cljs.core.Keyword(null,"upper","upper",246243906))) && (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(c,new cljs.core.Keyword(null,"lower","lower",1120320821))))));
 })()){
-var G__23636 = result_PLUS_new(next);
-var G__23637 = next;
-var G__23638 = next;
-result = G__23636;
-start = G__23637;
-current = G__23638;
+var G__23647 = result_PLUS_new(next);
+var G__23648 = next;
+var G__23649 = next;
+result = G__23647;
+start = G__23648;
+current = G__23649;
 continue;
 } else {
-var G__23639 = result;
-var G__23640 = start;
-var G__23641 = next;
-result = G__23639;
-start = G__23640;
-current = G__23641;
+var G__23650 = result;
+var G__23651 = start;
+var G__23652 = next;
+result = G__23650;
+start = G__23651;
+current = G__23652;
 continue;
 
 }

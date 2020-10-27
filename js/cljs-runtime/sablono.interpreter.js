@@ -59,8 +59,8 @@ return module$node_modules$react$index.Component.call(this$,props);
 
 goog.inherits(ctor,module$node_modules$react$index.Component);
 
-var x13589_13602 = ctor.prototype;
-(x13589_13602.onChange = (function (event){
+var x13589_13608 = ctor.prototype;
+(x13589_13608.onChange = (function (event){
 var this$ = this;
 var temp__5735__auto__ = this$.props.onChange;
 if(cljs.core.truth_(temp__5735__auto__)){
@@ -73,7 +73,7 @@ return null;
 }
 }));
 
-(x13589_13602.componentWillReceiveProps = (function (new_props){
+(x13589_13608.componentWillReceiveProps = (function (new_props){
 var this$ = this;
 var state_value = goog.object.getValueByKeys(this$,"state",property);
 var element_value = goog.object.get(module$node_modules$react_dom$index.findDOMNode(this$),property);
@@ -84,7 +84,7 @@ return sablono.interpreter.update_state(this$,new_props,property,goog.object.get
 }
 }));
 
-(x13589_13602.render = (function (){
+(x13589_13608.render = (function (){
 var this$ = this;
 return module$node_modules$react$index.createElement(element,this$.state);
 }));
@@ -182,14 +182,14 @@ return type;
  */
 sablono.interpreter.create_element = (function sablono$interpreter$create_element(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___13606 = arguments.length;
-var i__4737__auto___13607 = (0);
+var len__4736__auto___13612 = arguments.length;
+var i__4737__auto___13613 = (0);
 while(true){
-if((i__4737__auto___13607 < len__4736__auto___13606)){
-args__4742__auto__.push((arguments[i__4737__auto___13607]));
+if((i__4737__auto___13613 < len__4736__auto___13612)){
+args__4742__auto__.push((arguments[i__4737__auto___13613]));
 
-var G__13608 = (i__4737__auto___13607 + (1));
-i__4737__auto___13607 = G__13608;
+var G__13614 = (i__4737__auto___13613 + (1));
+i__4737__auto___13613 = G__13614;
 continue;
 } else {
 }
