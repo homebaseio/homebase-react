@@ -202,11 +202,11 @@ return (new cljs.tools.reader.impl.utils.ReaderConditional(splicing_QMARK_,form,
  * Factory function for cljs.tools.reader.impl.utils/ReaderConditional, taking a map of keywords to field values.
  */
 cljs.tools.reader.impl.utils.map__GT_ReaderConditional = (function cljs$tools$reader$impl$utils$map__GT_ReaderConditional(G__18905){
-var extmap__4419__auto__ = (function (){var G__18919 = cljs.core.dissoc.cljs$core$IFn$_invoke$arity$variadic(G__18905,new cljs.core.Keyword(null,"splicing?","splicing?",-428596366),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"form","form",-1624062471)], 0));
+var extmap__4419__auto__ = (function (){var G__18925 = cljs.core.dissoc.cljs$core$IFn$_invoke$arity$variadic(G__18905,new cljs.core.Keyword(null,"splicing?","splicing?",-428596366),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"form","form",-1624062471)], 0));
 if(cljs.core.record_QMARK_(G__18905)){
-return cljs.core.into.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentArrayMap.EMPTY,G__18919);
+return cljs.core.into.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentArrayMap.EMPTY,G__18925);
 } else {
-return G__18919;
+return G__18925;
 }
 })();
 return (new cljs.tools.reader.impl.utils.ReaderConditional(new cljs.core.Keyword(null,"splicing?","splicing?",-428596366).cljs$core$IFn$_invoke$arity$1(G__18905),new cljs.core.Keyword(null,"form","form",-1624062471).cljs$core$IFn$_invoke$arity$1(G__18905),null,cljs.core.not_empty(extmap__4419__auto__),null));
@@ -319,8 +319,8 @@ return key;
 }
 })():key));
 
-var G__18953 = (i__18934 + (1));
-i__18934 = G__18953;
+var G__18959 = (i__18934 + (1));
+i__18934 = G__18959;
 continue;
 } else {
 return true;
@@ -359,10 +359,10 @@ break;
 });
 return iter__4529__auto__(keys);
 });
-cljs.tools.reader.impl.utils.second_SINGLEQUOTE_ = (function cljs$tools$reader$impl$utils$second_SINGLEQUOTE_(p__18942){
-var vec__18943 = p__18942;
-var a = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__18943,(0),null);
-var b = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__18943,(1),null);
+cljs.tools.reader.impl.utils.second_SINGLEQUOTE_ = (function cljs$tools$reader$impl$utils$second_SINGLEQUOTE_(p__18948){
+var vec__18949 = p__18948;
+var a = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__18949,(0),null);
+var b = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__18949,(1),null);
 if(cljs.core.truth_(a)){
 return null;
 } else {

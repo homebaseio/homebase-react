@@ -2,13 +2,13 @@ goog.provide('camel_snake_kebab.internals.misc');
 camel_snake_kebab.internals.misc.convert_case = (function camel_snake_kebab$internals$misc$convert_case(var_args){
 var args__4742__auto__ = [];
 var len__4736__auto___18707 = arguments.length;
-var i__4737__auto___18709 = (0);
+var i__4737__auto___18708 = (0);
 while(true){
-if((i__4737__auto___18709 < len__4736__auto___18707)){
-args__4742__auto__.push((arguments[i__4737__auto___18709]));
+if((i__4737__auto___18708 < len__4736__auto___18707)){
+args__4742__auto__.push((arguments[i__4737__auto___18708]));
 
-var G__18710 = (i__4737__auto___18709 + (1));
-i__4737__auto___18709 = G__18710;
+var G__18709 = (i__4737__auto___18708 + (1));
+i__4737__auto___18708 = G__18709;
 continue;
 } else {
 }
