@@ -4,6 +4,7 @@
    ["marked" :as marked]
    [cljsjs.react]
    [cljsjs.react.dom]
+   [reagent.core]
    [devcards.core :as dc]
    [example.counter]
    [example.todo]))
