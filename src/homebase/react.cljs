@@ -1,7 +1,6 @@
 (ns homebase.react
   (:require
    ["react" :as react]
-   [reagent.core :as r]
    [homebase.js :as hbjs]
    [datascript.core :as d]))
 
@@ -16,7 +15,7 @@
                               (merge (hbjs/js->schema (.-schema config)) base-schema)
                               base-schema))]
     (when (.-initialData config) (hbjs/transact! conn (.-initialData config)))
-    (r/create-element
+    (react/createElement
      (.-Provider homebase-context) #js {:value conn}
      (.-children props))))
 
