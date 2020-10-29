@@ -142,12 +142,12 @@ return (new cljs.tools.reader.impl.utils.ReaderConditional(self__.splicing_QMARK
 (cljs.tools.reader.impl.utils.ReaderConditional.prototype.cljs$core$IAssociative$_assoc$arity$3 = (function (this__4387__auto__,k__4388__auto__,G__19004){
 var self__ = this;
 var this__4387__auto____$1 = this;
-var pred__19014 = cljs.core.keyword_identical_QMARK_;
-var expr__19015 = k__4388__auto__;
-if(cljs.core.truth_((pred__19014.cljs$core$IFn$_invoke$arity$2 ? pred__19014.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"splicing?","splicing?",-428596366),expr__19015) : pred__19014.call(null,new cljs.core.Keyword(null,"splicing?","splicing?",-428596366),expr__19015)))){
+var pred__19015 = cljs.core.keyword_identical_QMARK_;
+var expr__19016 = k__4388__auto__;
+if(cljs.core.truth_((pred__19015.cljs$core$IFn$_invoke$arity$2 ? pred__19015.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"splicing?","splicing?",-428596366),expr__19016) : pred__19015.call(null,new cljs.core.Keyword(null,"splicing?","splicing?",-428596366),expr__19016)))){
 return (new cljs.tools.reader.impl.utils.ReaderConditional(G__19004,self__.form,self__.__meta,self__.__extmap,null));
 } else {
-if(cljs.core.truth_((pred__19014.cljs$core$IFn$_invoke$arity$2 ? pred__19014.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"form","form",-1624062471),expr__19015) : pred__19014.call(null,new cljs.core.Keyword(null,"form","form",-1624062471),expr__19015)))){
+if(cljs.core.truth_((pred__19015.cljs$core$IFn$_invoke$arity$2 ? pred__19015.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"form","form",-1624062471),expr__19016) : pred__19015.call(null,new cljs.core.Keyword(null,"form","form",-1624062471),expr__19016)))){
 return (new cljs.tools.reader.impl.utils.ReaderConditional(self__.splicing_QMARK_,G__19004,self__.__meta,self__.__extmap,null));
 } else {
 return (new cljs.tools.reader.impl.utils.ReaderConditional(self__.splicing_QMARK_,self__.form,self__.__meta,cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(self__.__extmap,k__4388__auto__,G__19004),null));
@@ -319,8 +319,8 @@ return key;
 }
 })():key));
 
-var G__19034 = (i__19021 + (1));
-i__19021 = G__19034;
+var G__19041 = (i__19021 + (1));
+i__19021 = G__19041;
 continue;
 } else {
 return true;
