@@ -6,7 +6,7 @@
   "homepage": "https://github.com/homebaseio/homebase-react",
   "repository": {
     "type": "git",
-    "url": "https://github.com/homebaseio/homebase-react.git"
+    "url": "git+https://github.com/homebaseio/homebase-react.git"
   },
   "keywords": [
     "react",
@@ -15,6 +15,7 @@
     "state",
     "graph"
   ],
+  "main": "./dist/homebase.react.js",
   "devDependencies": {
     "@babel/cli": "7.11.6",
     "@babel/core": "7.11.6",
@@ -26,5 +27,12 @@
     "react-dom": "16.13.0",
     "shadow-cljs": "2.11.4"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/homebaseio/homebase-react/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": ""
 }
