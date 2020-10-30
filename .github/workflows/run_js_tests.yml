@@ -24,7 +24,7 @@ jobs:
           npm install
 
       - name: Shadow-cljs Build 🔨👻
-        run: npx shadow-cljs compile dist
+        run: npx shadow-cljs compile npm-dist
 
       - name: Test 🧪
         run: npm test

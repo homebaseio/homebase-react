@@ -4,24 +4,35 @@ import { mount } from 'enzyme';
 import Benchmark from 'react-component-benchmark';
 import Adapter from "enzyme-adapter-react-16";
 import Enzyme from 'enzyme';
-import { HomebaseProvider, useTransact, useQuery } from '../../dist/homebase.react';
+import { HomebaseProvider, useTransact, useQuery, useEntity } from '../../dist/homebase.react';
 
-const counterId = 1
-const config = { initialData: [{
-  ':db/id': counterId,
-  ':count': 0
-}]}
+const config = {
+  initialData: [{
+    counter: {
+      identity: 'counter',
+      count: 0
+    }
+  }]
+}
+
+export const App = () => (
+  <HomebaseProvider config={config}>
+    <Counter/>
+  </HomebaseProvider>
+)
 
 const Counter = () => {
-  const [counter] = useQuery(counterId)
+  const [counter] = useEntity({ identity: 'counter' })
   const [transact] = useTransact()
   return (
     <div>
-      Count: {counter.get(':count')}
+      Count: {counter.get('count')}
       <div>
         <button onClick={() => transact([{
-          ':db/id': counterId,
-          ':count': counter.get(':count') + 1
+          counter: {
+            id: counter.get('id'),
+            count: counter.get('count') + 1
+          }
         }])}>
           Increment
         </button>

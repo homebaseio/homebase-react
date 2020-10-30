@@ -18,4 +18,10 @@
                            :output-feature-set :es6}
         :modules {:main {:init-fn example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
-                               "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}}}
+                               "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
+  :npm-dist {:target :npm-module
+             :output-dir "dist"
+             :output-to "dist/lib.js"
+             :entries [homebase.react]
+             :compiler-options {:optimizations :advanced
+                                :source-map false}}}}
