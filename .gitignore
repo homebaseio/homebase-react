@@ -38,3 +38,4 @@ packages/react-devtools-shell/dist
 packages/react-devtools-scheduling-profiler/dist
 
 examples/counter-example/node_modules
+examples/todo-example/node_modules
