@@ -16,7 +16,11 @@ yarn add homebase-react
 https://www.notion.so/Homebase-Alpha-Docs-0f0e22f3adcd4e9d87a13440ab0c7a0b
 
 ## Examples
-https://homebaseio.github.io/homebase-react
+### Live Demos
+You can see our hosted live demos [here](https://homebaseio.github.io/homebase-react)
+
+### Code Examples
+You can clone and run our React code examples [here](https://github.com/homebaseio/create-homebase-app).
 
 ## Purpose
 
@@ -31,16 +35,6 @@ Homebase React lets you plug a relational database into your React app.
 - Traverse your data graph like it's one big JSON object
 
 It is immediately more intuitive than a denormalized JSON store, and over time it will get better as we add more local-first features to it.
-
-## Roadmap
-
-1. Improve performance
-1. Document integration with backends
-1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
-    1. Immutability
-    1. History / Change Tracking
-1. Persist to IndexDB
-1. Local-first conflict resolution for offline caching and sync between multiple devices
 
 ## API Overview
 
@@ -124,6 +118,17 @@ npx shadow-cljs watch :dev
 ```
 
 Open http://localhost:3000
+
+
+## Roadmap
+
+1. Improve performance
+1. Document integration with backends
+1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
+    1. Immutability
+    1. History / Change Tracking
+1. Persist to IndexDB
+1. Local-first conflict resolution for offline caching and sync between multiple devices
 
 
 ## Authors
