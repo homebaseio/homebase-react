@@ -32,8 +32,8 @@ if((i__18122 < size__4528__auto__)){
 var subkey = cljs.core._nth(c__4527__auto__,i__18122);
 cljs.core.chunk_append(b__18123,cljs.core.cons(k,subkey));
 
-var G__18127 = (i__18122 + (1));
-i__18122 = G__18127;
+var G__18134 = (i__18122 + (1));
+i__18122 = G__18134;
 continue;
 } else {
 return true;
@@ -62,8 +62,8 @@ var fs__4526__auto__ = cljs.core.seq(iterys__4525__auto__((homebase.util.paths.c
 if(fs__4526__auto__){
 return cljs.core.concat.cljs$core$IFn$_invoke$arity$2(fs__4526__auto__,homebase$util$paths_$_iter__18118(cljs.core.rest(s__18119__$1)));
 } else {
-var G__18128 = cljs.core.rest(s__18119__$1);
-s__18119__$1 = G__18128;
+var G__18136 = cljs.core.rest(s__18119__$1);
+s__18119__$1 = G__18136;
 continue;
 }
 } else {
