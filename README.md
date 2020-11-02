@@ -20,7 +20,7 @@ https://www.notion.so/Homebase-Alpha-Docs-0f0e22f3adcd4e9d87a13440ab0c7a0b
 You can see our hosted live demos [here](https://homebaseio.github.io/homebase-react)
 
 ### Code Examples
-You can clone and run our React code examples [here](https://github.com/homebaseio/create-homebase-app).
+You can clone and run our React code examples [here](https://github.com/homebaseio/homebase-react-examples).
 
 ## Purpose
 
