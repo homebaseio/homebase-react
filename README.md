@@ -1,6 +1,6 @@
-# create-homebase-app
+# homebase-react-examples
 
-One day soon, this will be a fancy tool. Right now you can use old fashioned Git to clone this repo and run our examples.
+You can clone this repo to have ready to run [homebase-react](https://github.com/homebaseio/homebase-react) examples.
 
 ## Examples
 [Counter Example](https://github.com/homebaseio/create-homebase-app/tree/main/examples/counter-example)
