@@ -215,7 +215,7 @@
   (condp re-find (.-message error)
     #"Lookup ref attribute should be marked as :db/unique: \[:([\w-]+)/([\w-]+) ((?!\]).+)\]"
     :>> (fn [[_ nmspc attr v]]
-          (str "The `" nmspc "." attr "` attribute should be marked as unique if you want to lookup entities by it"
+          (str "The `" nmspc "." attr "` attribute should be marked as unique if you want to lookup entities by it."
                "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { unique: 'identity' }}}\n"))
     (.-message error)))
 
@@ -233,7 +233,7 @@
 
 (defn example-js-query
   ([] (example-js-query "item"))
-  ([nmsp] (str "
+  ([nmsp] (str "\n
 For example:  query({ 
                 $find: '" nmsp "',
                 $where: { " nmsp ": { name: '$any' }}
