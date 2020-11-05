@@ -1,6 +1,7 @@
 (ns homebase.react
   (:require
    ["react" :as react]
+   [clojure.string]
    [homebase.js :as hbjs]
    [datascript.core :as d]))
 
@@ -41,5 +42,14 @@
 
 (defn ^:export useTransact []
   (let [conn (react/useContext homebase-context)
-        transact (fn transact [txs] (hbjs/transact! conn txs))]
+        transact (fn transact [txs] 
+                   (try 
+                     (hbjs/transact! conn txs)
+                     (catch js/Error e
+                       (js/console.error 
+                        (str (.-message e) "\n"
+                             (->> (.-stack e)
+                                  (re-find #"useTransact.*\n(.*)\n")
+                                  (second)
+                                  (clojure.string/trim)))))))]
     [transact]))
