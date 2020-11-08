@@ -93,53 +93,53 @@ var seq__8640__$2 = cljs.core.next(seq__8640__$1);
 var attrs = first__8641__$1;
 var children = seq__8640__$2;
 var js = [cljs.core.name(tag),shadow.cljs.devtools.client.console.map__GT_style(attrs)];
-var seq__8642_8670 = cljs.core.seq(children);
-var chunk__8643_8671 = null;
-var count__8644_8672 = (0);
-var i__8645_8673 = (0);
+var seq__8642_8669 = cljs.core.seq(children);
+var chunk__8643_8670 = null;
+var count__8644_8671 = (0);
+var i__8645_8672 = (0);
 while(true){
-if((i__8645_8673 < count__8644_8672)){
-var child_8674 = chunk__8643_8671.cljs$core$IIndexed$_nth$arity$2(null,i__8645_8673);
-shadow.cljs.devtools.client.console.push_all(js,(shadow.cljs.devtools.client.console.clj__GT_jsonml.cljs$core$IFn$_invoke$arity$1 ? shadow.cljs.devtools.client.console.clj__GT_jsonml.cljs$core$IFn$_invoke$arity$1(child_8674) : shadow.cljs.devtools.client.console.clj__GT_jsonml.call(null,child_8674)));
+if((i__8645_8672 < count__8644_8671)){
+var child_8673 = chunk__8643_8670.cljs$core$IIndexed$_nth$arity$2(null,i__8645_8672);
+shadow.cljs.devtools.client.console.push_all(js,(shadow.cljs.devtools.client.console.clj__GT_jsonml.cljs$core$IFn$_invoke$arity$1 ? shadow.cljs.devtools.client.console.clj__GT_jsonml.cljs$core$IFn$_invoke$arity$1(child_8673) : shadow.cljs.devtools.client.console.clj__GT_jsonml.call(null,child_8673)));
 
 
-var G__8675 = seq__8642_8670;
-var G__8676 = chunk__8643_8671;
-var G__8677 = count__8644_8672;
-var G__8678 = (i__8645_8673 + (1));
-seq__8642_8670 = G__8675;
-chunk__8643_8671 = G__8676;
-count__8644_8672 = G__8677;
-i__8645_8673 = G__8678;
+var G__8674 = seq__8642_8669;
+var G__8675 = chunk__8643_8670;
+var G__8676 = count__8644_8671;
+var G__8677 = (i__8645_8672 + (1));
+seq__8642_8669 = G__8674;
+chunk__8643_8670 = G__8675;
+count__8644_8671 = G__8676;
+i__8645_8672 = G__8677;
 continue;
 } else {
-var temp__5735__auto___8679 = cljs.core.seq(seq__8642_8670);
-if(temp__5735__auto___8679){
-var seq__8642_8680__$1 = temp__5735__auto___8679;
-if(cljs.core.chunked_seq_QMARK_(seq__8642_8680__$1)){
-var c__4556__auto___8681 = cljs.core.chunk_first(seq__8642_8680__$1);
-var G__8682 = cljs.core.chunk_rest(seq__8642_8680__$1);
-var G__8683 = c__4556__auto___8681;
-var G__8684 = cljs.core.count(c__4556__auto___8681);
-var G__8685 = (0);
-seq__8642_8670 = G__8682;
-chunk__8643_8671 = G__8683;
-count__8644_8672 = G__8684;
-i__8645_8673 = G__8685;
+var temp__5735__auto___8678 = cljs.core.seq(seq__8642_8669);
+if(temp__5735__auto___8678){
+var seq__8642_8679__$1 = temp__5735__auto___8678;
+if(cljs.core.chunked_seq_QMARK_(seq__8642_8679__$1)){
+var c__4556__auto___8680 = cljs.core.chunk_first(seq__8642_8679__$1);
+var G__8681 = cljs.core.chunk_rest(seq__8642_8679__$1);
+var G__8682 = c__4556__auto___8680;
+var G__8683 = cljs.core.count(c__4556__auto___8680);
+var G__8684 = (0);
+seq__8642_8669 = G__8681;
+chunk__8643_8670 = G__8682;
+count__8644_8671 = G__8683;
+i__8645_8672 = G__8684;
 continue;
 } else {
-var child_8686 = cljs.core.first(seq__8642_8680__$1);
-shadow.cljs.devtools.client.console.push_all(js,(shadow.cljs.devtools.client.console.clj__GT_jsonml.cljs$core$IFn$_invoke$arity$1 ? shadow.cljs.devtools.client.console.clj__GT_jsonml.cljs$core$IFn$_invoke$arity$1(child_8686) : shadow.cljs.devtools.client.console.clj__GT_jsonml.call(null,child_8686)));
+var child_8685 = cljs.core.first(seq__8642_8679__$1);
+shadow.cljs.devtools.client.console.push_all(js,(shadow.cljs.devtools.client.console.clj__GT_jsonml.cljs$core$IFn$_invoke$arity$1 ? shadow.cljs.devtools.client.console.clj__GT_jsonml.cljs$core$IFn$_invoke$arity$1(child_8685) : shadow.cljs.devtools.client.console.clj__GT_jsonml.call(null,child_8685)));
 
 
-var G__8687 = cljs.core.next(seq__8642_8680__$1);
-var G__8688 = null;
+var G__8686 = cljs.core.next(seq__8642_8679__$1);
+var G__8687 = null;
+var G__8688 = (0);
 var G__8689 = (0);
-var G__8690 = (0);
-seq__8642_8670 = G__8687;
-chunk__8643_8671 = G__8688;
-count__8644_8672 = G__8689;
-i__8645_8673 = G__8690;
+seq__8642_8669 = G__8686;
+chunk__8643_8670 = G__8687;
+count__8644_8671 = G__8688;
+i__8645_8672 = G__8689;
 continue;
 }
 } else {
