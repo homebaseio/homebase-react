@@ -154,6 +154,12 @@ yarn shadow-cljs watch :dev
 
 Open http://localhost:3000
 
+## Test
+
+```bash
+yarn install
+yarn test
+```
 
 ## Roadmap
 
@@ -164,7 +170,6 @@ Open http://localhost:3000
     1. History / Change Tracking
 1. Persist to IndexDB
 1. Local-first conflict resolution for offline caching and sync between multiple devices
-
 
 ## Authors
 

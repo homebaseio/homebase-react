@@ -1,15 +1,28 @@
-import React from 'react';
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.App = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 const {
   HomebaseProvider,
   useTransact,
   useQuery,
   useEntity
 } = window.homebase.react;
-export const App = () => {
-  return /*#__PURE__*/React.createElement(HomebaseProvider, {
+
+const App = () => {
+  return /*#__PURE__*/_react.default.createElement(HomebaseProvider, {
     config: config
-  }, /*#__PURE__*/React.createElement(Todos, null));
+  }, /*#__PURE__*/_react.default.createElement(Todos, null));
 };
+
+exports.App = App;
 const config = {
   // Schema is optional. Add as much or as little as you want.
   schema: {
@@ -81,12 +94,12 @@ const config = {
 };
 
 const Todos = () => {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(NewTodo, null), /*#__PURE__*/React.createElement(TodoFilters, null), /*#__PURE__*/React.createElement(TodoList, null));
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(NewTodo, null), /*#__PURE__*/_react.default.createElement(TodoFilters, null), /*#__PURE__*/_react.default.createElement(TodoList, null));
 };
 
 const NewTodo = () => {
   const [transact] = useTransact();
-  return /*#__PURE__*/React.createElement("form", {
+  return /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: e => {
       e.preventDefault();
       transact([{
@@ -97,14 +110,14 @@ const NewTodo = () => {
       }]);
       e.target.reset();
     }
-  }, /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/_react.default.createElement("input", {
     autoFocus: true,
     type: "text",
     name: "todo-name",
     placeholder: "What needs to be done?",
     autoComplete: "off",
     required: true
-  }), "\xA0", /*#__PURE__*/React.createElement("button", {
+  }), "\xA0", /*#__PURE__*/_react.default.createElement("button", {
     type: "submit"
   }, "Create Todo"));
 };
@@ -114,9 +127,9 @@ const TodoFilters = () => {
     identity: 'todoFilters'
   });
   const [transact] = useTransact();
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "show-completed"
-  }, "Show Completed?"), /*#__PURE__*/React.createElement("input", {
+  }, "Show Completed?"), /*#__PURE__*/_react.default.createElement("input", {
     type: "checkbox",
     id: "show-completed",
     checked: filters.get('showCompleted'),
@@ -126,7 +139,7 @@ const TodoFilters = () => {
         showCompleted: e.target.checked
       }
     }])
-  }), "\xA0\xB7\xA0", /*#__PURE__*/React.createElement(ProjectSelect, {
+  }), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(ProjectSelect, {
     value: filters.get('project'),
     onChange: project => transact([{
       todoFilter: {
@@ -149,13 +162,13 @@ const ProjectSelect = ({
       }
     }
   });
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", null, "Project:"), "\xA0", /*#__PURE__*/React.createElement("select", {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("label", null, "Project:"), "\xA0", /*#__PURE__*/_react.default.createElement("select", {
     name: "projects",
     value: value,
     onChange: e => onChange && onChange(Number(e.target.value))
-  }, /*#__PURE__*/React.createElement("option", {
+  }, /*#__PURE__*/_react.default.createElement("option", {
     value: "0"
-  }), projects.map(project => /*#__PURE__*/React.createElement("option", {
+  }), projects.map(project => /*#__PURE__*/_react.default.createElement("option", {
     key: project.get('id'),
     value: project.get('id')
   }, project.get('name')))));
@@ -173,11 +186,11 @@ const TodoList = () => {
       }
     }
   });
-  return /*#__PURE__*/React.createElement("div", null, todos.filter(todo => {
+  return /*#__PURE__*/_react.default.createElement("div", null, todos.filter(todo => {
     if (!filters.get('showCompleted') && todo.get('isCompleted')) return false;
     if (filters.get('project') && todo.get('project', 'id') !== filters.get('project')) return false;
     return true;
-  }).sort((a, b) => a.get('createdAt') > b.get('createdAt') ? -1 : 1).map(todo => /*#__PURE__*/React.createElement(Todo, {
+  }).sort((a, b) => a.get('createdAt') > b.get('createdAt') ? -1 : 1).map(todo => /*#__PURE__*/_react.default.createElement(Todo, {
     key: todo.get('id'),
     todo: todo
   })));
@@ -185,24 +198,24 @@ const TodoList = () => {
 
 const Todo = ({
   todo
-}) => /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+}) => /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
   style: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-end',
     paddingTop: 20
   }
-}, /*#__PURE__*/React.createElement(TodoCheck, {
+}, /*#__PURE__*/_react.default.createElement(TodoCheck, {
   todo: todo
-}), /*#__PURE__*/React.createElement(TodoName, {
+}), /*#__PURE__*/_react.default.createElement(TodoName, {
   todo: todo
-})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(TodoProject, {
+})), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TodoProject, {
   todo: todo
-}), "\xA0\xB7\xA0", /*#__PURE__*/React.createElement(TodoOwner, {
+}), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(TodoOwner, {
   todo: todo
-}), "\xA0\xB7\xA0", /*#__PURE__*/React.createElement(TodoDelete, {
+}), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(TodoDelete, {
   todo: todo
-})), /*#__PURE__*/React.createElement("small", {
+})), /*#__PURE__*/_react.default.createElement("small", {
   style: {
     color: 'grey'
   }
@@ -212,7 +225,7 @@ const TodoCheck = ({
   todo
 }) => {
   const [transact] = useTransact();
-  return /*#__PURE__*/React.createElement("input", {
+  return /*#__PURE__*/_react.default.createElement("input", {
     type: "checkbox",
     style: {
       width: 20,
@@ -233,7 +246,7 @@ const TodoName = ({
   todo
 }) => {
   const [transact] = useTransact();
-  return /*#__PURE__*/React.createElement("input", {
+  return /*#__PURE__*/_react.default.createElement("input", {
     style: {
       border: 'none',
       fontSize: 20,
@@ -257,7 +270,7 @@ const TodoProject = ({
   todo
 }) => {
   const [transact] = useTransact();
-  return /*#__PURE__*/React.createElement(ProjectSelect, {
+  return /*#__PURE__*/_react.default.createElement(ProjectSelect, {
     value: todo.get('project', 'id') || '',
     onChange: projectId => transact([{
       todo: {
@@ -280,7 +293,7 @@ const TodoOwner = ({
       }
     }
   });
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", null, "Owner:"), "\xA0", /*#__PURE__*/React.createElement("select", {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("label", null, "Owner:"), "\xA0", /*#__PURE__*/_react.default.createElement("select", {
     name: "users",
     value: todo.get('owner', 'id') || '',
     onChange: e => transact([{
@@ -289,9 +302,9 @@ const TodoOwner = ({
         owner: Number(e.target.value) || null
       }
     }])
-  }, /*#__PURE__*/React.createElement("option", {
+  }, /*#__PURE__*/_react.default.createElement("option", {
     value: ""
-  }), users.map(user => /*#__PURE__*/React.createElement("option", {
+  }), users.map(user => /*#__PURE__*/_react.default.createElement("option", {
     key: user.get('id'),
     value: user.get('id')
   }, user.get('name')))));
@@ -301,7 +314,7 @@ const TodoDelete = ({
   todo
 }) => {
   const [transact] = useTransact();
-  return /*#__PURE__*/React.createElement("button", {
+  return /*#__PURE__*/_react.default.createElement("button", {
     onClick: () => transact([['retractEntity', todo.get('id')]])
   }, "Delete");
 };
