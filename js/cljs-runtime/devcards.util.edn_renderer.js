@@ -12,20 +12,20 @@ devcards.util.edn_renderer.literal_QMARK_ = (function devcards$util$edn_renderer
 return (((!(cljs.core.map_entry_QMARK_(x)))) && ((!(cljs.core.seq_QMARK_(x)))) && ((!(cljs.core.coll_QMARK_(x)))));
 });
 devcards.util.edn_renderer.separator_STAR_ = (function devcards$util$edn_renderer$separator_STAR_(s){
-var G__17069 = "span";
-var G__17070 = ({"key": devcards.util.edn_renderer.get_key(), "className": "seperator"});
-var G__17071 = sablono.interpreter.interpret(s);
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17069,G__17070,G__17071) : sablono.core.create_element.call(null,G__17069,G__17070,G__17071));
+var G__17066 = "span";
+var G__17067 = ({"key": devcards.util.edn_renderer.get_key(), "className": "seperator"});
+var G__17068 = sablono.interpreter.interpret(s);
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17066,G__17067,G__17068) : sablono.core.create_element.call(null,G__17066,G__17067,G__17068));
 });
 devcards.util.edn_renderer.clearfix_separator_STAR_ = (function devcards$util$edn_renderer$clearfix_separator_STAR_(s){
-var G__17074 = "span";
-var G__17075 = ({"key": devcards.util.edn_renderer.get_key()});
-var G__17076 = sablono.interpreter.interpret(devcards.util.edn_renderer.separator_STAR_(s));
-var G__17077 = (function (){var G__17078 = "span";
-var G__17079 = ({"className": "clearfix"});
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$2 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$2(G__17078,G__17079) : sablono.core.create_element.call(null,G__17078,G__17079));
+var G__17071 = "span";
+var G__17072 = ({"key": devcards.util.edn_renderer.get_key()});
+var G__17073 = sablono.interpreter.interpret(devcards.util.edn_renderer.separator_STAR_(s));
+var G__17074 = (function (){var G__17075 = "span";
+var G__17076 = ({"className": "clearfix"});
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$2 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$2(G__17075,G__17076) : sablono.core.create_element.call(null,G__17075,G__17076));
 })();
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$4 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$4(G__17074,G__17075,G__17076,G__17077) : sablono.core.create_element.call(null,G__17074,G__17075,G__17076,G__17077));
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$4 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$4(G__17071,G__17072,G__17073,G__17074) : sablono.core.create_element.call(null,G__17071,G__17072,G__17073,G__17074));
 });
 devcards.util.edn_renderer.separate_fn = (function devcards$util$edn_renderer$separate_fn(coll){
 try{if((!(cljs.core.every_QMARK_(devcards.util.edn_renderer.literal_QMARK_,coll)))){
@@ -33,11 +33,11 @@ return devcards.util.edn_renderer.clearfix_separator_STAR_;
 } else {
 return devcards.util.edn_renderer.separator_STAR_;
 }
-}catch (e17080){if((e17080 instanceof Error)){
-var e = e17080;
+}catch (e17077){if((e17077 instanceof Error)){
+var e = e17077;
 return devcards.util.edn_renderer.clearfix_separator_STAR_;
 } else {
-throw e17080;
+throw e17077;
 
 }
 }});
@@ -47,52 +47,52 @@ return (sep_fn.cljs$core$IFn$_invoke$arity$1 ? sep_fn.cljs$core$IFn$_invoke$arit
 })),cljs.core.rest(rct_coll))));
 });
 devcards.util.edn_renderer.literal = (function devcards$util$edn_renderer$literal(class$,x){
-var G__17081 = "span";
-var G__17082 = ({"className": class$, "key": devcards.util.edn_renderer.get_key()});
-var G__17083 = sablono.interpreter.interpret(devcards.util.utils.pprint_str(x));
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17081,G__17082,G__17083) : sablono.core.create_element.call(null,G__17081,G__17082,G__17083));
+var G__17080 = "span";
+var G__17081 = ({"className": class$, "key": devcards.util.edn_renderer.get_key()});
+var G__17082 = sablono.interpreter.interpret(devcards.util.utils.pprint_str(x));
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17080,G__17081,G__17082) : sablono.core.create_element.call(null,G__17080,G__17081,G__17082));
 });
 devcards.util.edn_renderer.html_val = (function devcards$util$edn_renderer$html_val(index,v){
-var G__17085 = "span";
-var G__17086 = ({"key": index});
-var G__17087 = sablono.interpreter.interpret((devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1 ? devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1(v) : devcards.util.edn_renderer.html.call(null,v)));
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17085,G__17086,G__17087) : sablono.core.create_element.call(null,G__17085,G__17086,G__17087));
+var G__17083 = "span";
+var G__17084 = ({"key": index});
+var G__17085 = sablono.interpreter.interpret((devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1 ? devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1(v) : devcards.util.edn_renderer.html.call(null,v)));
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17083,G__17084,G__17085) : sablono.core.create_element.call(null,G__17083,G__17084,G__17085));
 });
 devcards.util.edn_renderer.join_html = (function devcards$util$edn_renderer$join_html(separator,coll){
 return devcards.util.edn_renderer.interpose_separator(cljs.core.into.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentVector.EMPTY,cljs.core.map_indexed.cljs$core$IFn$_invoke$arity$2(devcards.util.edn_renderer.html_val,coll)),separator,devcards.util.edn_renderer.separate_fn(coll));
 });
-devcards.util.edn_renderer.html_keyval = (function devcards$util$edn_renderer$html_keyval(p__17088){
-var vec__17089 = p__17088;
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__17089,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__17089,(1),null);
-var G__17092 = "span";
-var G__17093 = ({"key": cljs.core.prn_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([k], 0)), "className": "keyval"});
-var G__17094 = sablono.interpreter.interpret((devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1 ? devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1(k) : devcards.util.edn_renderer.html.call(null,k)));
-var G__17095 = sablono.interpreter.interpret((devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1 ? devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1(v) : devcards.util.edn_renderer.html.call(null,v)));
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$4 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$4(G__17092,G__17093,G__17094,G__17095) : sablono.core.create_element.call(null,G__17092,G__17093,G__17094,G__17095));
+devcards.util.edn_renderer.html_keyval = (function devcards$util$edn_renderer$html_keyval(p__17086){
+var vec__17087 = p__17086;
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__17087,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__17087,(1),null);
+var G__17090 = "span";
+var G__17091 = ({"key": cljs.core.prn_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([k], 0)), "className": "keyval"});
+var G__17092 = sablono.interpreter.interpret((devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1 ? devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1(k) : devcards.util.edn_renderer.html.call(null,k)));
+var G__17093 = sablono.interpreter.interpret((devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1 ? devcards.util.edn_renderer.html.cljs$core$IFn$_invoke$arity$1(v) : devcards.util.edn_renderer.html.call(null,v)));
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$4 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$4(G__17090,G__17091,G__17092,G__17093) : sablono.core.create_element.call(null,G__17090,G__17091,G__17092,G__17093));
 });
 devcards.util.edn_renderer.html_keyvals = (function devcards$util$edn_renderer$html_keyvals(coll){
 return devcards.util.edn_renderer.interpose_separator(cljs.core.mapv.cljs$core$IFn$_invoke$arity$2(devcards.util.edn_renderer.html_keyval,coll)," ",devcards.util.edn_renderer.separate_fn(cljs.core.vals(coll)));
 });
 devcards.util.edn_renderer.open_close = (function devcards$util$edn_renderer$open_close(class_str,opener,closer,rct_coll){
-var G__17096 = "span";
-var G__17097 = ({"className": class_str, "key": cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.hash(rct_coll))});
-var G__17098 = (function (){var G__17101 = "span";
-var G__17102 = ({"key": (1), "className": "opener"});
-var G__17103 = sablono.interpreter.interpret(opener);
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17101,G__17102,G__17103) : sablono.core.create_element.call(null,G__17101,G__17102,G__17103));
+var G__17095 = "span";
+var G__17096 = ({"className": class_str, "key": cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.hash(rct_coll))});
+var G__17097 = (function (){var G__17100 = "span";
+var G__17101 = ({"key": (1), "className": "opener"});
+var G__17102 = sablono.interpreter.interpret(opener);
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17100,G__17101,G__17102) : sablono.core.create_element.call(null,G__17100,G__17101,G__17102));
 })();
-var G__17099 = (function (){var G__17104 = "span";
-var G__17105 = ({"key": (2), "className": "contents"});
-var G__17106 = sablono.interpreter.interpret(rct_coll);
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17104,G__17105,G__17106) : sablono.core.create_element.call(null,G__17104,G__17105,G__17106));
+var G__17098 = (function (){var G__17103 = "span";
+var G__17104 = ({"key": (2), "className": "contents"});
+var G__17105 = sablono.interpreter.interpret(rct_coll);
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17103,G__17104,G__17105) : sablono.core.create_element.call(null,G__17103,G__17104,G__17105));
 })();
-var G__17100 = (function (){var G__17107 = "span";
-var G__17108 = ({"key": (3), "className": "closer"});
-var G__17109 = sablono.interpreter.interpret(closer);
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17107,G__17108,G__17109) : sablono.core.create_element.call(null,G__17107,G__17108,G__17109));
+var G__17099 = (function (){var G__17106 = "span";
+var G__17107 = ({"key": (3), "className": "closer"});
+var G__17108 = sablono.interpreter.interpret(closer);
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$3 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$3(G__17106,G__17107,G__17108) : sablono.core.create_element.call(null,G__17106,G__17107,G__17108));
 })();
-return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$5 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$5(G__17096,G__17097,G__17098,G__17099,G__17100) : sablono.core.create_element.call(null,G__17096,G__17097,G__17098,G__17099,G__17100));
+return (sablono.core.create_element.cljs$core$IFn$_invoke$arity$5 ? sablono.core.create_element.cljs$core$IFn$_invoke$arity$5(G__17095,G__17096,G__17097,G__17098,G__17099) : sablono.core.create_element.call(null,G__17095,G__17096,G__17097,G__17098,G__17099));
 });
 devcards.util.edn_renderer.html_collection = (function devcards$util$edn_renderer$html_collection(class$,opener,closer,coll){
 return devcards.util.edn_renderer.open_close(["collection ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(class$)].join(''),opener,closer,devcards.util.edn_renderer.join_html(" ",coll));
