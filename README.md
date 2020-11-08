@@ -1,5 +1,10 @@
 # Homebase React
 
+[![CI](https://github.com/homebaseio/homebase-react/workflows/CI/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACI)
+[![NPM Version](https://badge.fury.io/js/homebase-react.svg)](https://badge.fury.io/js/homebase-react)
+[![License](https://img.shields.io/github/license/homebaseio/homebase-react.svg)](LICENSE)
+
+
 > The graph database for delightful React state management
 
 ## Installation
