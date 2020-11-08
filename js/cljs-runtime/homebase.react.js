@@ -1,5 +1,23 @@
 goog.provide('homebase.react');
 var module$node_modules$react$index=shadow.js.require("module$node_modules$react$index", {});
+homebase.react.try_hook = (function homebase$react$try_hook(hook_name,f){
+try{return (f.cljs$core$IFn$_invoke$arity$0 ? f.cljs$core$IFn$_invoke$arity$0() : f.call(null));
+}catch (e24064){if((e24064 instanceof Error)){
+var e = e24064;
+throw Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1(e.message),"\n",(function (){var G__24067 = e.stack;
+var G__24067__$1 = (((G__24067 == null))?null:cljs.core.re_find(cljs.core.re_pattern([cljs.core.str.cljs$core$IFn$_invoke$arity$1(hook_name),".*\\n(.*)\\n?"].join('')),G__24067));
+var G__24067__$2 = (((G__24067__$1 == null))?null:cljs.core.second(G__24067__$1));
+if((G__24067__$2 == null)){
+return null;
+} else {
+return clojure.string.trim(G__24067__$2);
+}
+})()].join(''));
+} else {
+throw e24064;
+
+}
+}});
 if((typeof homebase !== 'undefined') && (typeof homebase.react !== 'undefined') && (typeof homebase.react.homebase_context !== 'undefined')){
 } else {
 homebase.react.homebase_context = module$node_modules$react$index.createContext();
@@ -18,14 +36,19 @@ return module$node_modules$react$index.createElement(homebase.react.homebase_con
 goog.exportSymbol('homebase.react.HomebaseProvider', homebase.react.HomebaseProvider);
 homebase.react.useEntity = (function homebase$react$useEntity(lookup){
 var conn = module$node_modules$react$index.useContext(homebase.react.homebase_context);
-var vec__24031 = module$node_modules$react$index.useState(homebase.js.entity(conn,lookup));
-var result = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24031,(0),null);
-var setResult = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24031,(1),null);
+var run_lookup = (function (){
+return homebase.react.try_hook("useEntity",(function (){
+return homebase.js.entity(conn,lookup);
+}));
+});
+var vec__24076 = module$node_modules$react$index.useState(run_lookup());
+var result = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24076,(0),null);
+var setResult = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24076,(1),null);
 module$node_modules$react$index.useEffect((function homebase$react$useEntity_$_use_entity_effect(){
 var key = cljs.core.rand.cljs$core$IFn$_invoke$arity$0();
 datascript.core.listen_BANG_.cljs$core$IFn$_invoke$arity$3(conn,key,(function (){
-var G__24034 = homebase.js.entity(conn,lookup);
-return (setResult.cljs$core$IFn$_invoke$arity$1 ? setResult.cljs$core$IFn$_invoke$arity$1(G__24034) : setResult.call(null,G__24034));
+var G__24082 = run_lookup();
+return (setResult.cljs$core$IFn$_invoke$arity$1 ? setResult.cljs$core$IFn$_invoke$arity$1(G__24082) : setResult.call(null,G__24082));
 }));
 
 return (function homebase$react$useEntity_$_use_entity_effect_$_unmount_use_entity_effect(){
@@ -38,14 +61,14 @@ return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMP
 goog.exportSymbol('homebase.react.useEntity', homebase.react.useEntity);
 homebase.react.useQuery = (function homebase$react$useQuery(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___24041 = arguments.length;
-var i__4737__auto___24042 = (0);
+var len__4736__auto___24089 = arguments.length;
+var i__4737__auto___24090 = (0);
 while(true){
-if((i__4737__auto___24042 < len__4736__auto___24041)){
-args__4742__auto__.push((arguments[i__4737__auto___24042]));
+if((i__4737__auto___24090 < len__4736__auto___24089)){
+args__4742__auto__.push((arguments[i__4737__auto___24090]));
 
-var G__24043 = (i__4737__auto___24042 + (1));
-i__4737__auto___24042 = G__24043;
+var G__24091 = (i__4737__auto___24090 + (1));
+i__4737__auto___24090 = G__24091;
 continue;
 } else {
 }
@@ -59,14 +82,19 @@ goog.exportSymbol('homebase.react.useQuery', homebase.react.useQuery);
 
 (homebase.react.useQuery.cljs$core$IFn$_invoke$arity$variadic = (function (query,args){
 var conn = module$node_modules$react$index.useContext(homebase.react.homebase_context);
-var vec__24037 = module$node_modules$react$index.useState(cljs.core.apply.cljs$core$IFn$_invoke$arity$4(homebase.js.q,query,conn,args));
-var result = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24037,(0),null);
-var setResult = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24037,(1),null);
+var run_query = (function (){
+return homebase.react.try_hook("useQuery",(function (){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$4(homebase.js.q,query,conn,args);
+}));
+});
+var vec__24085 = module$node_modules$react$index.useState(run_query());
+var result = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24085,(0),null);
+var setResult = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24085,(1),null);
 module$node_modules$react$index.useEffect((function homebase$react$use_query_effect(){
 var key = cljs.core.rand.cljs$core$IFn$_invoke$arity$0();
 datascript.core.listen_BANG_.cljs$core$IFn$_invoke$arity$3(conn,key,(function (){
-var G__24040 = cljs.core.apply.cljs$core$IFn$_invoke$arity$4(homebase.js.q,query,conn,args);
-return (setResult.cljs$core$IFn$_invoke$arity$1 ? setResult.cljs$core$IFn$_invoke$arity$1(G__24040) : setResult.call(null,G__24040));
+var G__24088 = run_query();
+return (setResult.cljs$core$IFn$_invoke$arity$1 ? setResult.cljs$core$IFn$_invoke$arity$1(G__24088) : setResult.call(null,G__24088));
 }));
 
 return (function homebase$react$use_query_effect_$_unmount_use_query_effect(){
@@ -80,17 +108,19 @@ return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMP
 (homebase.react.useQuery.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(homebase.react.useQuery.cljs$lang$applyTo = (function (seq24035){
-var G__24036 = cljs.core.first(seq24035);
-var seq24035__$1 = cljs.core.next(seq24035);
+(homebase.react.useQuery.cljs$lang$applyTo = (function (seq24083){
+var G__24084 = cljs.core.first(seq24083);
+var seq24083__$1 = cljs.core.next(seq24083);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__24036,seq24035__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__24084,seq24083__$1);
 }));
 
 homebase.react.useTransact = (function homebase$react$useTransact(){
 var conn = module$node_modules$react$index.useContext(homebase.react.homebase_context);
 var transact = (function homebase$react$useTransact_$_transact(txs){
+return homebase.react.try_hook("useTransact",(function (){
 return homebase.js.transact_BANG_(conn,txs);
+}));
 });
 return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [transact], null);
 });
