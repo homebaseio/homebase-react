@@ -3,6 +3,7 @@ name: Run Tests
 on:
   push:
     paths:
+      - '.github/workflows/run-tests.yml'
       - 'src/**'
       - 'package.json'
       - 'shadow-cljs.edn'
