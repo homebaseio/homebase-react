@@ -35,6 +35,13 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Cache shadow-cljs
+        uses: actions/cache@v2
+        with:
+          path: .shadow-cljs
+          key: ${{ runner.os }}-shadow-cljs-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-shadow-cljs
+
       - run: yarn install --frozen-lockfile
 
       - run: yarn shadow-cljs compile dev 
