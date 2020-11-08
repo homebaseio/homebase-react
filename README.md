@@ -54,7 +54,7 @@ const config = {
   // The only schema currently supported is:
   // `type: 'ref'` which is a relationship and
   // `unique: 'identity` which enforces a uniqueness constraint 
-  // and let's you lookup entites by their unique attributes.
+  // and let's you lookup entities by their unique attributes.
   schema: {
     todo: {
       project: { type: 'ref' },
@@ -62,7 +62,7 @@ const config = {
     }
   },
   
-  // Initial data is like it sound. 
+  // Initial data is what it sounds like.
   // It's a transaction that runs on component mount.
   // Use it to hydrate your app.
   initialData: [
@@ -93,13 +93,13 @@ todo.get('name') // => 'Make it'
 const [sameTodo] = useEntity({ todo: { name: 'Make it' } })
 sameTodo.get('id') // => 2
 
-// And most importantly you can traverse arbitrarilly deep relationships.
+// And most importantly you can traverse arbitrarily deep relationships.
 sameTodo.get('project', 'owner', 'name') // => 'Arpegius'
 ```
 
 ### `useTransact`
 
-Transactions let you create, update and delete multiple entites simultaneously. All changes will reactively update any components that depend on the changed data.
+Transactions let you create, update and delete multiple entities simultaneously. All changes will reactively update any components that depend on the changed data.
 
 ```js
 const transact = useTransact()
@@ -109,7 +109,7 @@ const transact = useTransact()
 transact([{ todo: { name: 'New Todo', project: 1 } }])
 
 // Setting the id to a negative number is a temp id which 
-// allows multiple entites to be related to each other on creation.
+// allows multiple entities to be related to each other on creation.
 transact([
   { project: { id: -123, name: 'New Project' } },
   { todo: { project: -123, name: 'New Todo' } },
