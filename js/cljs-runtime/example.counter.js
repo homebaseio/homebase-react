@@ -11,21 +11,21 @@ if((typeof example !== 'undefined') && (typeof example.counter !== 'undefined') 
  * @implements {cljs.core.IWithMeta}
  * @implements {devcards.core.IDevcardOptions}
 */
-example.counter.t_example$counter24059 = (function (meta24062){
-this.meta24062 = meta24062;
+example.counter.t_example$counter24059 = (function (meta24060){
+this.meta24060 = meta24060;
 this.cljs$lang$protocol_mask$partition0$ = 393216;
 this.cljs$lang$protocol_mask$partition1$ = 0;
 });
-(example.counter.t_example$counter24059.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = (function (_24064,meta24062__$1){
+(example.counter.t_example$counter24059.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = (function (_24061,meta24060__$1){
 var self__ = this;
-var _24064__$1 = this;
-return (new example.counter.t_example$counter24059(meta24062__$1));
+var _24061__$1 = this;
+return (new example.counter.t_example$counter24059(meta24060__$1));
 }));
 
-(example.counter.t_example$counter24059.prototype.cljs$core$IMeta$_meta$arity$1 = (function (_24064){
+(example.counter.t_example$counter24059.prototype.cljs$core$IMeta$_meta$arity$1 = (function (_24061){
 var self__ = this;
-var _24064__$1 = this;
-return self__.meta24062;
+var _24061__$1 = this;
+return self__.meta24060;
 }));
 
 (example.counter.t_example$counter24059.prototype.devcards$core$IDevcardOptions$ = cljs.core.PROTOCOL_SENTINEL);
@@ -45,7 +45,7 @@ return reagent.core.as_element.cljs$core$IFn$_invoke$arity$1(v__18031__auto__);
 }));
 
 (example.counter.t_example$counter24059.getBasis = (function (){
-return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"meta24062","meta24062",869608552,null)], null);
+return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"meta24060","meta24060",230784059,null)], null);
 }));
 
 (example.counter.t_example$counter24059.cljs$lang$type = true);
@@ -59,8 +59,8 @@ return cljs.core._write(writer__4370__auto__,"example.counter/t_example$counter2
 /**
  * Positional factory function for example.counter/t_example$counter24059.
  */
-example.counter.__GT_t_example$counter24059 = (function example$counter$__GT_t_example$counter24059(meta24062){
-return (new example.counter.t_example$counter24059(meta24062));
+example.counter.__GT_t_example$counter24059 = (function example$counter$__GT_t_example$counter24059(meta24060){
+return (new example.counter.t_example$counter24059(meta24060));
 });
 
 }
