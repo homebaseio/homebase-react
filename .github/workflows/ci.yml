@@ -5,7 +5,11 @@ on: push
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       
@@ -33,12 +37,12 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       
-      # - name: Cache shadow-cljs
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: .shadow-cljs
-      #     key: ${{ runner.os }}-shadow-cljs-${{ hashFiles('**/pom.xml') }}
-      #     restore-keys: ${{ runner.os }}-shadow-cljs
+      - name: Cache shadow-cljs
+        uses: actions/cache@v2
+        with:
+          path: .shadow-cljs
+          key: ${{ runner.os }}-shadow-cljs-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-shadow-cljs
 
       - run: yarn install --frozen-lockfile
 
@@ -46,4 +50,4 @@ jobs:
       - run: yarn shadow-cljs compile test
       
       - run: node out/node-tests.js
-      - run: yarn jest
+      - run: yarn jest js/tests
