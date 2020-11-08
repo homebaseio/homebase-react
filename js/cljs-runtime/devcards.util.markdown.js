@@ -45,8 +45,8 @@ devcards.util.markdown.block_parser = (function (){var method_table__4619__auto_
 var prefer_table__4620__auto__ = cljs.core.atom.cljs$core$IFn$_invoke$arity$1(cljs.core.PersistentArrayMap.EMPTY);
 var method_cache__4621__auto__ = cljs.core.atom.cljs$core$IFn$_invoke$arity$1(cljs.core.PersistentArrayMap.EMPTY);
 var cached_hierarchy__4622__auto__ = cljs.core.atom.cljs$core$IFn$_invoke$arity$1(cljs.core.PersistentArrayMap.EMPTY);
-var hierarchy__4623__auto__ = cljs.core.get.cljs$core$IFn$_invoke$arity$3(cljs.core.PersistentArrayMap.EMPTY,new cljs.core.Keyword(null,"hierarchy","hierarchy",-1053470341),(function (){var fexpr__17834 = cljs.core.get_global_hierarchy;
-return (fexpr__17834.cljs$core$IFn$_invoke$arity$0 ? fexpr__17834.cljs$core$IFn$_invoke$arity$0() : fexpr__17834.call(null));
+var hierarchy__4623__auto__ = cljs.core.get.cljs$core$IFn$_invoke$arity$3(cljs.core.PersistentArrayMap.EMPTY,new cljs.core.Keyword(null,"hierarchy","hierarchy",-1053470341),(function (){var fexpr__17830 = cljs.core.get_global_hierarchy;
+return (fexpr__17830.cljs$core$IFn$_invoke$arity$0 ? fexpr__17830.cljs$core$IFn$_invoke$arity$0() : fexpr__17830.call(null));
 })());
 return (new cljs.core.MultiFn(cljs.core.symbol.cljs$core$IFn$_invoke$arity$2("devcards.util.markdown","block-parser"),(function (p__17835,line){
 var map__17836 = p__17835;

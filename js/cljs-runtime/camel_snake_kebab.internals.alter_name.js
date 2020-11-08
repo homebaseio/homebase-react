@@ -5,7 +5,7 @@ goog.provide('camel_snake_kebab.internals.alter_name');
  */
 camel_snake_kebab.internals.alter_name.AlterName = function(){};
 
-var camel_snake_kebab$internals$alter_name$AlterName$alter_name$dyn_18389 = (function (this$,f){
+var camel_snake_kebab$internals$alter_name$AlterName$alter_name$dyn_18319 = (function (this$,f){
 var x__4428__auto__ = (((this$ == null))?null:this$);
 var m__4429__auto__ = (camel_snake_kebab.internals.alter_name.alter_name[goog.typeOf(x__4428__auto__)]);
 if((!((m__4429__auto__ == null)))){
@@ -26,7 +26,7 @@ camel_snake_kebab.internals.alter_name.alter_name = (function camel_snake_kebab$
 if((((!((this$ == null)))) && ((!((this$.camel_snake_kebab$internals$alter_name$AlterName$alter_name$arity$2 == null)))))){
 return this$.camel_snake_kebab$internals$alter_name$AlterName$alter_name$arity$2(this$,f);
 } else {
-return camel_snake_kebab$internals$alter_name$AlterName$alter_name$dyn_18389(this$,f);
+return camel_snake_kebab$internals$alter_name$AlterName$alter_name$dyn_18319(this$,f);
 }
 });
 
@@ -43,8 +43,8 @@ var this$__$1 = this;
 if(cljs.core.truth_(cljs.core.namespace(this$__$1))){
 throw cljs.core.ex_info.cljs$core$IFn$_invoke$arity$2("Namespaced keywords are not supported",new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"input","input",556931961),this$__$1], null));
 } else {
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1((function (){var G__18387 = cljs.core.name(this$__$1);
-return (f.cljs$core$IFn$_invoke$arity$1 ? f.cljs$core$IFn$_invoke$arity$1(G__18387) : f.call(null,G__18387));
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1((function (){var G__18317 = cljs.core.name(this$__$1);
+return (f.cljs$core$IFn$_invoke$arity$1 ? f.cljs$core$IFn$_invoke$arity$1(G__18317) : f.call(null,G__18317));
 })());
 }
 }));
@@ -56,8 +56,8 @@ var this$__$1 = this;
 if(cljs.core.truth_(cljs.core.namespace(this$__$1))){
 throw cljs.core.ex_info.cljs$core$IFn$_invoke$arity$2("Namespaced symbols are not supported",new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"input","input",556931961),this$__$1], null));
 } else {
-return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1((function (){var G__18388 = cljs.core.name(this$__$1);
-return (f.cljs$core$IFn$_invoke$arity$1 ? f.cljs$core$IFn$_invoke$arity$1(G__18388) : f.call(null,G__18388));
+return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1((function (){var G__18318 = cljs.core.name(this$__$1);
+return (f.cljs$core$IFn$_invoke$arity$1 ? f.cljs$core$IFn$_invoke$arity$1(G__18318) : f.call(null,G__18318));
 })());
 }
 }));
