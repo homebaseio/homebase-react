@@ -58,7 +58,7 @@ describe('Benchmark', () => {
       onComplete: jest.fn(results => {
         meanTime = results.mean;
       }),
-      samples: 20
+      samples: 10
     };
   });
 
