@@ -5,7 +5,11 @@ on: push
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       
@@ -42,8 +46,8 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
+      - run: yarn shadow-cljs compile npm-dist
       - run: yarn shadow-cljs compile test
       
       - run: node out/node-tests.js
-        env:
-          CI: true
+      - run: yarn jest js/tests

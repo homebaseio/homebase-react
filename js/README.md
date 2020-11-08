@@ -4,5 +4,5 @@ ShadowCLJS needs dialects like JSX to be pre-processed before use in CLJS https:
 
 Run babel after editing a file here and import it from the src/js_gen file when using it in CLJS.
 ```bash
-npx babel js --out-dir src/js_gen
+yarn babel js --out-dir src/js_gen
 ```
