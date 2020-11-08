@@ -1,0 +1,23 @@
+name: Run Tests
+
+on: 
+  push:
+    paths:
+      - '.github/workflows/ci.yml'
+      - 'src/**'
+      - 'package.json'
+      - 'shadow-cljs.edn'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: NPM Install 📦
+        run: npm install
+      - name: Compile CLJS Tests 🛠
+        run: npx shadow-cljs compile test
+      - name: Run CLJS Tests ✅
+        run: node out/node-tests.js

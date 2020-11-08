@@ -22,7 +22,7 @@
   :test {:target :node-test
          :output-to "out/node-tests.js"
          :ns-regexp "-test$"
-         :autorun true}
+         :autorun false}
   :npm-dist {:target :npm-module
              :output-dir "dist"
              :output-to "dist/lib.js"
