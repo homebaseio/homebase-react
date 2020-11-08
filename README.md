@@ -148,8 +148,8 @@ todos
 ## Development
 
 ```bash
-npm install
-npx shadow-cljs watch :dev
+yarn install
+yarn shadow-cljs watch :dev
 ```
 
 Open http://localhost:3000
