@@ -1,10 +1,9 @@
 /* eslint-env jest */
 import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Benchmark from 'react-component-benchmark';
 import Adapter from "enzyme-adapter-react-16";
-import Enzyme from 'enzyme';
-import { HomebaseProvider, useTransact, useQuery, useEntity } from '../../dist/homebase.react';
+import { HomebaseProvider, useTransact, useEntity } from '../../dist/homebase.react';
 
 const config = {
   initialData: [{
@@ -14,12 +13,6 @@ const config = {
     }
   }]
 }
-
-export const App = () => (
-  <HomebaseProvider config={config}>
-    <Counter/>
-  </HomebaseProvider>
-)
 
 const Counter = () => {
   const [counter] = useEntity({ identity: 'counter' })
@@ -45,13 +38,12 @@ Enzyme.configure({ adapter: new Adapter() });
 
 class Test extends React.Component {
   render() {
-    const counters = [];
-    for (let step = 0; step < 100; step++) {
-      counters.push(<Counter key={step}/>)
-    }
-    return <HomebaseProvider config={config}>
-      {counters}
-  </HomebaseProvider>
+    const counters = Array(100).fill().map((_, i) => <Counter key={i}/>)
+    return (
+      <HomebaseProvider config={config}>
+        {counters}
+      </HomebaseProvider>
+    )
   }
 }
 

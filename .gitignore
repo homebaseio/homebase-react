@@ -6,6 +6,7 @@ dist/
 /target
 /checkouts
 /src/gen
+/src/js_gen/tests
 
 package-lock.json
 pom.xml
