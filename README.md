@@ -1,5 +1,10 @@
 # Homebase React
 
+[![CI](https://github.com/homebaseio/homebase-react/workflows/CI/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACI)
+[![NPM Version](https://badge.fury.io/js/homebase-react.svg)](https://badge.fury.io/js/homebase-react)
+[![License](https://img.shields.io/github/license/homebaseio/homebase-react.svg)](LICENSE)
+
+
 > The graph database for delightful React state management
 
 ## Installation
@@ -154,6 +159,12 @@ yarn shadow-cljs watch :dev
 
 Open http://localhost:3000
 
+## Test
+
+```bash
+yarn install
+yarn test
+```
 
 ## Roadmap
 
@@ -164,7 +175,6 @@ Open http://localhost:3000
     1. History / Change Tracking
 1. Persist to IndexDB
 1. Local-first conflict resolution for offline caching and sync between multiple devices
-
 
 ## Authors
 

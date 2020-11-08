@@ -1,10 +1,10 @@
 import React from 'react'
 const { HomebaseProvider, useTransact, useEntity } = window.homebase.react
 
-const config = { 
+const config = {
   initialData: [{
     counter: {
-      identity: 'counter', 
+      identity: 'counter',
       count: 0
     }
   }]
@@ -25,7 +25,7 @@ const Counter = () => {
       <div>
         <button onClick={() => transact([{
           counter: {
-            id: counter.get('id'), 
+            id: counter.get('id'),
             count: counter.get('count') + 1
           }
         }])}>
