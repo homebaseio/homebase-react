@@ -1,15 +1,9 @@
 name: Run Tests
 
-on:
-  push:
-    paths:
-      - '.github/workflows/run-tests.yml'
-      - 'src/**'
-      - 'package.json'
-      - 'shadow-cljs.edn'
+on: push
 
 jobs:
-  checkout-and-install-deps:
+  cljs-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -18,10 +12,5 @@ jobs:
           persist-credentials: false    
       - name: NPM Install 💾
         run: npm install
-
-  run-cljs-tests:
-    runs-on: ubuntu-latest
-    needs: checkout-and-install-deps
-    steps:
-      - name: Run CLJS Tests 🧾 
+      - name: Run CLJS Tests ⁉️ 
         run: npx shadow-cljs compile :test
