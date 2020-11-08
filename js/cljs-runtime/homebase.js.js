@@ -14,11 +14,11 @@ homebase.js.bool_re = /^(is|has|show|hide)(-|_)?(.*)/;
 homebase.js.js__GT_bool_key = (function homebase$js$js__GT_bool_key(string){
 var temp__5735__auto__ = cljs.core.re_find(homebase.js.bool_re,string);
 if(cljs.core.truth_(temp__5735__auto__)){
-var vec__23969 = temp__5735__auto__;
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23969,(0),null);
-var verb = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23969,(1),null);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23969,(2),null);
-var key = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23969,(3),null);
+var vec__23975 = temp__5735__auto__;
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23975,(0),null);
+var verb = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23975,(1),null);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23975,(2),null);
+var key = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23975,(3),null);
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2("is",verb)){
 return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(key),"?"].join('');
 } else {
