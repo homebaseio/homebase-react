@@ -46,7 +46,7 @@ Enzyme.configure({ adapter: new Adapter() });
 class Test extends React.Component {
   render() {
     const counters = [];
-    for (let step = 0; step < 10000; step++) {
+    for (let step = 0; step < 100; step++) {
       counters.push(<Counter key={step}/>)
     }
     return <HomebaseProvider config={config}>
