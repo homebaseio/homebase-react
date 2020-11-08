@@ -19,6 +19,10 @@
         :modules {:main {:init-fn example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
                                "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
+  :test {:target :node-test
+         :output-to "out/node-tests.js"
+         :ns-regexp "-test$"
+         :autorun false}
   :npm-dist {:target :npm-module
              :output-dir "dist"
              :output-to "dist/lib.js"
