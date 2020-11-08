@@ -1,15 +1,18 @@
 node_modules/
 public/js
+out/
 
 /target
 /checkouts
 /src/gen
 
+package-lock.json
 pom.xml
 pom.xml.asc
 *.iml
 *.jar
 *.log
+*.orig
 .shadow-cljs
 .idea
 .lein-*
