@@ -6,6 +6,7 @@ out/
 /checkouts
 /src/gen
 
+package-lock.json
 pom.xml
 pom.xml.asc
 *.iml
