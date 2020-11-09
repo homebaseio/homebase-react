@@ -167,12 +167,88 @@
          (dissoc tx :db/id))
     [tx]))
 
+
+(defn humanize-transact-error [error]
+  (condp re-find (.-message error)
+    #"\[object Object\] is not ISeqable" 
+    "Expected an array of transactions. 
+\nFor example:  transact([
+                {todo: {name: 1}}, 
+                {todo: {name: 2}}
+              ])
+"
+    
+    #"Unknown operation at \[nil nil nil nil\], expected"
+    "Expected 'retractEntity'. 
+\nFor example:  transact([['retractEntity', id]])
+"
+    
+    #"Can't use tempid in '\[:db\.fn/retractEntity"
+    "Expected a numerical id. 
+\nFor example:  transact([['retractEntity', 123]])
+"
+    
+    #"Expected number or lookup ref for entity id, got nil"
+    "Expected a numerical id. 
+\nFor example:  transact([['retractEntity', 123]])
+"
+    (.-message error)))
+
 (defn transact! [conn txs]
-  (let [txs (mapcat (comp nil->retract js->tx) txs)]
-    (d/transact! conn txs)))
+  (try 
+    (d/transact! conn (mapcat (comp nil->retract js->tx) txs))
+    (catch js/Error e 
+      (throw (js/Error. (humanize-transact-error e))))))
+
+
+(defn humanize-entity-error [error]
+  (condp re-find (.-message error)
+    #"Lookup ref attribute should be marked as :db/unique: \[:([\w-]+)/([\w-]+) ((?!\]).+)\]"
+    :>> (fn [[_ nmspc attr v]]
+          (str "The `" nmspc "." attr "` attribute should be marked as unique if you want to lookup entities by it."
+               "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { unique: 'identity' }}}\n"))
+    (.-message error)))
 
 (defn entity [conn lookup]
-  (d/entity @conn (js->entity-lookup lookup)))
+  (try
+    (d/entity @conn (js->entity-lookup lookup))
+    (catch js/Error e
+      (throw (js/Error. (humanize-entity-error e))))))
+
+
+(defn example-js-query
+  ([] (example-js-query "item"))
+  ([nmsp] (str "\n
+For example:  query({ 
+                $find: '" nmsp "',
+                $where: { " nmsp ": { name: '$any' }}
+              })
+")))
+
+(defn humanize-q-error [error]
+  (condp re-find (.-message error)
+    #"Query should be a vector or a map"
+    (str "Expected query to be in the form of an object or datalog string."
+         (example-js-query))
+    
+    #"Query for unknown vars: \[\?\]"
+    (str "Expected query to have a $find and a $where clause."
+         (example-js-query))
+    
+    ; TODO: revist when datalog strings are better supported since this error is directed at JS object queries only.
+    #"Query for unknown vars: \[\?((?!\]).+)\]"
+    :>> (fn [[_ var]]
+          (str "Expected to see '" var "' in both the $find and $where clauses."
+               (example-js-query var)))
+    
+    #"((?! is not ISeqable).+) is not ISeqable"
+    :>> (fn [[_ v]]
+          (str "Expected $where clause to be a nested object, not " v "."
+               (example-js-query)))
+    (.-message error)))
 
 (defn q [query conn & args]
-  (apply q-entity-array (js->query query) @conn (keywordize args)))
+  (try 
+    (apply q-entity-array (js->query query) @conn (keywordize args))
+    (catch js/Error e 
+      (throw (js/Error. (humanize-q-error e))))))

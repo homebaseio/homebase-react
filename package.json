@@ -38,7 +38,9 @@
     "url": "https://github.com/homebaseio/homebase-react/issues"
   },
   "scripts": {
-    "test": "shadow-cljs compile npm-dist && shadow-cljs compile test && node out/node-tests.js && jest js/tests"
+    "test-js": "shadow-cljs compile npm-dist && jest js/tests",
+    "test-cljs": "shadow-cljs compile test && node out/node-tests.js",
+    "test": "yarn test-cljs && yarn test-js"
   },
   "author": ""
 }
