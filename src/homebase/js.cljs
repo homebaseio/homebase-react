@@ -199,16 +199,6 @@
     (d/transact! conn (mapcat (comp nil->retract js->tx) txs))
     (catch js/Error e 
       (throw (js/Error. (humanize-transact-error e))))))
-(comment
-  ; Valid tx
-  (transact! (d/create-conn) (clj->js [{"wat" {"thing" 1}} 
-                                       ["retractEntity" 1]]))
-  ; Invalid txs
-  (transact! (d/create-conn) (clj->js {}))
-  (transact! (d/create-conn) (clj->js [[]]))
-  (transact! (d/create-conn) (clj->js [["notAThing"]]))
-  (transact! (d/create-conn) (clj->js [["retractEntity" "wat"]]))
-  (transact! (d/create-conn) (clj->js [["retractEntity"]])))
 
 
 (defn humanize-entity-error [error]
@@ -224,11 +214,6 @@
     (d/entity @conn (js->entity-lookup lookup))
     (catch js/Error e
       (throw (js/Error. (humanize-entity-error e))))))
-(comment
-  ; Valid entity
-  (entity (d/create-conn) (clj->js 1))
-  ; Potentially invalid
-  (entity (d/create-conn) (clj->js {"item" {"number" 1}})))
 
 
 (defn example-js-query
@@ -267,23 +252,3 @@ For example:  query({
     (apply q-entity-array (js->query query) @conn (keywordize args))
     (catch js/Error e 
       (throw (js/Error. (humanize-q-error e))))))
-(comment
-  ; Valid queries
-  (q (clj->js {"$find" "item"
-               "$where" {"item" {"name" "$any"}}})
-     (d/create-conn))
-  (q (clj->js "[:find ?e :where [?e :item/name]]") (d/create-conn))
-  ; Invalid queries
-  (q (clj->js 1) (d/create-conn))
-  (q (clj->js "") (d/create-conn))
-  (q (clj->js []) (d/create-conn))
-  (q (clj->js {}) (d/create-conn))
-  (q (clj->js {"item" {"number" 1}}) (d/create-conn))
-  (q (clj->js {"$find" "todo"}) (d/create-conn))
-  (q (clj->js {"$find" "item"
-               "$where" {"todo" {"name" "wat"}}}) (d/create-conn))
-  (q (clj->js {"$find" "todo"
-               "$where" {"todo" 1}}) (d/create-conn))
-  (q (clj->js "[]") (d/create-conn))
-  (q (clj->js "{}") (d/create-conn))
-  )
