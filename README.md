@@ -1,11 +1,11 @@
 # Homebase React
 
 [![CI](https://github.com/homebaseio/homebase-react/workflows/CI/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACI)
-[![NPM Version](https://badge.fury.io/js/homebase-react.svg)](https://badge.fury.io/js/homebase-react)
+[![NPM Version](https://img.shields.io/npm/v/homebase-react)](https://www.npmjs.com/package/homebase-react)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/homebase-react)](https://www.npmjs.com/package/homebase-react)
 [![License](https://img.shields.io/github/license/homebaseio/homebase-react.svg)](LICENSE)
 
-
-> The graph database for delightful React state management
+*The graph database for delightful React state management*
 
 ## Installation
 
@@ -154,7 +154,7 @@ todos
 
 ```bash
 yarn install
-yarn shadow-cljs watch :dev
+yarn dev
 ```
 
 Open http://localhost:3000

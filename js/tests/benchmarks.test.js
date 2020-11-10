@@ -3,7 +3,7 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Benchmark from 'react-component-benchmark';
 import Adapter from "enzyme-adapter-react-16";
-import { HomebaseProvider, useTransact, useEntity } from '../../dist/homebase.react';
+import { HomebaseProvider, useTransact, useEntity } from '../../dist/js/homebase.react';
 
 const config = {
   initialData: [{

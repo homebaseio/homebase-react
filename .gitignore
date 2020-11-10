@@ -9,6 +9,7 @@ dist/
 /src/js_gen/tests
 
 package-lock.json
+report.html
 pom.xml
 pom.xml.asc
 *.iml

@@ -169,7 +169,7 @@
 
 
 (defn humanize-transact-error [error]
-  (condp re-find (.-message error)
+  (condp re-find (goog.object/get error "message")
     #"\[object Object\] is not ISeqable" 
     "Expected an array of transactions. 
 \nFor example:  transact([
@@ -192,7 +192,7 @@
     "Expected a numerical id. 
 \nFor example:  transact([['retractEntity', 123]])
 "
-    (.-message error)))
+    (goog.object/get error "message")))
 
 (defn transact! [conn txs]
   (try 
@@ -202,12 +202,12 @@
 
 
 (defn humanize-entity-error [error]
-  (condp re-find (.-message error)
+  (condp re-find (goog.object/get error "message")
     #"Lookup ref attribute should be marked as :db/unique: \[:([\w-]+)/([\w-]+) ((?!\]).+)\]"
     :>> (fn [[_ nmspc attr v]]
           (str "The `" nmspc "." attr "` attribute should be marked as unique if you want to lookup entities by it."
                "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { unique: 'identity' }}}\n"))
-    (.-message error)))
+    (goog.object/get error "message")))
 
 (defn entity [conn lookup]
   (try
@@ -226,7 +226,7 @@ For example:  query({
 ")))
 
 (defn humanize-q-error [error]
-  (condp re-find (.-message error)
+  (condp re-find (goog.object/get error "message")
     #"Query should be a vector or a map"
     (str "Expected query to be in the form of an object or datalog string."
          (example-js-query))
@@ -245,7 +245,7 @@ For example:  query({
     :>> (fn [[_ v]]
           (str "Expected $where clause to be a nested object, not " v "."
                (example-js-query)))
-    (.-message error)))
+    (goog.object/get error "message")))
 
 (defn q [query conn & args]
   (try 
