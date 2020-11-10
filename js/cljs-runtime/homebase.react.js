@@ -33,10 +33,10 @@ return cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.c
 return homebase.react.base_schema;
 }
 })());
-var temp__5735__auto___24085 = goog.object.getValueByKeys(props,["config","initialData"]);
-if(cljs.core.truth_(temp__5735__auto___24085)){
-var tx_24086 = temp__5735__auto___24085;
-homebase.js.transact_BANG_(conn,tx_24086);
+var temp__5735__auto___24081 = goog.object.getValueByKeys(props,["config","initialData"]);
+if(cljs.core.truth_(temp__5735__auto___24081)){
+var tx_24082 = temp__5735__auto___24081;
+homebase.js.transact_BANG_(conn,tx_24082);
 } else {
 }
 
@@ -56,8 +56,8 @@ var setResult = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24067,(1),null)
 module$node_modules$react$index.useEffect((function homebase$react$useEntity_$_use_entity_effect(){
 var key = cljs.core.rand.cljs$core$IFn$_invoke$arity$0();
 datascript.core.listen_BANG_.cljs$core$IFn$_invoke$arity$3(conn,key,(function (){
-var G__24074 = run_lookup();
-return (setResult.cljs$core$IFn$_invoke$arity$1 ? setResult.cljs$core$IFn$_invoke$arity$1(G__24074) : setResult.call(null,G__24074));
+var G__24070 = run_lookup();
+return (setResult.cljs$core$IFn$_invoke$arity$1 ? setResult.cljs$core$IFn$_invoke$arity$1(G__24070) : setResult.call(null,G__24070));
 }));
 
 return (function homebase$react$useEntity_$_use_entity_effect_$_unmount_use_entity_effect(){
@@ -70,14 +70,14 @@ return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMP
 goog.exportSymbol('homebase.react.useEntity', homebase.react.useEntity);
 homebase.react.useQuery = (function homebase$react$useQuery(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___24087 = arguments.length;
-var i__4737__auto___24088 = (0);
+var len__4736__auto___24085 = arguments.length;
+var i__4737__auto___24086 = (0);
 while(true){
-if((i__4737__auto___24088 < len__4736__auto___24087)){
-args__4742__auto__.push((arguments[i__4737__auto___24088]));
+if((i__4737__auto___24086 < len__4736__auto___24085)){
+args__4742__auto__.push((arguments[i__4737__auto___24086]));
 
-var G__24089 = (i__4737__auto___24088 + (1));
-i__4737__auto___24088 = G__24089;
+var G__24087 = (i__4737__auto___24086 + (1));
+i__4737__auto___24086 = G__24087;
 continue;
 } else {
 }
@@ -117,11 +117,11 @@ return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMP
 (homebase.react.useQuery.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(homebase.react.useQuery.cljs$lang$applyTo = (function (seq24075){
-var G__24076 = cljs.core.first(seq24075);
-var seq24075__$1 = cljs.core.next(seq24075);
+(homebase.react.useQuery.cljs$lang$applyTo = (function (seq24071){
+var G__24072 = cljs.core.first(seq24071);
+var seq24071__$1 = cljs.core.next(seq24071);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__24076,seq24075__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__24072,seq24071__$1);
 }));
 
 homebase.react.useTransact = (function homebase$react$useTransact(){
