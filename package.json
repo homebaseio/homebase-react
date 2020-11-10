@@ -10,8 +10,10 @@
     "build": "rm -rf dist && shadow-cljs release npm",
     "build:dev": "rm -rf dist && shadow-cljs compile npm",
     "test:js": "yarn build && jest js/tests",
+    "test:js:dev": "yarn build:dev && jest js/tests",
     "test:cljs": "shadow-cljs compile test && node out/node-tests.js",
     "test": "yarn test:cljs && yarn test:js",
+    "test:dev": "yarn test:cljs && yarn test:js:dev",
     "report": "rm -rf dist && shadow-cljs run shadow.cljs.build-report npm report.html"
   },
   "dependencies": {
