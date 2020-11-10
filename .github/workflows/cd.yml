@@ -1,0 +1,21 @@
+name: CD
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    name: Release
+    if: "!contains(github.event.head_commit.message, 'skip cd')"
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
+      - run: yarn semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
