@@ -184,17 +184,17 @@ if(datascript.core.is_filtered(db)){
 var fdb = db;
 var orig_pred = fdb.pred;
 var orig_db = fdb.unfiltered_db;
-return (new datascript.db.FilteredDB(orig_db,(function (p1__23792_SHARP_){
-var and__4115__auto__ = (orig_pred.cljs$core$IFn$_invoke$arity$1 ? orig_pred.cljs$core$IFn$_invoke$arity$1(p1__23792_SHARP_) : orig_pred.call(null,p1__23792_SHARP_));
+return (new datascript.db.FilteredDB(orig_db,(function (p1__23797_SHARP_){
+var and__4115__auto__ = (orig_pred.cljs$core$IFn$_invoke$arity$1 ? orig_pred.cljs$core$IFn$_invoke$arity$1(p1__23797_SHARP_) : orig_pred.call(null,p1__23797_SHARP_));
 if(cljs.core.truth_(and__4115__auto__)){
-return (pred.cljs$core$IFn$_invoke$arity$2 ? pred.cljs$core$IFn$_invoke$arity$2(orig_db,p1__23792_SHARP_) : pred.call(null,orig_db,p1__23792_SHARP_));
+return (pred.cljs$core$IFn$_invoke$arity$2 ? pred.cljs$core$IFn$_invoke$arity$2(orig_db,p1__23797_SHARP_) : pred.call(null,orig_db,p1__23797_SHARP_));
 } else {
 return and__4115__auto__;
 }
 }),cljs.core.atom.cljs$core$IFn$_invoke$arity$1((0)),null,null,null));
 } else {
-return (new datascript.db.FilteredDB(db,(function (p1__23794_SHARP_){
-return (pred.cljs$core$IFn$_invoke$arity$2 ? pred.cljs$core$IFn$_invoke$arity$2(db,p1__23794_SHARP_) : pred.call(null,db,p1__23794_SHARP_));
+return (new datascript.db.FilteredDB(db,(function (p1__23798_SHARP_){
+return (pred.cljs$core$IFn$_invoke$arity$2 ? pred.cljs$core$IFn$_invoke$arity$2(db,p1__23798_SHARP_) : pred.call(null,db,p1__23798_SHARP_));
 }),cljs.core.atom.cljs$core$IFn$_invoke$arity$1((0)),null,null,null));
 }
 });
@@ -202,8 +202,8 @@ return (pred.cljs$core$IFn$_invoke$arity$2 ? pred.cljs$core$IFn$_invoke$arity$2(
  * Same as [[transact!]], but applies to an immutable database value. Returns transaction report (see [[transact!]]).
  */
 datascript.core.with$ = (function datascript$core$with(var_args){
-var G__23797 = arguments.length;
-switch (G__23797) {
+var G__23800 = arguments.length;
+switch (G__23800) {
 case 2:
 return datascript.core.with$.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -975,14 +975,14 @@ var callback_23952 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__23852_2395
 (callback_23952.cljs$core$IFn$_invoke$arity$1 ? callback_23952.cljs$core$IFn$_invoke$arity$1(report) : callback_23952.call(null,report));
 
 
-var G__23953 = cljs.core.next(seq__23837_23944__$1);
-var G__23954 = null;
-var G__23955 = (0);
-var G__23956 = (0);
-seq__23837_23932 = G__23953;
-chunk__23838_23933 = G__23954;
-count__23839_23934 = G__23955;
-i__23840_23935 = G__23956;
+var G__23956 = cljs.core.next(seq__23837_23944__$1);
+var G__23957 = null;
+var G__23958 = (0);
+var G__23959 = (0);
+seq__23837_23932 = G__23956;
+chunk__23838_23933 = G__23957;
+count__23839_23934 = G__23958;
+i__23840_23935 = G__23959;
 continue;
 }
 } else {
