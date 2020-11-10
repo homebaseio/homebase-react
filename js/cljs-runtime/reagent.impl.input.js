@@ -109,8 +109,8 @@ delete jsprops["value"];
 
 (jsprops.defaultValue = value);
 
-(jsprops.onChange = (function (p1__10002_SHARP_){
-return reagent.impl.input.input_handle_change(this$,on_change,p1__10002_SHARP_);
+(jsprops.onChange = (function (p1__10005_SHARP_){
+return reagent.impl.input.input_handle_change(this$,on_change,p1__10005_SHARP_);
 }));
 
 return (jsprops.ref = this$.reagentRefFn);
@@ -122,8 +122,8 @@ reagent.impl.input.input_unmount = (function reagent$impl$input$input_unmount(th
 return (this$.cljsInputLive = null);
 });
 reagent.impl.input.input_component_QMARK_ = (function reagent$impl$input$input_component_QMARK_(x){
-var G__10003 = x;
-switch (G__10003) {
+var G__10011 = x;
+switch (G__10011) {
 case "input":
 case "textarea":
 return true;
