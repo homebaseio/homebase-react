@@ -32,14 +32,14 @@ goog.provide('camel_snake_kebab.core');
  */
 camel_snake_kebab.core.convert_case = (function camel_snake_kebab$core$convert_case(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18651 = arguments.length;
-var i__4737__auto___18652 = (0);
+var len__4736__auto___18903 = arguments.length;
+var i__4737__auto___18904 = (0);
 while(true){
-if((i__4737__auto___18652 < len__4736__auto___18651)){
-args__4742__auto__.push((arguments[i__4737__auto___18652]));
+if((i__4737__auto___18904 < len__4736__auto___18903)){
+args__4742__auto__.push((arguments[i__4737__auto___18904]));
 
-var G__18653 = (i__4737__auto___18652 + (1));
-i__4737__auto___18652 = G__18653;
+var G__18905 = (i__4737__auto___18904 + (1));
+i__4737__auto___18904 = G__18905;
 continue;
 } else {
 }
@@ -57,29 +57,29 @@ return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.in
 (camel_snake_kebab.core.convert_case.cljs$lang$maxFixedArity = (4));
 
 /** @this {Function} */
-(camel_snake_kebab.core.convert_case.cljs$lang$applyTo = (function (seq18498){
-var G__18499 = cljs.core.first(seq18498);
-var seq18498__$1 = cljs.core.next(seq18498);
-var G__18500 = cljs.core.first(seq18498__$1);
-var seq18498__$2 = cljs.core.next(seq18498__$1);
-var G__18501 = cljs.core.first(seq18498__$2);
-var seq18498__$3 = cljs.core.next(seq18498__$2);
-var G__18502 = cljs.core.first(seq18498__$3);
-var seq18498__$4 = cljs.core.next(seq18498__$3);
+(camel_snake_kebab.core.convert_case.cljs$lang$applyTo = (function (seq18618){
+var G__18619 = cljs.core.first(seq18618);
+var seq18618__$1 = cljs.core.next(seq18618);
+var G__18620 = cljs.core.first(seq18618__$1);
+var seq18618__$2 = cljs.core.next(seq18618__$1);
+var G__18621 = cljs.core.first(seq18618__$2);
+var seq18618__$3 = cljs.core.next(seq18618__$2);
+var G__18622 = cljs.core.first(seq18618__$3);
+var seq18618__$4 = cljs.core.next(seq18618__$3);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18499,G__18500,G__18501,G__18502,seq18498__$4);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18619,G__18620,G__18621,G__18622,seq18618__$4);
 }));
 
 camel_snake_kebab.core.__GT_PascalCase = (function camel_snake_kebab$core$__GT_PascalCase(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18654 = arguments.length;
-var i__4737__auto___18655 = (0);
+var len__4736__auto___18908 = arguments.length;
+var i__4737__auto___18909 = (0);
 while(true){
-if((i__4737__auto___18655 < len__4736__auto___18654)){
-args__4742__auto__.push((arguments[i__4737__auto___18655]));
+if((i__4737__auto___18909 < len__4736__auto___18908)){
+args__4742__auto__.push((arguments[i__4737__auto___18909]));
 
-var G__18656 = (i__4737__auto___18655 + (1));
-i__4737__auto___18655 = G__18656;
+var G__18910 = (i__4737__auto___18909 + (1));
+i__4737__auto___18909 = G__18910;
 continue;
 } else {
 }
@@ -90,34 +90,34 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_PascalCase.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_PascalCase.cljs$core$IFn$_invoke$arity$variadic = (function (s__18455__auto__,rest__18456__auto__){
-var convert_case__18457__auto__ = (function (p1__18454__18458__auto__){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"",p1__18454__18458__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18456__auto__], 0));
+(camel_snake_kebab.core.__GT_PascalCase.cljs$core$IFn$_invoke$arity$variadic = (function (s__18558__auto__,rest__18559__auto__){
+var convert_case__18560__auto__ = (function (p1__18557__18561__auto__){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"",p1__18557__18561__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18559__auto__], 0));
 });
-return camel_snake_kebab.internals.alter_name.alter_name(s__18455__auto__,convert_case__18457__auto__);
+return camel_snake_kebab.internals.alter_name.alter_name(s__18558__auto__,convert_case__18560__auto__);
 }));
 
 (camel_snake_kebab.core.__GT_PascalCase.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_PascalCase.cljs$lang$applyTo = (function (seq18513){
-var G__18514 = cljs.core.first(seq18513);
-var seq18513__$1 = cljs.core.next(seq18513);
+(camel_snake_kebab.core.__GT_PascalCase.cljs$lang$applyTo = (function (seq18631){
+var G__18632 = cljs.core.first(seq18631);
+var seq18631__$1 = cljs.core.next(seq18631);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18514,seq18513__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18632,seq18631__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_PascalCaseString = (function camel_snake_kebab$core$__GT_PascalCaseString(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18660 = arguments.length;
-var i__4737__auto___18661 = (0);
+var len__4736__auto___18911 = arguments.length;
+var i__4737__auto___18912 = (0);
 while(true){
-if((i__4737__auto___18661 < len__4736__auto___18660)){
-args__4742__auto__.push((arguments[i__4737__auto___18661]));
+if((i__4737__auto___18912 < len__4736__auto___18911)){
+args__4742__auto__.push((arguments[i__4737__auto___18912]));
 
-var G__18662 = (i__4737__auto___18661 + (1));
-i__4737__auto___18661 = G__18662;
+var G__18913 = (i__4737__auto___18912 + (1));
+i__4737__auto___18912 = G__18913;
 continue;
 } else {
 }
@@ -128,31 +128,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_PascalCaseString.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_PascalCaseString.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_PascalCaseString.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_PascalCaseString.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_PascalCaseString.cljs$lang$applyTo = (function (seq18515){
-var G__18516 = cljs.core.first(seq18515);
-var seq18515__$1 = cljs.core.next(seq18515);
+(camel_snake_kebab.core.__GT_PascalCaseString.cljs$lang$applyTo = (function (seq18633){
+var G__18634 = cljs.core.first(seq18633);
+var seq18633__$1 = cljs.core.next(seq18633);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18516,seq18515__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18634,seq18633__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_PascalCaseSymbol = (function camel_snake_kebab$core$__GT_PascalCaseSymbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18666 = arguments.length;
-var i__4737__auto___18667 = (0);
+var len__4736__auto___18917 = arguments.length;
+var i__4737__auto___18918 = (0);
 while(true){
-if((i__4737__auto___18667 < len__4736__auto___18666)){
-args__4742__auto__.push((arguments[i__4737__auto___18667]));
+if((i__4737__auto___18918 < len__4736__auto___18917)){
+args__4742__auto__.push((arguments[i__4737__auto___18918]));
 
-var G__18672 = (i__4737__auto___18667 + (1));
-i__4737__auto___18667 = G__18672;
+var G__18919 = (i__4737__auto___18918 + (1));
+i__4737__auto___18918 = G__18919;
 continue;
 } else {
 }
@@ -163,31 +163,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_PascalCaseSymbol.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_PascalCaseSymbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_PascalCaseSymbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_PascalCaseSymbol.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_PascalCaseSymbol.cljs$lang$applyTo = (function (seq18517){
-var G__18518 = cljs.core.first(seq18517);
-var seq18517__$1 = cljs.core.next(seq18517);
+(camel_snake_kebab.core.__GT_PascalCaseSymbol.cljs$lang$applyTo = (function (seq18639){
+var G__18640 = cljs.core.first(seq18639);
+var seq18639__$1 = cljs.core.next(seq18639);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18518,seq18517__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18640,seq18639__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_PascalCaseKeyword = (function camel_snake_kebab$core$__GT_PascalCaseKeyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18685 = arguments.length;
-var i__4737__auto___18686 = (0);
+var len__4736__auto___18920 = arguments.length;
+var i__4737__auto___18921 = (0);
 while(true){
-if((i__4737__auto___18686 < len__4736__auto___18685)){
-args__4742__auto__.push((arguments[i__4737__auto___18686]));
+if((i__4737__auto___18921 < len__4736__auto___18920)){
+args__4742__auto__.push((arguments[i__4737__auto___18921]));
 
-var G__18690 = (i__4737__auto___18686 + (1));
-i__4737__auto___18686 = G__18690;
+var G__18922 = (i__4737__auto___18921 + (1));
+i__4737__auto___18921 = G__18922;
 continue;
 } else {
 }
@@ -198,30 +198,30 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_PascalCaseKeyword.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_PascalCaseKeyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_PascalCaseKeyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_PascalCaseKeyword.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_PascalCaseKeyword.cljs$lang$applyTo = (function (seq18522){
-var G__18523 = cljs.core.first(seq18522);
-var seq18522__$1 = cljs.core.next(seq18522);
+(camel_snake_kebab.core.__GT_PascalCaseKeyword.cljs$lang$applyTo = (function (seq18641){
+var G__18642 = cljs.core.first(seq18641);
+var seq18641__$1 = cljs.core.next(seq18641);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18523,seq18522__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18642,seq18641__$1);
 }));
 
 camel_snake_kebab.core.__GT_Camel_Snake_Case = (function camel_snake_kebab$core$__GT_Camel_Snake_Case(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18694 = arguments.length;
-var i__4737__auto___18695 = (0);
+var len__4736__auto___18926 = arguments.length;
+var i__4737__auto___18927 = (0);
 while(true){
-if((i__4737__auto___18695 < len__4736__auto___18694)){
-args__4742__auto__.push((arguments[i__4737__auto___18695]));
+if((i__4737__auto___18927 < len__4736__auto___18926)){
+args__4742__auto__.push((arguments[i__4737__auto___18927]));
 
-var G__18696 = (i__4737__auto___18695 + (1));
-i__4737__auto___18695 = G__18696;
+var G__18928 = (i__4737__auto___18927 + (1));
+i__4737__auto___18927 = G__18928;
 continue;
 } else {
 }
@@ -232,34 +232,34 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_Camel_Snake_Case.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_Camel_Snake_Case.cljs$core$IFn$_invoke$arity$variadic = (function (s__18455__auto__,rest__18456__auto__){
-var convert_case__18457__auto__ = (function (p1__18454__18458__auto__){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"_",p1__18454__18458__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18456__auto__], 0));
+(camel_snake_kebab.core.__GT_Camel_Snake_Case.cljs$core$IFn$_invoke$arity$variadic = (function (s__18558__auto__,rest__18559__auto__){
+var convert_case__18560__auto__ = (function (p1__18557__18561__auto__){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"_",p1__18557__18561__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18559__auto__], 0));
 });
-return camel_snake_kebab.internals.alter_name.alter_name(s__18455__auto__,convert_case__18457__auto__);
+return camel_snake_kebab.internals.alter_name.alter_name(s__18558__auto__,convert_case__18560__auto__);
 }));
 
 (camel_snake_kebab.core.__GT_Camel_Snake_Case.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_Camel_Snake_Case.cljs$lang$applyTo = (function (seq18524){
-var G__18525 = cljs.core.first(seq18524);
-var seq18524__$1 = cljs.core.next(seq18524);
+(camel_snake_kebab.core.__GT_Camel_Snake_Case.cljs$lang$applyTo = (function (seq18651){
+var G__18652 = cljs.core.first(seq18651);
+var seq18651__$1 = cljs.core.next(seq18651);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18525,seq18524__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18652,seq18651__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_Camel_Snake_Case_String = (function camel_snake_kebab$core$__GT_Camel_Snake_Case_String(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18697 = arguments.length;
-var i__4737__auto___18698 = (0);
+var len__4736__auto___18930 = arguments.length;
+var i__4737__auto___18931 = (0);
 while(true){
-if((i__4737__auto___18698 < len__4736__auto___18697)){
-args__4742__auto__.push((arguments[i__4737__auto___18698]));
+if((i__4737__auto___18931 < len__4736__auto___18930)){
+args__4742__auto__.push((arguments[i__4737__auto___18931]));
 
-var G__18699 = (i__4737__auto___18698 + (1));
-i__4737__auto___18698 = G__18699;
+var G__18932 = (i__4737__auto___18931 + (1));
+i__4737__auto___18931 = G__18932;
 continue;
 } else {
 }
@@ -270,31 +270,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_Camel_Snake_Case_String.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_Camel_Snake_Case_String.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_Camel_Snake_Case_String.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_Camel_Snake_Case_String.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_Camel_Snake_Case_String.cljs$lang$applyTo = (function (seq18526){
-var G__18527 = cljs.core.first(seq18526);
-var seq18526__$1 = cljs.core.next(seq18526);
+(camel_snake_kebab.core.__GT_Camel_Snake_Case_String.cljs$lang$applyTo = (function (seq18653){
+var G__18654 = cljs.core.first(seq18653);
+var seq18653__$1 = cljs.core.next(seq18653);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18527,seq18526__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18654,seq18653__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_Camel_Snake_Case_Symbol = (function camel_snake_kebab$core$__GT_Camel_Snake_Case_Symbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18700 = arguments.length;
-var i__4737__auto___18701 = (0);
+var len__4736__auto___18933 = arguments.length;
+var i__4737__auto___18934 = (0);
 while(true){
-if((i__4737__auto___18701 < len__4736__auto___18700)){
-args__4742__auto__.push((arguments[i__4737__auto___18701]));
+if((i__4737__auto___18934 < len__4736__auto___18933)){
+args__4742__auto__.push((arguments[i__4737__auto___18934]));
 
-var G__18702 = (i__4737__auto___18701 + (1));
-i__4737__auto___18701 = G__18702;
+var G__18935 = (i__4737__auto___18934 + (1));
+i__4737__auto___18934 = G__18935;
 continue;
 } else {
 }
@@ -305,31 +305,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_Camel_Snake_Case_Symbol.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_Camel_Snake_Case_Symbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_Camel_Snake_Case_Symbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_Camel_Snake_Case_Symbol.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_Camel_Snake_Case_Symbol.cljs$lang$applyTo = (function (seq18536){
-var G__18537 = cljs.core.first(seq18536);
-var seq18536__$1 = cljs.core.next(seq18536);
+(camel_snake_kebab.core.__GT_Camel_Snake_Case_Symbol.cljs$lang$applyTo = (function (seq18655){
+var G__18656 = cljs.core.first(seq18655);
+var seq18655__$1 = cljs.core.next(seq18655);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18537,seq18536__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18656,seq18655__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_Camel_Snake_Case_Keyword = (function camel_snake_kebab$core$__GT_Camel_Snake_Case_Keyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18703 = arguments.length;
-var i__4737__auto___18704 = (0);
+var len__4736__auto___18936 = arguments.length;
+var i__4737__auto___18937 = (0);
 while(true){
-if((i__4737__auto___18704 < len__4736__auto___18703)){
-args__4742__auto__.push((arguments[i__4737__auto___18704]));
+if((i__4737__auto___18937 < len__4736__auto___18936)){
+args__4742__auto__.push((arguments[i__4737__auto___18937]));
 
-var G__18705 = (i__4737__auto___18704 + (1));
-i__4737__auto___18704 = G__18705;
+var G__18938 = (i__4737__auto___18937 + (1));
+i__4737__auto___18937 = G__18938;
 continue;
 } else {
 }
@@ -340,30 +340,30 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_Camel_Snake_Case_Keyword.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_Camel_Snake_Case_Keyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_Camel_Snake_Case_Keyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.capitalize,clojure.string.capitalize,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_Camel_Snake_Case_Keyword.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_Camel_Snake_Case_Keyword.cljs$lang$applyTo = (function (seq18538){
-var G__18539 = cljs.core.first(seq18538);
-var seq18538__$1 = cljs.core.next(seq18538);
+(camel_snake_kebab.core.__GT_Camel_Snake_Case_Keyword.cljs$lang$applyTo = (function (seq18657){
+var G__18658 = cljs.core.first(seq18657);
+var seq18657__$1 = cljs.core.next(seq18657);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18539,seq18538__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18658,seq18657__$1);
 }));
 
 camel_snake_kebab.core.__GT_camelCase = (function camel_snake_kebab$core$__GT_camelCase(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18706 = arguments.length;
-var i__4737__auto___18707 = (0);
+var len__4736__auto___18939 = arguments.length;
+var i__4737__auto___18940 = (0);
 while(true){
-if((i__4737__auto___18707 < len__4736__auto___18706)){
-args__4742__auto__.push((arguments[i__4737__auto___18707]));
+if((i__4737__auto___18940 < len__4736__auto___18939)){
+args__4742__auto__.push((arguments[i__4737__auto___18940]));
 
-var G__18708 = (i__4737__auto___18707 + (1));
-i__4737__auto___18707 = G__18708;
+var G__18942 = (i__4737__auto___18940 + (1));
+i__4737__auto___18940 = G__18942;
 continue;
 } else {
 }
@@ -374,34 +374,34 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_camelCase.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_camelCase.cljs$core$IFn$_invoke$arity$variadic = (function (s__18455__auto__,rest__18456__auto__){
-var convert_case__18457__auto__ = (function (p1__18454__18458__auto__){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.capitalize,"",p1__18454__18458__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18456__auto__], 0));
+(camel_snake_kebab.core.__GT_camelCase.cljs$core$IFn$_invoke$arity$variadic = (function (s__18558__auto__,rest__18559__auto__){
+var convert_case__18560__auto__ = (function (p1__18557__18561__auto__){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.capitalize,"",p1__18557__18561__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18559__auto__], 0));
 });
-return camel_snake_kebab.internals.alter_name.alter_name(s__18455__auto__,convert_case__18457__auto__);
+return camel_snake_kebab.internals.alter_name.alter_name(s__18558__auto__,convert_case__18560__auto__);
 }));
 
 (camel_snake_kebab.core.__GT_camelCase.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_camelCase.cljs$lang$applyTo = (function (seq18540){
-var G__18541 = cljs.core.first(seq18540);
-var seq18540__$1 = cljs.core.next(seq18540);
+(camel_snake_kebab.core.__GT_camelCase.cljs$lang$applyTo = (function (seq18659){
+var G__18660 = cljs.core.first(seq18659);
+var seq18659__$1 = cljs.core.next(seq18659);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18541,seq18540__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18660,seq18659__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_camelCaseString = (function camel_snake_kebab$core$__GT_camelCaseString(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18717 = arguments.length;
-var i__4737__auto___18718 = (0);
+var len__4736__auto___18943 = arguments.length;
+var i__4737__auto___18944 = (0);
 while(true){
-if((i__4737__auto___18718 < len__4736__auto___18717)){
-args__4742__auto__.push((arguments[i__4737__auto___18718]));
+if((i__4737__auto___18944 < len__4736__auto___18943)){
+args__4742__auto__.push((arguments[i__4737__auto___18944]));
 
-var G__18719 = (i__4737__auto___18718 + (1));
-i__4737__auto___18718 = G__18719;
+var G__18945 = (i__4737__auto___18944 + (1));
+i__4737__auto___18944 = G__18945;
 continue;
 } else {
 }
@@ -412,31 +412,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_camelCaseString.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_camelCaseString.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.capitalize,"",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_camelCaseString.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.capitalize,"",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_camelCaseString.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_camelCaseString.cljs$lang$applyTo = (function (seq18542){
-var G__18543 = cljs.core.first(seq18542);
-var seq18542__$1 = cljs.core.next(seq18542);
+(camel_snake_kebab.core.__GT_camelCaseString.cljs$lang$applyTo = (function (seq18666){
+var G__18667 = cljs.core.first(seq18666);
+var seq18666__$1 = cljs.core.next(seq18666);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18543,seq18542__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18667,seq18666__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_camelCaseSymbol = (function camel_snake_kebab$core$__GT_camelCaseSymbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18724 = arguments.length;
-var i__4737__auto___18725 = (0);
+var len__4736__auto___18946 = arguments.length;
+var i__4737__auto___18947 = (0);
 while(true){
-if((i__4737__auto___18725 < len__4736__auto___18724)){
-args__4742__auto__.push((arguments[i__4737__auto___18725]));
+if((i__4737__auto___18947 < len__4736__auto___18946)){
+args__4742__auto__.push((arguments[i__4737__auto___18947]));
 
-var G__18726 = (i__4737__auto___18725 + (1));
-i__4737__auto___18725 = G__18726;
+var G__18949 = (i__4737__auto___18947 + (1));
+i__4737__auto___18947 = G__18949;
 continue;
 } else {
 }
@@ -447,31 +447,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_camelCaseSymbol.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_camelCaseSymbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.capitalize,"",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_camelCaseSymbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.capitalize,"",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_camelCaseSymbol.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_camelCaseSymbol.cljs$lang$applyTo = (function (seq18544){
-var G__18545 = cljs.core.first(seq18544);
-var seq18544__$1 = cljs.core.next(seq18544);
+(camel_snake_kebab.core.__GT_camelCaseSymbol.cljs$lang$applyTo = (function (seq18678){
+var G__18679 = cljs.core.first(seq18678);
+var seq18678__$1 = cljs.core.next(seq18678);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18545,seq18544__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18679,seq18678__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_camelCaseKeyword = (function camel_snake_kebab$core$__GT_camelCaseKeyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18727 = arguments.length;
-var i__4737__auto___18728 = (0);
+var len__4736__auto___18950 = arguments.length;
+var i__4737__auto___18951 = (0);
 while(true){
-if((i__4737__auto___18728 < len__4736__auto___18727)){
-args__4742__auto__.push((arguments[i__4737__auto___18728]));
+if((i__4737__auto___18951 < len__4736__auto___18950)){
+args__4742__auto__.push((arguments[i__4737__auto___18951]));
 
-var G__18729 = (i__4737__auto___18728 + (1));
-i__4737__auto___18728 = G__18729;
+var G__18952 = (i__4737__auto___18951 + (1));
+i__4737__auto___18951 = G__18952;
 continue;
 } else {
 }
@@ -482,30 +482,30 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_camelCaseKeyword.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_camelCaseKeyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.capitalize,"",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_camelCaseKeyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.capitalize,"",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_camelCaseKeyword.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_camelCaseKeyword.cljs$lang$applyTo = (function (seq18546){
-var G__18547 = cljs.core.first(seq18546);
-var seq18546__$1 = cljs.core.next(seq18546);
+(camel_snake_kebab.core.__GT_camelCaseKeyword.cljs$lang$applyTo = (function (seq18680){
+var G__18681 = cljs.core.first(seq18680);
+var seq18680__$1 = cljs.core.next(seq18680);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18547,seq18546__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18681,seq18680__$1);
 }));
 
 camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE = (function camel_snake_kebab$core$__GT_SCREAMING_SNAKE_CASE(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18730 = arguments.length;
-var i__4737__auto___18731 = (0);
+var len__4736__auto___18953 = arguments.length;
+var i__4737__auto___18954 = (0);
 while(true){
-if((i__4737__auto___18731 < len__4736__auto___18730)){
-args__4742__auto__.push((arguments[i__4737__auto___18731]));
+if((i__4737__auto___18954 < len__4736__auto___18953)){
+args__4742__auto__.push((arguments[i__4737__auto___18954]));
 
-var G__18732 = (i__4737__auto___18731 + (1));
-i__4737__auto___18731 = G__18732;
+var G__18955 = (i__4737__auto___18954 + (1));
+i__4737__auto___18954 = G__18955;
 continue;
 } else {
 }
@@ -516,34 +516,34 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE.cljs$core$IFn$_invoke$arity$variadic = (function (s__18455__auto__,rest__18456__auto__){
-var convert_case__18457__auto__ = (function (p1__18454__18458__auto__){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.upper_case,clojure.string.upper_case,"_",p1__18454__18458__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18456__auto__], 0));
+(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE.cljs$core$IFn$_invoke$arity$variadic = (function (s__18558__auto__,rest__18559__auto__){
+var convert_case__18560__auto__ = (function (p1__18557__18561__auto__){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.upper_case,clojure.string.upper_case,"_",p1__18557__18561__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18559__auto__], 0));
 });
-return camel_snake_kebab.internals.alter_name.alter_name(s__18455__auto__,convert_case__18457__auto__);
+return camel_snake_kebab.internals.alter_name.alter_name(s__18558__auto__,convert_case__18560__auto__);
 }));
 
 (camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE.cljs$lang$applyTo = (function (seq18548){
-var G__18549 = cljs.core.first(seq18548);
-var seq18548__$1 = cljs.core.next(seq18548);
+(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE.cljs$lang$applyTo = (function (seq18682){
+var G__18683 = cljs.core.first(seq18682);
+var seq18682__$1 = cljs.core.next(seq18682);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18549,seq18548__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18683,seq18682__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_STRING = (function camel_snake_kebab$core$__GT_SCREAMING_SNAKE_CASE_STRING(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18733 = arguments.length;
-var i__4737__auto___18734 = (0);
+var len__4736__auto___18956 = arguments.length;
+var i__4737__auto___18957 = (0);
 while(true){
-if((i__4737__auto___18734 < len__4736__auto___18733)){
-args__4742__auto__.push((arguments[i__4737__auto___18734]));
+if((i__4737__auto___18957 < len__4736__auto___18956)){
+args__4742__auto__.push((arguments[i__4737__auto___18957]));
 
-var G__18735 = (i__4737__auto___18734 + (1));
-i__4737__auto___18734 = G__18735;
+var G__18958 = (i__4737__auto___18957 + (1));
+i__4737__auto___18957 = G__18958;
 continue;
 } else {
 }
@@ -554,31 +554,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_STRING.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_STRING.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.upper_case,clojure.string.upper_case,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_STRING.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.upper_case,clojure.string.upper_case,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_STRING.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_STRING.cljs$lang$applyTo = (function (seq18550){
-var G__18551 = cljs.core.first(seq18550);
-var seq18550__$1 = cljs.core.next(seq18550);
+(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_STRING.cljs$lang$applyTo = (function (seq18684){
+var G__18685 = cljs.core.first(seq18684);
+var seq18684__$1 = cljs.core.next(seq18684);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18551,seq18550__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18685,seq18684__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_SYMBOL = (function camel_snake_kebab$core$__GT_SCREAMING_SNAKE_CASE_SYMBOL(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18736 = arguments.length;
-var i__4737__auto___18737 = (0);
+var len__4736__auto___18959 = arguments.length;
+var i__4737__auto___18960 = (0);
 while(true){
-if((i__4737__auto___18737 < len__4736__auto___18736)){
-args__4742__auto__.push((arguments[i__4737__auto___18737]));
+if((i__4737__auto___18960 < len__4736__auto___18959)){
+args__4742__auto__.push((arguments[i__4737__auto___18960]));
 
-var G__18738 = (i__4737__auto___18737 + (1));
-i__4737__auto___18737 = G__18738;
+var G__18961 = (i__4737__auto___18960 + (1));
+i__4737__auto___18960 = G__18961;
 continue;
 } else {
 }
@@ -589,31 +589,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_SYMBOL.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_SYMBOL.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.upper_case,clojure.string.upper_case,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_SYMBOL.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.upper_case,clojure.string.upper_case,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_SYMBOL.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_SYMBOL.cljs$lang$applyTo = (function (seq18554){
-var G__18555 = cljs.core.first(seq18554);
-var seq18554__$1 = cljs.core.next(seq18554);
+(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_SYMBOL.cljs$lang$applyTo = (function (seq18692){
+var G__18693 = cljs.core.first(seq18692);
+var seq18692__$1 = cljs.core.next(seq18692);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18555,seq18554__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18693,seq18692__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_KEYWORD = (function camel_snake_kebab$core$__GT_SCREAMING_SNAKE_CASE_KEYWORD(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18739 = arguments.length;
-var i__4737__auto___18740 = (0);
+var len__4736__auto___18962 = arguments.length;
+var i__4737__auto___18963 = (0);
 while(true){
-if((i__4737__auto___18740 < len__4736__auto___18739)){
-args__4742__auto__.push((arguments[i__4737__auto___18740]));
+if((i__4737__auto___18963 < len__4736__auto___18962)){
+args__4742__auto__.push((arguments[i__4737__auto___18963]));
 
-var G__18741 = (i__4737__auto___18740 + (1));
-i__4737__auto___18740 = G__18741;
+var G__18964 = (i__4737__auto___18963 + (1));
+i__4737__auto___18963 = G__18964;
 continue;
 } else {
 }
@@ -624,30 +624,30 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_KEYWORD.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_KEYWORD.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.upper_case,clojure.string.upper_case,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_KEYWORD.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.upper_case,clojure.string.upper_case,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_KEYWORD.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_KEYWORD.cljs$lang$applyTo = (function (seq18556){
-var G__18557 = cljs.core.first(seq18556);
-var seq18556__$1 = cljs.core.next(seq18556);
+(camel_snake_kebab.core.__GT_SCREAMING_SNAKE_CASE_KEYWORD.cljs$lang$applyTo = (function (seq18701){
+var G__18702 = cljs.core.first(seq18701);
+var seq18701__$1 = cljs.core.next(seq18701);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18557,seq18556__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18702,seq18701__$1);
 }));
 
 camel_snake_kebab.core.__GT_snake_case = (function camel_snake_kebab$core$__GT_snake_case(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18743 = arguments.length;
-var i__4737__auto___18744 = (0);
+var len__4736__auto___18965 = arguments.length;
+var i__4737__auto___18966 = (0);
 while(true){
-if((i__4737__auto___18744 < len__4736__auto___18743)){
-args__4742__auto__.push((arguments[i__4737__auto___18744]));
+if((i__4737__auto___18966 < len__4736__auto___18965)){
+args__4742__auto__.push((arguments[i__4737__auto___18966]));
 
-var G__18747 = (i__4737__auto___18744 + (1));
-i__4737__auto___18744 = G__18747;
+var G__18967 = (i__4737__auto___18966 + (1));
+i__4737__auto___18966 = G__18967;
 continue;
 } else {
 }
@@ -658,34 +658,34 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_snake_case.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_snake_case.cljs$core$IFn$_invoke$arity$variadic = (function (s__18455__auto__,rest__18456__auto__){
-var convert_case__18457__auto__ = (function (p1__18454__18458__auto__){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"_",p1__18454__18458__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18456__auto__], 0));
+(camel_snake_kebab.core.__GT_snake_case.cljs$core$IFn$_invoke$arity$variadic = (function (s__18558__auto__,rest__18559__auto__){
+var convert_case__18560__auto__ = (function (p1__18557__18561__auto__){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"_",p1__18557__18561__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18559__auto__], 0));
 });
-return camel_snake_kebab.internals.alter_name.alter_name(s__18455__auto__,convert_case__18457__auto__);
+return camel_snake_kebab.internals.alter_name.alter_name(s__18558__auto__,convert_case__18560__auto__);
 }));
 
 (camel_snake_kebab.core.__GT_snake_case.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_snake_case.cljs$lang$applyTo = (function (seq18558){
-var G__18559 = cljs.core.first(seq18558);
-var seq18558__$1 = cljs.core.next(seq18558);
+(camel_snake_kebab.core.__GT_snake_case.cljs$lang$applyTo = (function (seq18712){
+var G__18713 = cljs.core.first(seq18712);
+var seq18712__$1 = cljs.core.next(seq18712);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18559,seq18558__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18713,seq18712__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_snake_case_string = (function camel_snake_kebab$core$__GT_snake_case_string(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18753 = arguments.length;
-var i__4737__auto___18754 = (0);
+var len__4736__auto___18968 = arguments.length;
+var i__4737__auto___18969 = (0);
 while(true){
-if((i__4737__auto___18754 < len__4736__auto___18753)){
-args__4742__auto__.push((arguments[i__4737__auto___18754]));
+if((i__4737__auto___18969 < len__4736__auto___18968)){
+args__4742__auto__.push((arguments[i__4737__auto___18969]));
 
-var G__18755 = (i__4737__auto___18754 + (1));
-i__4737__auto___18754 = G__18755;
+var G__18970 = (i__4737__auto___18969 + (1));
+i__4737__auto___18969 = G__18970;
 continue;
 } else {
 }
@@ -696,31 +696,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_snake_case_string.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_snake_case_string.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_snake_case_string.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_snake_case_string.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_snake_case_string.cljs$lang$applyTo = (function (seq18562){
-var G__18563 = cljs.core.first(seq18562);
-var seq18562__$1 = cljs.core.next(seq18562);
+(camel_snake_kebab.core.__GT_snake_case_string.cljs$lang$applyTo = (function (seq18714){
+var G__18715 = cljs.core.first(seq18714);
+var seq18714__$1 = cljs.core.next(seq18714);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18563,seq18562__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18715,seq18714__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_snake_case_symbol = (function camel_snake_kebab$core$__GT_snake_case_symbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18756 = arguments.length;
-var i__4737__auto___18758 = (0);
+var len__4736__auto___18971 = arguments.length;
+var i__4737__auto___18972 = (0);
 while(true){
-if((i__4737__auto___18758 < len__4736__auto___18756)){
-args__4742__auto__.push((arguments[i__4737__auto___18758]));
+if((i__4737__auto___18972 < len__4736__auto___18971)){
+args__4742__auto__.push((arguments[i__4737__auto___18972]));
 
-var G__18759 = (i__4737__auto___18758 + (1));
-i__4737__auto___18758 = G__18759;
+var G__18973 = (i__4737__auto___18972 + (1));
+i__4737__auto___18972 = G__18973;
 continue;
 } else {
 }
@@ -731,31 +731,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_snake_case_symbol.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_snake_case_symbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_snake_case_symbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_snake_case_symbol.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_snake_case_symbol.cljs$lang$applyTo = (function (seq18566){
-var G__18567 = cljs.core.first(seq18566);
-var seq18566__$1 = cljs.core.next(seq18566);
+(camel_snake_kebab.core.__GT_snake_case_symbol.cljs$lang$applyTo = (function (seq18716){
+var G__18717 = cljs.core.first(seq18716);
+var seq18716__$1 = cljs.core.next(seq18716);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18567,seq18566__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18717,seq18716__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_snake_case_keyword = (function camel_snake_kebab$core$__GT_snake_case_keyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18764 = arguments.length;
-var i__4737__auto___18765 = (0);
+var len__4736__auto___18975 = arguments.length;
+var i__4737__auto___18976 = (0);
 while(true){
-if((i__4737__auto___18765 < len__4736__auto___18764)){
-args__4742__auto__.push((arguments[i__4737__auto___18765]));
+if((i__4737__auto___18976 < len__4736__auto___18975)){
+args__4742__auto__.push((arguments[i__4737__auto___18976]));
 
-var G__18766 = (i__4737__auto___18765 + (1));
-i__4737__auto___18765 = G__18766;
+var G__18977 = (i__4737__auto___18976 + (1));
+i__4737__auto___18976 = G__18977;
 continue;
 } else {
 }
@@ -766,30 +766,30 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_snake_case_keyword.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_snake_case_keyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"_",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_snake_case_keyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"_",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_snake_case_keyword.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_snake_case_keyword.cljs$lang$applyTo = (function (seq18570){
-var G__18571 = cljs.core.first(seq18570);
-var seq18570__$1 = cljs.core.next(seq18570);
+(camel_snake_kebab.core.__GT_snake_case_keyword.cljs$lang$applyTo = (function (seq18718){
+var G__18719 = cljs.core.first(seq18718);
+var seq18718__$1 = cljs.core.next(seq18718);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18571,seq18570__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18719,seq18718__$1);
 }));
 
 camel_snake_kebab.core.__GT_kebab_case = (function camel_snake_kebab$core$__GT_kebab_case(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18767 = arguments.length;
-var i__4737__auto___18768 = (0);
+var len__4736__auto___18979 = arguments.length;
+var i__4737__auto___18980 = (0);
 while(true){
-if((i__4737__auto___18768 < len__4736__auto___18767)){
-args__4742__auto__.push((arguments[i__4737__auto___18768]));
+if((i__4737__auto___18980 < len__4736__auto___18979)){
+args__4742__auto__.push((arguments[i__4737__auto___18980]));
 
-var G__18769 = (i__4737__auto___18768 + (1));
-i__4737__auto___18768 = G__18769;
+var G__18981 = (i__4737__auto___18980 + (1));
+i__4737__auto___18980 = G__18981;
 continue;
 } else {
 }
@@ -800,34 +800,34 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_kebab_case.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_kebab_case.cljs$core$IFn$_invoke$arity$variadic = (function (s__18455__auto__,rest__18456__auto__){
-var convert_case__18457__auto__ = (function (p1__18454__18458__auto__){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"-",p1__18454__18458__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18456__auto__], 0));
+(camel_snake_kebab.core.__GT_kebab_case.cljs$core$IFn$_invoke$arity$variadic = (function (s__18558__auto__,rest__18559__auto__){
+var convert_case__18560__auto__ = (function (p1__18557__18561__auto__){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"-",p1__18557__18561__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18559__auto__], 0));
 });
-return camel_snake_kebab.internals.alter_name.alter_name(s__18455__auto__,convert_case__18457__auto__);
+return camel_snake_kebab.internals.alter_name.alter_name(s__18558__auto__,convert_case__18560__auto__);
 }));
 
 (camel_snake_kebab.core.__GT_kebab_case.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_kebab_case.cljs$lang$applyTo = (function (seq18572){
-var G__18573 = cljs.core.first(seq18572);
-var seq18572__$1 = cljs.core.next(seq18572);
+(camel_snake_kebab.core.__GT_kebab_case.cljs$lang$applyTo = (function (seq18761){
+var G__18766 = cljs.core.first(seq18761);
+var seq18761__$1 = cljs.core.next(seq18761);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18573,seq18572__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18766,seq18761__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_kebab_case_string = (function camel_snake_kebab$core$__GT_kebab_case_string(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18770 = arguments.length;
-var i__4737__auto___18771 = (0);
+var len__4736__auto___18982 = arguments.length;
+var i__4737__auto___18983 = (0);
 while(true){
-if((i__4737__auto___18771 < len__4736__auto___18770)){
-args__4742__auto__.push((arguments[i__4737__auto___18771]));
+if((i__4737__auto___18983 < len__4736__auto___18982)){
+args__4742__auto__.push((arguments[i__4737__auto___18983]));
 
-var G__18772 = (i__4737__auto___18771 + (1));
-i__4737__auto___18771 = G__18772;
+var G__18984 = (i__4737__auto___18983 + (1));
+i__4737__auto___18983 = G__18984;
 continue;
 } else {
 }
@@ -838,31 +838,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_kebab_case_string.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_kebab_case_string.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"-",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_kebab_case_string.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"-",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_kebab_case_string.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_kebab_case_string.cljs$lang$applyTo = (function (seq18574){
-var G__18575 = cljs.core.first(seq18574);
-var seq18574__$1 = cljs.core.next(seq18574);
+(camel_snake_kebab.core.__GT_kebab_case_string.cljs$lang$applyTo = (function (seq18824){
+var G__18825 = cljs.core.first(seq18824);
+var seq18824__$1 = cljs.core.next(seq18824);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18575,seq18574__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18825,seq18824__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_kebab_case_symbol = (function camel_snake_kebab$core$__GT_kebab_case_symbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18773 = arguments.length;
-var i__4737__auto___18774 = (0);
+var len__4736__auto___18985 = arguments.length;
+var i__4737__auto___18986 = (0);
 while(true){
-if((i__4737__auto___18774 < len__4736__auto___18773)){
-args__4742__auto__.push((arguments[i__4737__auto___18774]));
+if((i__4737__auto___18986 < len__4736__auto___18985)){
+args__4742__auto__.push((arguments[i__4737__auto___18986]));
 
-var G__18775 = (i__4737__auto___18774 + (1));
-i__4737__auto___18774 = G__18775;
+var G__18987 = (i__4737__auto___18986 + (1));
+i__4737__auto___18986 = G__18987;
 continue;
 } else {
 }
@@ -873,31 +873,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_kebab_case_symbol.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_kebab_case_symbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"-",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_kebab_case_symbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"-",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_kebab_case_symbol.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_kebab_case_symbol.cljs$lang$applyTo = (function (seq18577){
-var G__18578 = cljs.core.first(seq18577);
-var seq18577__$1 = cljs.core.next(seq18577);
+(camel_snake_kebab.core.__GT_kebab_case_symbol.cljs$lang$applyTo = (function (seq18831){
+var G__18832 = cljs.core.first(seq18831);
+var seq18831__$1 = cljs.core.next(seq18831);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18578,seq18577__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18832,seq18831__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_kebab_case_keyword = (function camel_snake_kebab$core$__GT_kebab_case_keyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18776 = arguments.length;
-var i__4737__auto___18777 = (0);
+var len__4736__auto___18988 = arguments.length;
+var i__4737__auto___18990 = (0);
 while(true){
-if((i__4737__auto___18777 < len__4736__auto___18776)){
-args__4742__auto__.push((arguments[i__4737__auto___18777]));
+if((i__4737__auto___18990 < len__4736__auto___18988)){
+args__4742__auto__.push((arguments[i__4737__auto___18990]));
 
-var G__18778 = (i__4737__auto___18777 + (1));
-i__4737__auto___18777 = G__18778;
+var G__18991 = (i__4737__auto___18990 + (1));
+i__4737__auto___18990 = G__18991;
 continue;
 } else {
 }
@@ -908,30 +908,30 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_kebab_case_keyword.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_kebab_case_keyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"-",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_kebab_case_keyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,clojure.string.lower_case,clojure.string.lower_case,"-",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_kebab_case_keyword.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_kebab_case_keyword.cljs$lang$applyTo = (function (seq18582){
-var G__18583 = cljs.core.first(seq18582);
-var seq18582__$1 = cljs.core.next(seq18582);
+(camel_snake_kebab.core.__GT_kebab_case_keyword.cljs$lang$applyTo = (function (seq18841){
+var G__18842 = cljs.core.first(seq18841);
+var seq18841__$1 = cljs.core.next(seq18841);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18583,seq18582__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18842,seq18841__$1);
 }));
 
 camel_snake_kebab.core.__GT_HTTP_Header_Case = (function camel_snake_kebab$core$__GT_HTTP_Header_Case(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18795 = arguments.length;
-var i__4737__auto___18799 = (0);
+var len__4736__auto___18992 = arguments.length;
+var i__4737__auto___18993 = (0);
 while(true){
-if((i__4737__auto___18799 < len__4736__auto___18795)){
-args__4742__auto__.push((arguments[i__4737__auto___18799]));
+if((i__4737__auto___18993 < len__4736__auto___18992)){
+args__4742__auto__.push((arguments[i__4737__auto___18993]));
 
-var G__18800 = (i__4737__auto___18799 + (1));
-i__4737__auto___18799 = G__18800;
+var G__18994 = (i__4737__auto___18993 + (1));
+i__4737__auto___18993 = G__18994;
 continue;
 } else {
 }
@@ -942,34 +942,34 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_HTTP_Header_Case.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_HTTP_Header_Case.cljs$core$IFn$_invoke$arity$variadic = (function (s__18455__auto__,rest__18456__auto__){
-var convert_case__18457__auto__ = (function (p1__18454__18458__auto__){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,camel_snake_kebab.internals.misc.capitalize_http_header,camel_snake_kebab.internals.misc.capitalize_http_header,"-",p1__18454__18458__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18456__auto__], 0));
+(camel_snake_kebab.core.__GT_HTTP_Header_Case.cljs$core$IFn$_invoke$arity$variadic = (function (s__18558__auto__,rest__18559__auto__){
+var convert_case__18560__auto__ = (function (p1__18557__18561__auto__){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,camel_snake_kebab.internals.misc.capitalize_http_header,camel_snake_kebab.internals.misc.capitalize_http_header,"-",p1__18557__18561__auto__,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18559__auto__], 0));
 });
-return camel_snake_kebab.internals.alter_name.alter_name(s__18455__auto__,convert_case__18457__auto__);
+return camel_snake_kebab.internals.alter_name.alter_name(s__18558__auto__,convert_case__18560__auto__);
 }));
 
 (camel_snake_kebab.core.__GT_HTTP_Header_Case.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_HTTP_Header_Case.cljs$lang$applyTo = (function (seq18631){
-var G__18632 = cljs.core.first(seq18631);
-var seq18631__$1 = cljs.core.next(seq18631);
+(camel_snake_kebab.core.__GT_HTTP_Header_Case.cljs$lang$applyTo = (function (seq18872){
+var G__18873 = cljs.core.first(seq18872);
+var seq18872__$1 = cljs.core.next(seq18872);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18632,seq18631__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18873,seq18872__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_HTTP_Header_Case_String = (function camel_snake_kebab$core$__GT_HTTP_Header_Case_String(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18804 = arguments.length;
-var i__4737__auto___18805 = (0);
+var len__4736__auto___18995 = arguments.length;
+var i__4737__auto___18996 = (0);
 while(true){
-if((i__4737__auto___18805 < len__4736__auto___18804)){
-args__4742__auto__.push((arguments[i__4737__auto___18805]));
+if((i__4737__auto___18996 < len__4736__auto___18995)){
+args__4742__auto__.push((arguments[i__4737__auto___18996]));
 
-var G__18806 = (i__4737__auto___18805 + (1));
-i__4737__auto___18805 = G__18806;
+var G__18997 = (i__4737__auto___18996 + (1));
+i__4737__auto___18996 = G__18997;
 continue;
 } else {
 }
@@ -980,31 +980,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_HTTP_Header_Case_String.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_HTTP_Header_Case_String.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,camel_snake_kebab.internals.misc.capitalize_http_header,camel_snake_kebab.internals.misc.capitalize_http_header,"-",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_HTTP_Header_Case_String.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.identity(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,camel_snake_kebab.internals.misc.capitalize_http_header,camel_snake_kebab.internals.misc.capitalize_http_header,"-",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_HTTP_Header_Case_String.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_HTTP_Header_Case_String.cljs$lang$applyTo = (function (seq18633){
-var G__18634 = cljs.core.first(seq18633);
-var seq18633__$1 = cljs.core.next(seq18633);
+(camel_snake_kebab.core.__GT_HTTP_Header_Case_String.cljs$lang$applyTo = (function (seq18876){
+var G__18877 = cljs.core.first(seq18876);
+var seq18876__$1 = cljs.core.next(seq18876);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18634,seq18633__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18877,seq18876__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_HTTP_Header_Case_Symbol = (function camel_snake_kebab$core$__GT_HTTP_Header_Case_Symbol(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18807 = arguments.length;
-var i__4737__auto___18808 = (0);
+var len__4736__auto___18998 = arguments.length;
+var i__4737__auto___18999 = (0);
 while(true){
-if((i__4737__auto___18808 < len__4736__auto___18807)){
-args__4742__auto__.push((arguments[i__4737__auto___18808]));
+if((i__4737__auto___18999 < len__4736__auto___18998)){
+args__4742__auto__.push((arguments[i__4737__auto___18999]));
 
-var G__18809 = (i__4737__auto___18808 + (1));
-i__4737__auto___18808 = G__18809;
+var G__19000 = (i__4737__auto___18999 + (1));
+i__4737__auto___18999 = G__19000;
 continue;
 } else {
 }
@@ -1015,31 +1015,31 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_HTTP_Header_Case_Symbol.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_HTTP_Header_Case_Symbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,camel_snake_kebab.internals.misc.capitalize_http_header,camel_snake_kebab.internals.misc.capitalize_http_header,"-",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_HTTP_Header_Case_Symbol.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.symbol.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,camel_snake_kebab.internals.misc.capitalize_http_header,camel_snake_kebab.internals.misc.capitalize_http_header,"-",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_HTTP_Header_Case_Symbol.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_HTTP_Header_Case_Symbol.cljs$lang$applyTo = (function (seq18637){
-var G__18638 = cljs.core.first(seq18637);
-var seq18637__$1 = cljs.core.next(seq18637);
+(camel_snake_kebab.core.__GT_HTTP_Header_Case_Symbol.cljs$lang$applyTo = (function (seq18878){
+var G__18879 = cljs.core.first(seq18878);
+var seq18878__$1 = cljs.core.next(seq18878);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18638,seq18637__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18879,seq18878__$1);
 }));
 
 
 camel_snake_kebab.core.__GT_HTTP_Header_Case_Keyword = (function camel_snake_kebab$core$__GT_HTTP_Header_Case_Keyword(var_args){
 var args__4742__auto__ = [];
-var len__4736__auto___18810 = arguments.length;
-var i__4737__auto___18811 = (0);
+var len__4736__auto___19001 = arguments.length;
+var i__4737__auto___19002 = (0);
 while(true){
-if((i__4737__auto___18811 < len__4736__auto___18810)){
-args__4742__auto__.push((arguments[i__4737__auto___18811]));
+if((i__4737__auto___19002 < len__4736__auto___19001)){
+args__4742__auto__.push((arguments[i__4737__auto___19002]));
 
-var G__18812 = (i__4737__auto___18811 + (1));
-i__4737__auto___18811 = G__18812;
+var G__19003 = (i__4737__auto___19002 + (1));
+i__4737__auto___19002 = G__19003;
 continue;
 } else {
 }
@@ -1050,18 +1050,18 @@ var argseq__4743__auto__ = ((((1) < args__4742__auto__.length))?(new cljs.core.I
 return camel_snake_kebab.core.__GT_HTTP_Header_Case_Keyword.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4743__auto__);
 });
 
-(camel_snake_kebab.core.__GT_HTTP_Header_Case_Keyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18460__auto__,rest__18461__auto__){
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,camel_snake_kebab.internals.misc.capitalize_http_header,camel_snake_kebab.internals.misc.capitalize_http_header,"-",cljs.core.name(s__18460__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18461__auto__], 0)));
+(camel_snake_kebab.core.__GT_HTTP_Header_Case_Keyword.cljs$core$IFn$_invoke$arity$variadic = (function (s__18566__auto__,rest__18567__auto__){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.cljs$core$IFn$_invoke$arity$variadic(camel_snake_kebab.internals.misc.convert_case,camel_snake_kebab.internals.misc.capitalize_http_header,camel_snake_kebab.internals.misc.capitalize_http_header,"-",cljs.core.name(s__18566__auto__),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([rest__18567__auto__], 0)));
 }));
 
 (camel_snake_kebab.core.__GT_HTTP_Header_Case_Keyword.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(camel_snake_kebab.core.__GT_HTTP_Header_Case_Keyword.cljs$lang$applyTo = (function (seq18649){
-var G__18650 = cljs.core.first(seq18649);
-var seq18649__$1 = cljs.core.next(seq18649);
+(camel_snake_kebab.core.__GT_HTTP_Header_Case_Keyword.cljs$lang$applyTo = (function (seq18900){
+var G__18901 = cljs.core.first(seq18900);
+var seq18900__$1 = cljs.core.next(seq18900);
 var self__4723__auto__ = this;
-return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18650,seq18649__$1);
+return self__4723__auto__.cljs$core$IFn$_invoke$arity$variadic(G__18901,seq18900__$1);
 }));
 
 
