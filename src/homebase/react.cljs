@@ -10,26 +10,27 @@
     (catch js/Error e
       (throw
        (js/Error
-        (str (.-message e) "\n"
-             (some->> (.-stack e)
+        (str (goog.object/get e "message") "\n"
+             (some->> (goog.object/get e "stack")
                       (re-find (re-pattern (str hook-name ".*\\n(.*)\\n?")))
                       (second)
                       (clojure.string/trim))))))))
 
-(defonce homebase-context (react/createContext))
+(defonce ^:export homebase-context (react/createContext))
 
 (def base-schema
   {:db/ident {:db/unique :db.unique/identity}})
 
 (defn ^:export HomebaseProvider [props]
-  (let [config (.-config props)
-        conn (d/create-conn (if (.-schema config)
-                              (merge (hbjs/js->schema (.-schema config)) base-schema)
+  (let [conn (d/create-conn (if-let [schema (goog.object/getValueByKeys props #js ["config" "schema"])]
+                              (merge (hbjs/js->schema schema) base-schema)
                               base-schema))]
-    (when (.-initialData config) (hbjs/transact! conn (.-initialData config)))
+    (when-let [tx (goog.object/getValueByKeys props #js ["config" "initialData"])] 
+      (hbjs/transact! conn tx))
     (react/createElement
-     (.-Provider homebase-context) #js {:value conn}
-     (.-children props))))
+     (goog.object/get homebase-context "Provider") 
+     #js {:value conn}
+     (goog.object/get props "children"))))
 
 (defn ^:export useEntity [lookup]
   (let [conn (react/useContext homebase-context)

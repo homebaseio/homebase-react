@@ -4,18 +4,21 @@
   "version": "0.0.1",
   "license": "MIT",
   "homepage": "https://github.com/homebaseio/homebase-react",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/homebaseio/homebase-react.git"
+  "main": "./dist/js/homebase.react.js",
+  "scripts": {
+    "dev": "shadow-cljs watch dev",
+    "build": "rm -rf dist && shadow-cljs release npm",
+    "build:dev": "rm -rf dist && shadow-cljs compile npm",
+    "test:js": "yarn build && jest js/tests",
+    "test:js:dev": "yarn build:dev && jest js/tests",
+    "test:cljs": "shadow-cljs compile test && node out/node-tests.js",
+    "test": "yarn test:cljs && yarn test:js",
+    "test:dev": "yarn test:cljs && yarn test:js:dev",
+    "report": "rm -rf dist && shadow-cljs run shadow.cljs.build-report npm report.html"
   },
-  "keywords": [
-    "react",
-    "database",
-    "datalog",
-    "state",
-    "graph"
-  ],
-  "main": "./dist/homebase.react.js",
+  "dependencies": {
+    "react": "16.14.0"
+  },
   "devDependencies": {
     "@babel/cli": "7.11.6",
     "@babel/core": "7.11.6",
@@ -28,19 +31,30 @@
     "highlight.js": "10.2.1",
     "jest": "26.6.0",
     "marked": "1.2.0",
-    "react": "16.14.0",
     "react-component-benchmark": "0.0.4",
     "react-dom": "16.14.0",
     "shadow-cljs": "2.11.4"
   },
-  "dependencies": {},
+  "keywords": [
+    "react",
+    "relational",
+    "database",
+    "datalog",
+    "state",
+    "graph"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/homebaseio/homebase-react.git"
+  },
   "bugs": {
     "url": "https://github.com/homebaseio/homebase-react/issues"
   },
-  "scripts": {
-    "test-js": "shadow-cljs compile npm-dist && jest js/tests",
-    "test-cljs": "shadow-cljs compile test && node out/node-tests.js",
-    "test": "yarn test-cljs && yarn test-js"
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
-  "author": ""
+  "author": "Chris Smothers <chris@homebase.io> (https://homebase.io)",
+  "contributors": [
+    "JB Rubinovitz <jb@homebase.io> (https://homebase.io)"
+  ]
 }

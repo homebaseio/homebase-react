@@ -46,7 +46,7 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - run: yarn shadow-cljs compile npm-dist
+      - run: yarn shadow-cljs release npm
       - run: yarn shadow-cljs compile test
       
       - run: node out/node-tests.js
