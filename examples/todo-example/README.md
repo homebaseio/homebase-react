@@ -4,10 +4,10 @@ Heavily adopted from `create-react-app` bootstrapping, here's a our Todo example
 
 ## Installation
 ```
-npm install
+yarn install
 ```
 
 ## Run it
 ```
-npm start
+yarn start
 ```
