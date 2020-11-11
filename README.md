@@ -20,9 +20,9 @@ yarn add homebase-react
 
 ## Purpose
 
-We want data to be a first class citizen on the client. We love relational databases in our servers and we want that same experience in our React apps. We need to make it easier to work with complex data on clients and we do that by making our applications [local-first](https://news.ycombinator.com/item?id=21581444).
+Data should be a first class citizen on the client. We deserve the ergonomics and power of relational databases not just on the server, but in our React applications.
 
-Homebase React lets you plug a relational database into your React app with 3 lines of code. In fact it's the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers. Homebase React enables you to:
+Homebase React lets you plug a relational database into your React application with just 3 lines of code. In fact, it's the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers.
 
 - Replace Redux with something simpler and more declarative
 - Stop spending time wiring up custom datatypes, reducers, caches and other bespoke state mumbo jumbo
@@ -32,8 +32,7 @@ Homebase React lets you plug a relational database into your React app with 3 li
 - Query your database with Clojure style [Datalog](https://docs.datomic.com/on-prem/query.html) if you need more power
 - It's just data
 
-The goal of Homebase React is to be immediately more intuitive than any denormalized JSON store and over time we will eliminate all the tedious aspects of manipulating data on clients.
-
+The goal of Homebase React is to be immediately more intuitive than any denormalized JSON store and over time we will eliminate all the tedious aspects of manipulating data on clients. Homebase React makes it easier to work with complex data on client by making our applications [local-first](https://news.ycombinator.com/item?id=21581444).
 
 ## Examples
 ### Live Demos
