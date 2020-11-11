@@ -1,6 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
-import {HomebaseProvider, useEntity, useTransact} from 'homebase-react';
+import React from 'react'
+import { HomebaseProvider, useEntity, useTransact } from 'homebase-react'
+import './App.css'
 
 const config = {
   initialData: [{
@@ -11,11 +11,13 @@ const config = {
   }]
 }
 
-export const OurApp = () => (
-  <HomebaseProvider config={config}>
-    <Counter/>
-  </HomebaseProvider>
-)
+export default function App() {
+  return (
+    <HomebaseProvider config={config}>
+      <Counter/>
+    </HomebaseProvider>
+  )
+}
 
 const Counter = () => {
   const [counter] = useEntity({ identity: 'counter' })
@@ -36,19 +38,3 @@ const Counter = () => {
     </div>
   )
 }
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Click to "Increment" to increment counter.
-        </p>
-        <OurApp/>
-      </header>
-    </div>
-  );
-}
-
-export default App;

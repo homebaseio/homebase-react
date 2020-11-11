@@ -4,10 +4,10 @@ Heavily adopted from `create-react-app` bootstrapping, here's a our Counter exam
 
 ## Installation
 ```
-npm install
+yarn install
 ```
 
 ## Run it
 ```
-npm start
+yarn start
 ```
