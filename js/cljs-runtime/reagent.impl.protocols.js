@@ -5,7 +5,7 @@ goog.provide('reagent.impl.protocols');
  */
 reagent.impl.protocols.Compiler = function(){};
 
-var reagent$impl$protocols$Compiler$get_id$dyn_9274 = (function (this$){
+var reagent$impl$protocols$Compiler$get_id$dyn_9294 = (function (this$){
 var x__4428__auto__ = (((this$ == null))?null:this$);
 var m__4429__auto__ = (reagent.impl.protocols.get_id[goog.typeOf(x__4428__auto__)]);
 if((!((m__4429__auto__ == null)))){
@@ -23,11 +23,11 @@ reagent.impl.protocols.get_id = (function reagent$impl$protocols$get_id(this$){
 if((((!((this$ == null)))) && ((!((this$.reagent$impl$protocols$Compiler$get_id$arity$1 == null)))))){
 return this$.reagent$impl$protocols$Compiler$get_id$arity$1(this$);
 } else {
-return reagent$impl$protocols$Compiler$get_id$dyn_9274(this$);
+return reagent$impl$protocols$Compiler$get_id$dyn_9294(this$);
 }
 });
 
-var reagent$impl$protocols$Compiler$as_element$dyn_9275 = (function (this$,x){
+var reagent$impl$protocols$Compiler$as_element$dyn_9296 = (function (this$,x){
 var x__4428__auto__ = (((this$ == null))?null:this$);
 var m__4429__auto__ = (reagent.impl.protocols.as_element[goog.typeOf(x__4428__auto__)]);
 if((!((m__4429__auto__ == null)))){
@@ -45,11 +45,11 @@ reagent.impl.protocols.as_element = (function reagent$impl$protocols$as_element(
 if((((!((this$ == null)))) && ((!((this$.reagent$impl$protocols$Compiler$as_element$arity$2 == null)))))){
 return this$.reagent$impl$protocols$Compiler$as_element$arity$2(this$,x);
 } else {
-return reagent$impl$protocols$Compiler$as_element$dyn_9275(this$,x);
+return reagent$impl$protocols$Compiler$as_element$dyn_9296(this$,x);
 }
 });
 
-var reagent$impl$protocols$Compiler$make_element$dyn_9276 = (function (this$,argv,component,jsprops,first_child){
+var reagent$impl$protocols$Compiler$make_element$dyn_9300 = (function (this$,argv,component,jsprops,first_child){
 var x__4428__auto__ = (((this$ == null))?null:this$);
 var m__4429__auto__ = (reagent.impl.protocols.make_element[goog.typeOf(x__4428__auto__)]);
 if((!((m__4429__auto__ == null)))){
@@ -67,7 +67,7 @@ reagent.impl.protocols.make_element = (function reagent$impl$protocols$make_elem
 if((((!((this$ == null)))) && ((!((this$.reagent$impl$protocols$Compiler$make_element$arity$5 == null)))))){
 return this$.reagent$impl$protocols$Compiler$make_element$arity$5(this$,argv,component,jsprops,first_child);
 } else {
-return reagent$impl$protocols$Compiler$make_element$dyn_9276(this$,argv,component,jsprops,first_child);
+return reagent$impl$protocols$Compiler$make_element$dyn_9300(this$,argv,component,jsprops,first_child);
 }
 });
 
