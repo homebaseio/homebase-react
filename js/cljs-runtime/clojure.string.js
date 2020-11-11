@@ -364,8 +364,8 @@ buffer.append(cljs.core.str.cljs$core$IFn$_invoke$arity$1(replacement));
 buffer.append(ch);
 }
 
-var G__8585 = (index + (1));
-index = G__8585;
+var G__8600 = (index + (1));
+index = G__8600;
 continue;
 }
 break;
