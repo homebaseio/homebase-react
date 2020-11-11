@@ -25,8 +25,8 @@ const config = {
     }, {
       user: {
         // negative numbers can be used as temporary ids in a transaction
-        id: -1, 
-        name: 'Stella' 
+        id: -1,
+        name: 'Stella'
       }
     }, {
       user: {
@@ -80,16 +80,16 @@ const NewTodo = () => {
       transact([{
         todo: {
           name: e.target.elements['todo-name'].value,
-          createdAt: new Date
+          createdAt: new Date()
         }
       }])
       e.target.reset()
     }}>
-      <input 
+      <input
         autoFocus
-        type="text" 
-        name="todo-name" 
-        placeholder="What needs to be done?" 
+        type="text"
+        name="todo-name"
+        placeholder="What needs to be done?"
         autoComplete="off"
         required
       />
@@ -105,8 +105,8 @@ const TodoFilters = () => {
   return (
     <div>
       <label htmlFor="show-completed">Show Completed?</label>
-      <input 
-        type="checkbox" 
+      <input
+        type="checkbox"
         id="show-completed"
         checked={filters.get('showCompleted')}
         onChange={e => transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked }}])}
@@ -131,15 +131,15 @@ const ProjectSelect = ({ value, onChange }) => {
         Project:
       </label>
       &nbsp;
-      <select 
-        name="projects" 
+      <select
+        name="projects"
         value={value}
         onChange={e => onChange && onChange(Number(e.target.value))}
       >
         <option value="0"></option>
         {projects.map(project => (
-          <option 
-            key={project.get('id')} 
+          <option
+            key={project.get('id')}
             value={project.get('id')}
           >
             {project.get('name')}
@@ -192,13 +192,13 @@ const Todo = ({ todo }) => (
 const TodoCheck = ({ todo }) => {
   const [transact] = useTransact()
   return (
-    <input 
+    <input
       type="checkbox"
       style={{ width: 20, height: 20, cursor: 'pointer' }}
       checked={!!todo.get('isCompleted')}
-      onChange={e => transact([{ 
+      onChange={e => transact([{
         todo: {
-          id: todo.get('id'), 
+          id: todo.get('id'),
           isCompleted: e.target.checked
         }
       }])}
@@ -209,8 +209,8 @@ const TodoCheck = ({ todo }) => {
 const TodoName = ({ todo }) => {
   const [transact] = useTransact()
   return (
-    <input 
-      style={{  
+    <input
+      style={{
         border: 'none',  fontSize: 20, marginTop: -2, cursor: 'pointer',
         ...todo.get('isCompleted') && { textDecoration: 'line-through '}
       }}
@@ -226,7 +226,7 @@ const TodoProject = ({ todo }) => {
     <ProjectSelect
       value={todo.get('project', 'id') || ''}
       onChange={projectId => transact([{ todo: { id: todo.get('id'), 'project': projectId || null }}])}
-    />    
+    />
   )
 }
 
@@ -242,15 +242,15 @@ const TodoOwner = ({ todo }) => {
         Owner:
       </label>
       &nbsp;
-      <select 
-        name="users" 
+      <select
+        name="users"
         value={todo.get('owner', 'id') || ''}
         onChange={e => transact([{ todo: { id: todo.get('id'), owner: Number(e.target.value) || null }}])}
       >
         <option value=""></option>
         {users.map(user => (
-          <option 
-            key={user.get('id')} 
+          <option
+            key={user.get('id')}
             value={user.get('id')}
           >
             {user.get('name')}
