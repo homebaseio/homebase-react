@@ -24,13 +24,10 @@ const App = () => {
 
 exports.App = App;
 const config = {
-  // Schema is optional. Add as much or as little as you want.
+  // Schema is only used to enforce 
+  // unique constraints and relationships.
+  // It is not a type system, yet.
   schema: {
-    user: {
-      name: {
-        type: 'string'
-      }
-    },
     project: {
       name: {
         unique: 'identity'
@@ -46,17 +43,20 @@ const config = {
       }
     }
   },
+  // Initial data let's you conveniently transact some 
+  // starting data on DB creation to hydrate your components.
   initialData: [{
     todoFilter: {
-      // identity is a special attribute for user generated ids
-      // E.g. this is a setting that should be easy to lookup by name
+      // identity is a special unique attribute for user generated ids
+      // E.g. todoFilters are settings that should be easy to lookup by their identity
       identity: 'todoFilters',
       showCompleted: true,
       project: 0
     }
   }, {
     user: {
-      // negative numbers can be used as temporary ids in a transaction
+      // Negative numbers can be used as temporary ids in a transaction.
+      // Use them to relate multiple entities together at once.
       id: -1,
       name: 'Stella'
     }
