@@ -18,8 +18,21 @@ npm install homebase-react --save
 yarn add homebase-react
 ```
 
-## Docs
-https://www.notion.so/Homebase-Alpha-Docs-0f0e22f3adcd4e9d87a13440ab0c7a0b
+## Purpose
+
+Data should be a first class citizen on the client. We deserve the ergonomics and power of relational databases not just on the server, but in our React applications.
+
+Homebase React lets you plug a relational database into your React application with just 3 lines of code. In fact, it's the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers.
+
+- Replace Redux with something simpler and more declarative
+- Stop spending time wiring up custom datatypes, reducers, caches and other bespoke state mumbo jumbo
+- Gain all the benefits of relational data like a single source of truth
+- Traverse your data graph like it's one big JSON object
+- Query your database with a convenient JSON query syntax
+- Query your database with Clojure style [Datalog](https://docs.datomic.com/on-prem/query.html) if you need more power
+- It's just data
+
+The goal of Homebase React is to be immediately more intuitive than any denormalized JSON store and over time we will eliminate all the tedious aspects of manipulating data on clients. Homebase React makes it easier to work with complex data on client by making our applications [local-first](https://news.ycombinator.com/item?id=21581444).
 
 ## Examples
 ### Live Demos
@@ -28,21 +41,6 @@ You can see our hosted live demos [here](https://homebaseio.github.io/homebase-r
 ### Code Examples
 You can clone and run our React code examples [here](https://github.com/homebaseio/homebase-react-examples).
 
-## Purpose
-
-We want data to be a first class citizen on the client. We love relational databases in our servers and we want that same experience in our React apps. In other words, we want our applications to be [local-first](https://news.ycombinator.com/item?id=21581444). That means we need to make it easier to work with complex data on clients.
-
-Homebase React lets you plug a relational database into your React app with 3 lines of code. In fact it's the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers.
-
-- Replace Redux with something simpler and more declarative
-- Gain all the benefits of relational data like a single source of truth
-- Query your database with a convenient JSON query syntax
-- Query your database with Clojure style datalog if you need more power
-- Traverse your data graph like it's one big JSON object
-- Stop spending time wiring up custom datatypes, reducers, caches and other bespoke state mumbo jumbo
-- It's just data
-
-We think that Homebase React is immediately more intuitive than any denormalized JSON store, and over time it will get better as we eliminate all the tedious aspects of manipulating data on clients.
 
 ## API Overview
 
@@ -151,6 +149,20 @@ todos
 .map(todo => todo.get('name'))
 ```
 
+
+## Docs
+https://www.notion.so/Homebase-Alpha-Docs-0f0e22f3adcd4e9d87a13440ab0c7a0b
+
+## Roadmap
+
+1. Improve performance
+1. Document integration with backends
+1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
+    1. Immutability
+    1. History / Change Tracking
+1. Persist to IndexDB
+1. Local-first conflict resolution for offline caching and sync between multiple devices
+
 ## Development
 
 ```bash
@@ -167,15 +179,6 @@ yarn install
 yarn test
 ```
 
-## Roadmap
-
-1. Improve performance
-1. Document integration with backends
-1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
-    1. Immutability
-    1. History / Change Tracking
-1. Persist to IndexDB
-1. Local-first conflict resolution for offline caching and sync between multiple devices
 
 ## Authors
 
