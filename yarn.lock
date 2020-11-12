@@ -4715,7 +4715,7 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@^5.0.0-beta.0:
+husky@5.0.0-beta.0:
   version "5.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/husky/-/husky-5.0.0-beta.0.tgz#b09c5a7da1da884cfd9ff0d7cfd328b77e068516"
   integrity sha512-gemLvVKIeuSuu+xp+hY5DUNjNSNk4YIgdsFhC3Wwv6tpc8VIGNR+0g+5uOpsiNNlAekcaMfO06mwSSokqLAlhQ==
@@ -7714,7 +7714,7 @@ pify@^4.0.0, pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-pinst@^2.0.0:
+pinst@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/pinst/-/pinst-2.0.0.tgz#220d3dff268eb133b51c23ef2b382cf1b782ca86"
   integrity sha512-ZfR7vITsD/kBzxZLBz8GhPDenSs33p/3qNPyxhQEQef2rxyOrLmhkUtZnKQyk4cKKGMDC7piuebZSOor4XISeQ==
