@@ -2,19 +2,19 @@ goog.provide('homebase.react');
 var module$node_modules$react$index=shadow.js.require("module$node_modules$react$index", {});
 homebase.react.try_hook = (function homebase$react$try_hook(hook_name,f){
 try{return (f.cljs$core$IFn$_invoke$arity$0 ? f.cljs$core$IFn$_invoke$arity$0() : f.call(null));
-}catch (e24072){if((e24072 instanceof Error)){
-var e = e24072;
-throw Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1(goog.object.get(e,"message")),"\n",(function (){var G__24074 = goog.object.get(e,"stack");
-var G__24074__$1 = (((G__24074 == null))?null:cljs.core.re_find(cljs.core.re_pattern([cljs.core.str.cljs$core$IFn$_invoke$arity$1(hook_name),".*\\n(.*)\\n?"].join('')),G__24074));
-var G__24074__$2 = (((G__24074__$1 == null))?null:cljs.core.second(G__24074__$1));
-if((G__24074__$2 == null)){
+}catch (e24076){if((e24076 instanceof Error)){
+var e = e24076;
+throw Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1(goog.object.get(e,"message")),"\n",(function (){var G__24078 = goog.object.get(e,"stack");
+var G__24078__$1 = (((G__24078 == null))?null:cljs.core.re_find(cljs.core.re_pattern([cljs.core.str.cljs$core$IFn$_invoke$arity$1(hook_name),".*\\n(.*)\\n?"].join('')),G__24078));
+var G__24078__$2 = (((G__24078__$1 == null))?null:cljs.core.second(G__24078__$1));
+if((G__24078__$2 == null)){
 return null;
 } else {
-return clojure.string.trim(G__24074__$2);
+return clojure.string.trim(G__24078__$2);
 }
 })()].join(''));
 } else {
-throw e24072;
+throw e24076;
 
 }
 }});
@@ -50,9 +50,9 @@ return homebase.react.try_hook("useEntity",(function (){
 return homebase.js.entity(conn,lookup);
 }));
 });
-var vec__24076 = module$node_modules$react$index.useState(run_lookup());
-var result = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24076,(0),null);
-var setResult = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24076,(1),null);
+var vec__24079 = module$node_modules$react$index.useState(run_lookup());
+var result = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24079,(0),null);
+var setResult = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__24079,(1),null);
 module$node_modules$react$index.useEffect((function homebase$react$useEntity_$_use_entity_effect(){
 var key = cljs.core.rand.cljs$core$IFn$_invoke$arity$0();
 datascript.core.listen_BANG_.cljs$core$IFn$_invoke$arity$3(conn,key,(function (){
