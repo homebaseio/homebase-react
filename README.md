@@ -179,6 +179,11 @@ yarn install
 yarn test
 ```
 
+## Contributing
+
+Welcome and thank you! Writing docs, patches and features are all incredibly helpful and appreciated.
+
+We only ask that you provide test coverage for code changes, and conform to our [commit guidelines](CONTRIBUTING.md).
 
 ## Authors
 
