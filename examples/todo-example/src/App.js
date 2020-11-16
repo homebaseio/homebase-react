@@ -2,6 +2,13 @@ import React from 'react'
 import { HomebaseProvider, useEntity, useTransact, useQuery } from 'homebase-react'
 import './App.css'
 
+export default function App() {
+  return (
+    <HomebaseProvider config={config}>
+      <Todos />
+    </HomebaseProvider>
+  )
+}
 
 const config = {
   // Schema is only used to enforce 
@@ -23,15 +30,14 @@ const config = {
         // identity is a special unique attribute for user generated ids
         // E.g. todoFilters are settings that should be easy to lookup by their identity
         identity: 'todoFilters',
-        showCompleted: true,
-        project: 0
+        showCompleted: true
       }
     }, {
       user: {
         // Negative numbers can be used as temporary ids in a transaction.
         // Use them to relate multiple entities together at once.
-        id: -1,
-        name: 'Stella'
+        id: -1, 
+        name: 'Stella' 
       }
     }, {
       user: {
@@ -67,14 +73,6 @@ const config = {
   ]
 }
 
-export default function App() {
-  return (
-    <HomebaseProvider config={config}>
-      <Todos />
-    </HomebaseProvider>
-  )
-}
-
 const Todos = () => {
   return (
     <div>
@@ -98,68 +96,17 @@ const NewTodo = () => {
       }])
       e.target.reset()
     }}>
-      <input
+      <input 
         autoFocus
-        type="text"
-        name="todo-name"
-        placeholder="What needs to be done?"
+        type="text" 
+        name="todo-name" 
+        placeholder="What needs to be done?" 
         autoComplete="off"
         required
       />
       &nbsp;
       <button type="submit">Create Todo</button>
     </form>
-  )
-}
-
-const TodoFilters = () => {
-  const [filters] = useEntity({ identity: 'todoFilters' })
-  const [transact] = useTransact()
-  return (
-    <div>
-      <label htmlFor="show-completed">Show Completed?</label>
-      <input
-        type="checkbox"
-        id="show-completed"
-        checked={filters.get('showCompleted')}
-        onChange={e => transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked }}])}
-      />
-      &nbsp;·&nbsp;
-      <ProjectSelect
-        value={filters.get('project')}
-        onChange={project => transact([{ todoFilter: { id: filters.get('id'), project }}])}
-      />
-    </div>
-  )
-}
-
-const ProjectSelect = ({ value, onChange }) => {
-  const [projects] = useQuery({
-    $find: 'project',
-    $where: { project: { name: '$any' } }
-  })
-  return (
-    <>
-      <label>
-        Project:
-      </label>
-      &nbsp;
-      <select
-        name="projects"
-        value={value}
-        onChange={e => onChange && onChange(Number(e.target.value))}
-      >
-        <option value="0"></option>
-        {projects.map(project => (
-          <option
-            key={project.get('id')}
-            value={project.get('id')}
-          >
-            {project.get('name')}
-          </option>
-        ))}
-      </select>
-    </>
   )
 }
 
@@ -171,50 +118,51 @@ const TodoList = () => {
   })
   return (
     <div>
-      {todos
-      .filter(todo => {
+      {todos.filter(todo => {
         if (!filters.get('showCompleted') && todo.get('isCompleted')) return false
         if (filters.get('project') && todo.get('project', 'id') !== filters.get('project')) return false
+        if (filters.get('owner') && todo.get('owner', 'id') !== filters.get('owner')) return false
         return true
-      })
-      .sort((a, b) => a.get('createdAt') > b.get('createdAt') ? -1 : 1)
-      .map(todo => <Todo key={todo.get('id')} todo={todo}/>)}
+      }).sort((a, b) => a.get('createdAt') > b.get('createdAt') ? -1 : 1)
+      .map(todo => <Todo key={todo.get('id')} id={todo.get('id')}/>)}
     </div>
   )
 }
 
-const Todo = ({ todo }) => (
-  <div>
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', paddingTop: 20}}>
-      <TodoCheck todo={todo} />
-      <TodoName todo={todo} />
-    </div>
+// PERFORMANCE: By accepting an `id` prop instead of a whole `todo` entity
+// this component stays disconnected from the useQuery in the parent TodoList. 
+// useEntity creates a separate scope for every Todo so changes to TodoList
+// or sibling Todos don't trigger unnecessary re-renders.
+const Todo = React.memo(({ id }) => {
+  const [todo] = useEntity(id)
+  return (
     <div>
-      <TodoProject todo={todo} />
-      &nbsp;·&nbsp;
-      <TodoOwner todo={todo} />
-      &nbsp;·&nbsp;
-      <TodoDelete todo={todo} />
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', paddingTop: 20}}>
+        <TodoCheck todo={todo} />
+        <TodoName todo={todo} />
+      </div>
+      <div>
+        <TodoProject todo={todo} />
+        &nbsp;·&nbsp;
+        <TodoOwner todo={todo} />
+        &nbsp;·&nbsp;
+        <TodoDelete todo={todo} />
+      </div>
+      <small style={{ color: 'grey' }}>
+        {todo.get('createdAt').toLocaleString()}
+      </small>
     </div>
-    <small style={{ color: 'grey' }}>
-      {todo.get('createdAt').toLocaleString()}
-    </small>
-  </div>
-)
+  )
+})
 
 const TodoCheck = ({ todo }) => {
   const [transact] = useTransact()
   return (
-    <input
+    <input 
       type="checkbox"
       style={{ width: 20, height: 20, cursor: 'pointer' }}
       checked={!!todo.get('isCompleted')}
-      onChange={e => transact([{
-        todo: {
-          id: todo.get('id'),
-          isCompleted: e.target.checked
-        }
-      }])}
+      onChange={e => transact([{ todo: { id: todo.get('id'), isCompleted: e.target.checked } }])}
     />
   )
 }
@@ -222,12 +170,12 @@ const TodoCheck = ({ todo }) => {
 const TodoName = ({ todo }) => {
   const [transact] = useTransact()
   return (
-    <input
-      style={{
-        border: 'none',  fontSize: 20, marginTop: -2, cursor: 'pointer',
+    <input 
+      style={{  
+        border: 'none', fontSize: 20, marginTop: -2, cursor: 'pointer',
         ...todo.get('isCompleted') && { textDecoration: 'line-through '}
       }}
-      value={todo.get('name')}
+      defaultValue={todo.get('name')}
       onChange={e => transact([{ todo: { id: todo.get('id'), name: e.target.value }}])}
     />
   )
@@ -236,41 +184,24 @@ const TodoName = ({ todo }) => {
 const TodoProject = ({ todo }) => {
   const [transact] = useTransact()
   return (
-    <ProjectSelect
-      value={todo.get('project', 'id') || ''}
-      onChange={projectId => transact([{ todo: { id: todo.get('id'), 'project': projectId || null }}])}
-    />
+    <EntitySelect
+      label="Project"
+      entityType="project"
+      value={todo.get('project', 'id')}
+      onChange={project => transact([{ todo: { id: todo.get('id'), project }}])}
+    />    
   )
 }
 
 const TodoOwner = ({ todo }) => {
   const [transact] = useTransact()
-  const [users] = useQuery({
-    $find: 'user',
-    $where: { user: { name: '$any' } }
-  })
   return (
-    <>
-      <label>
-        Owner:
-      </label>
-      &nbsp;
-      <select
-        name="users"
-        value={todo.get('owner', 'id') || ''}
-        onChange={e => transact([{ todo: { id: todo.get('id'), owner: Number(e.target.value) || null }}])}
-      >
-        <option value=""></option>
-        {users.map(user => (
-          <option
-            key={user.get('id')}
-            value={user.get('id')}
-          >
-            {user.get('name')}
-          </option>
-        ))}
-      </select>
-    </>
+    <EntitySelect 
+      label="Owner"
+      entityType="user" 
+      value={todo.get('owner', 'id')}
+      onChange={owner => transact([{ todo: { id: todo.get('id'), owner }}])}
+    />
   )
 }
 
@@ -282,3 +213,56 @@ const TodoDelete = ({ todo }) => {
     </button>
   )
 }
+
+const TodoFilters = () => {
+  const [filters] = useEntity({ identity: 'todoFilters' })
+  const [transact] = useTransact()
+  return (
+    <div>
+      <label>Show Completed?
+        <input 
+          type="checkbox" 
+          checked={filters.get('showCompleted')}
+          onChange={e => transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked }}])}
+        />
+      </label>
+      &nbsp;·&nbsp;
+      <EntitySelect
+        label="Project"
+        entityType="project"
+        value={filters.get('project')}
+        onChange={project => transact([{ todoFilter: { id: filters.get('id'), project }}])}
+      />
+      &nbsp;·&nbsp;
+      <EntitySelect
+        label="Owner"
+        entityType="user"
+        value={filters.get('owner')}
+        onChange={owner => transact([{ todoFilter: { id: filters.get('id'), owner }}])}
+      />
+    </div>
+  )
+}
+
+const EntitySelect = React.memo(({ label, entityType, value, onChange }) => {
+  const [entities] = useQuery({
+    $find: entityType,
+    $where: { [entityType]: { name: '$any' } }
+  })
+  return (
+    <label>{label}:&nbsp;
+      <select 
+        name={entityType} 
+        value={value || ''}
+        onChange={e => onChange && onChange(Number(e.target.value) || null)}
+      >
+        <option key="-" value=""></option>
+        {entities.map(entity => (
+          <option key={entity.get('id')} value={entity.get('id')}>
+            {entity.get('name')}
+          </option>
+        ))}
+      </select>
+    </label>
+  )
+})
