@@ -26,13 +26,14 @@
   (when-let [[_ verb _ key] (re-find bool-re string)]
     (if (= "is" verb) (str key "?") (str verb "-" key "?"))))
 
-(defn js->key-not-memo [namespace string]
+(defn js->key-not-memo [namespace key]
   (or
-   (get js->db-attr-overrides string)
+   (get js->db-attr-overrides key)
    (keyword (csk/->kebab-case namespace)
-            (csk/->kebab-case
-             (or (js->bool-key string)
-                 string)))))
+            (str (if (= (subs key 0 1) "_") "_" "")
+                 (csk/->kebab-case
+                  (or (js->bool-key key)
+                      key))))))
 (def js->key (memoize js->key-not-memo))
 
 (comment
@@ -99,11 +100,6 @@
                                        "unique" "identity"}
                             "owner" {"type" "ref"}}})))
 
-(defn q-entity-array [query conn & args]
-  (->> (apply d/q query conn args)
-       (map (fn id->entity [[id]] (d/entity conn id)))
-       to-array))
-
 (defn js->datalog [data]
   (let [{find "$find" where "$where"} (js->clj data)]
     {:find [(symbol (str "?" find))]
@@ -136,30 +132,6 @@
     (object? query) (js->datalog query)
     :else nil))
 
-(defn js-get [entity name]
-  (case name
-    "id" (:db/id entity)
-    "ident" (:db/ident entity)
-    "identity" (:db/ident entity)
-    (let [ks (remove #{:db/id :db/ident} (keys entity))
-          ; This assumes that every entity only has keys of the same namespace once the :db keys are removed
-          nms (namespace (first ks))
-          k (js->key nms name)]
-      (get entity k))))
-
-(extend-type Entity
-  Object
-  (get [this & keys]
-    (reduce
-     (fn [acc key]
-       (let [key (keywordize key)
-             f (if (keyword? key) get js-get)]
-         (cond
-           (set? acc) (f (first acc) (keywordize key))
-           acc (f acc (keywordize key))
-           :else nil)))
-     this keys)))
-
 (defn nil->retract [tx]
   (if-let [id (:db/id tx)]
     (map (fn [[k v]]
@@ -167,32 +139,73 @@
          (dissoc tx :db/id))
     [tx]))
 
+(defn js-get [entity name]
+  (case name
+    "id" (:db/id entity)
+    "ident" (:db/ident entity)
+    "identity" (:db/ident entity)
+    (let [ks (remove #{:db/id :db/ident} (keys entity))
+          ; This assumes that every entity only has keys of the same namespace once the :db keys are removed
+          ; E.g. :db/id 1, :todo/name "", :todo/email ""
+          ; Not: :db/id 1, :todo/name "", :email/address ""
+          k (when (first ks)
+              (js->key (namespace (first ks)) name))]
+      (when k (get entity k)))))
 
-(defn humanize-transact-error [error]
-  (condp re-find (goog.object/get error "message")
-    #"\[object Object\] is not ISeqable" 
-    "Expected an array of transactions. 
-\nFor example:  transact([
-                {todo: {name: 1}}, 
-                {todo: {name: 2}}
-              ])
-"
-    
-    #"Unknown operation at \[nil nil nil nil\], expected"
-    "Expected 'retractEntity'. 
-\nFor example:  transact([['retractEntity', id]])
-"
-    
-    #"Can't use tempid in '\[:db\.fn/retractEntity"
-    "Expected a numerical id. 
-\nFor example:  transact([['retractEntity', 123]])
-"
-    
-    #"Expected number or lookup ref for entity id, got nil"
-    "Expected a numerical id. 
-\nFor example:  transact([['retractEntity', 123]])
-"
-    (goog.object/get error "message")))
+(defn entity-in-db? [entity]
+  (not (nil? (first (d/datoms (.-db entity) :eavt (:db/id entity))))))
+
+(declare HBEntity)
+
+(defn Entity->HBEntity [v]
+  (if (= Entity (type v))
+    (HBEntity. v nil) v))
+
+(defn lookup-entity 
+  ([entity attrs] (lookup-entity entity attrs false))
+  ([entity attrs nil-attrs-if-not-in-db?]
+   (Entity->HBEntity
+    (reduce
+     (fn [acc attr]
+       (if-not acc nil
+               (let [attr (keywordize attr)
+                     f (if (keyword? attr) get js-get)]
+                 (cond
+                   (and nil-attrs-if-not-in-db?
+                        (or (= :db/id attr) (= "id" attr))
+                        (not (entity-in-db? acc))) nil
+                   (set? acc) (f (first acc) attr)
+                   acc (f acc attr)
+                   :else nil))))
+     entity attrs))))
+
+(extend-type Entity
+  Object
+  (get [entity & attrs] (lookup-entity entity attrs)))
+
+(deftype HBEntity [^datascript.impl.entity/Entity entity _meta]
+  IMeta
+  (-meta [_] _meta)
+  IWithMeta
+  (-with-meta [_ new-meta] (HBEntity. entity new-meta))
+  ILookup
+  (-lookup [_ attr] (lookup-entity entity [attr] true))
+  (-lookup [_ attr not-found] (or (lookup-entity entity [attr] true) not-found))
+  IAssociative
+  (-contains-key? [_ k] (not (nil? (lookup-entity entity [k] true))))
+  Object
+  (get [this & attrs]
+    (let [v (lookup-entity entity attrs true)]
+      (when-let [f (:HBEntity/get (meta this))]
+        (f [this attrs v]))
+      v)))
+
+(defn q-entity-array [query conn & args]
+  (->> (apply d/q query conn args)
+       (map (fn id->entity [[id]] (HBEntity. (d/entity conn id) nil)))
+       to-array))
+
+(declare humanize-transact-error humanize-entity-error humanize-q-error)
 
 (defn transact! [conn txs]
   (try 
@@ -200,6 +213,43 @@
     (catch js/Error e 
       (throw (js/Error. (humanize-transact-error e))))))
 
+(defn entity [conn lookup]
+  (try
+    (HBEntity. (d/entity @conn (js->entity-lookup lookup)) nil)
+    (catch js/Error e
+      (throw (js/Error. (humanize-entity-error e))))))
+
+(defn q [query conn & args]
+  (try 
+    (apply q-entity-array (js->query query) @conn (keywordize args))
+    (catch js/Error e 
+      (throw (js/Error. (humanize-q-error e))))))
+
+(defn humanize-transact-error [error]
+  (condp re-find (goog.object/get error "message")
+    #"\[object Object\] is not ISeqable"
+    "Expected an array of transactions. 
+\nFor example:  transact([
+                {todo: {name: 1}}, 
+                {todo: {name: 2}}
+              ])
+"
+
+    #"Unknown operation at \[nil nil nil nil\], expected"
+    "Expected 'retractEntity'. 
+\nFor example:  transact([['retractEntity', id]])
+"
+
+    #"Can't use tempid in '\[:db\.fn/retractEntity"
+    "Expected a numerical id. 
+\nFor example:  transact([['retractEntity', 123]])
+"
+
+    #"Expected number or lookup ref for entity id, got nil"
+    "Expected a numerical id. 
+\nFor example:  transact([['retractEntity', 123]])
+"
+    (goog.object/get error "message")))
 
 (defn humanize-entity-error [error]
   (condp re-find (goog.object/get error "message")
@@ -208,13 +258,6 @@
           (str "The `" nmspc "." attr "` attribute should be marked as unique if you want to lookup entities by it."
                "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { unique: 'identity' }}}\n"))
     (goog.object/get error "message")))
-
-(defn entity [conn lookup]
-  (try
-    (d/entity @conn (js->entity-lookup lookup))
-    (catch js/Error e
-      (throw (js/Error. (humanize-entity-error e))))))
-
 
 (defn example-js-query
   ([] (example-js-query "item"))
@@ -230,25 +273,19 @@ For example:  query({
     #"Query should be a vector or a map"
     (str "Expected query to be in the form of an object or datalog string."
          (example-js-query))
-    
+
     #"Query for unknown vars: \[\?\]"
     (str "Expected query to have a $find and a $where clause."
          (example-js-query))
-    
+
     ; TODO: revist when datalog strings are better supported since this error is directed at JS object queries only.
     #"Query for unknown vars: \[\?((?!\]).+)\]"
     :>> (fn [[_ var]]
           (str "Expected to see '" var "' in both the $find and $where clauses."
                (example-js-query var)))
-    
+
     #"((?! is not ISeqable).+) is not ISeqable"
     :>> (fn [[_ v]]
           (str "Expected $where clause to be a nested object, not " v "."
                (example-js-query)))
     (goog.object/get error "message")))
-
-(defn q [query conn & args]
-  (try 
-    (apply q-entity-array (js->query query) @conn (keywordize args))
-    (catch js/Error e 
-      (throw (js/Error. (humanize-q-error e))))))
