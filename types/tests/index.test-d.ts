@@ -1,15 +1,15 @@
 import {expectType, expectError} from 'tsd';
-import { HomebaseProvider, useTransact, useEntity, useQuery } from '../index';
+import { HomebaseProvider, useTransact, useEntity, useQuery, Entity, Transaction} from '../index';
 
-expectType<object>(HomebaseProvider({}));
+expectType<any>(HomebaseProvider({children: []}));
 expectError(HomebaseProvider("a"));
 expectError(HomebaseProvider(1));
 
-expectType<Array<Array<object>>>(useTransact());
+expectType<[(transaction: Transaction) => any]>(useTransact());
 expectError(useTransact("blurb"));
 
-expectType<Array<any>>(useEntity(1));
+expectType<[Entity]>(useEntity(1));
 expectError(useEntity());
 
-expectType<Array<object>>(useQuery({}));
-expectError(useQuery());
+expectType<[Entity[]]>(useQuery({}));
+expectError(useQuery("d"));
