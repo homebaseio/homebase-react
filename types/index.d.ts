@@ -1,4 +1,4 @@
-export function HomebaseProvider(props: Object | undefined): Object;
-export function useTransact(): Array<Array<Object>>;
-export function useEntity(lookup: Object | String | Number): Array<any>;
-export function useQuery(query: Object, args: Object | undefined): any;
+export function HomebaseProvider(props?: object): object;
+export function useTransact(): Array<Array<object>>;
+export function useEntity(lookup: object | string | number): Array<any>;
+export function useQuery(query: object, args?: object): Array<object>;
