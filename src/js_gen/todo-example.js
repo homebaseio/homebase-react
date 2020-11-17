@@ -50,8 +50,7 @@ const config = {
       // identity is a special unique attribute for user generated ids
       // E.g. todoFilters are settings that should be easy to lookup by their identity
       identity: 'todoFilters',
-      showCompleted: true,
-      project: 0
+      showCompleted: true
     }
   }, {
     user: {
@@ -122,58 +121,6 @@ const NewTodo = () => {
   }, "Create Todo"));
 };
 
-const TodoFilters = () => {
-  const [filters] = useEntity({
-    identity: 'todoFilters'
-  });
-  const [transact] = useTransact();
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: "show-completed"
-  }, "Show Completed?"), /*#__PURE__*/_react.default.createElement("input", {
-    type: "checkbox",
-    id: "show-completed",
-    checked: filters.get('showCompleted'),
-    onChange: e => transact([{
-      todoFilter: {
-        id: filters.get('id'),
-        showCompleted: e.target.checked
-      }
-    }])
-  }), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(ProjectSelect, {
-    value: filters.get('project'),
-    onChange: project => transact([{
-      todoFilter: {
-        id: filters.get('id'),
-        project
-      }
-    }])
-  }));
-};
-
-const ProjectSelect = ({
-  value,
-  onChange
-}) => {
-  const [projects] = useQuery({
-    $find: 'project',
-    $where: {
-      project: {
-        name: '$any'
-      }
-    }
-  });
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("label", null, "Project:"), "\xA0", /*#__PURE__*/_react.default.createElement("select", {
-    name: "projects",
-    value: value,
-    onChange: e => onChange && onChange(Number(e.target.value))
-  }, /*#__PURE__*/_react.default.createElement("option", {
-    value: "0"
-  }), projects.map(project => /*#__PURE__*/_react.default.createElement("option", {
-    key: project.get('id'),
-    value: project.get('id')
-  }, project.get('name')))));
-};
-
 const TodoList = () => {
   const [filters] = useEntity({
     identity: 'todoFilters'
@@ -189,37 +136,45 @@ const TodoList = () => {
   return /*#__PURE__*/_react.default.createElement("div", null, todos.filter(todo => {
     if (!filters.get('showCompleted') && todo.get('isCompleted')) return false;
     if (filters.get('project') && todo.get('project', 'id') !== filters.get('project')) return false;
+    if (filters.get('owner') && todo.get('owner', 'id') !== filters.get('owner')) return false;
     return true;
   }).sort((a, b) => a.get('createdAt') > b.get('createdAt') ? -1 : 1).map(todo => /*#__PURE__*/_react.default.createElement(Todo, {
     key: todo.get('id'),
-    todo: todo
+    id: todo.get('id')
   })));
-};
+}; // PERFORMANCE: By accepting an `id` prop instead of a whole `todo` entity
+// this component stays disconnected from the useQuery in the parent TodoList. 
+// useEntity creates a separate scope for every Todo so changes to TodoList
+// or sibling Todos don't trigger unnecessary re-renders.
 
-const Todo = ({
-  todo
-}) => /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
-  style: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    paddingTop: 20
-  }
-}, /*#__PURE__*/_react.default.createElement(TodoCheck, {
-  todo: todo
-}), /*#__PURE__*/_react.default.createElement(TodoName, {
-  todo: todo
-})), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TodoProject, {
-  todo: todo
-}), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(TodoOwner, {
-  todo: todo
-}), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(TodoDelete, {
-  todo: todo
-})), /*#__PURE__*/_react.default.createElement("small", {
-  style: {
-    color: 'grey'
-  }
-}, todo.get('createdAt').toLocaleString()));
+
+const Todo = _react.default.memo(({
+  id
+}) => {
+  const [todo] = useEntity(id);
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      paddingTop: 20
+    }
+  }, /*#__PURE__*/_react.default.createElement(TodoCheck, {
+    todo: todo
+  }), /*#__PURE__*/_react.default.createElement(TodoName, {
+    todo: todo
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TodoProject, {
+    todo: todo
+  }), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(TodoOwner, {
+    todo: todo
+  }), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(TodoDelete, {
+    todo: todo
+  })), /*#__PURE__*/_react.default.createElement("small", {
+    style: {
+      color: 'grey'
+    }
+  }, todo.get('createdAt').toLocaleString()));
+});
 
 const TodoCheck = ({
   todo
@@ -256,7 +211,7 @@ const TodoName = ({
         textDecoration: 'line-through '
       })
     },
-    value: todo.get('name'),
+    defaultValue: todo.get('name'),
     onChange: e => transact([{
       todo: {
         id: todo.get('id'),
@@ -270,12 +225,14 @@ const TodoProject = ({
   todo
 }) => {
   const [transact] = useTransact();
-  return /*#__PURE__*/_react.default.createElement(ProjectSelect, {
-    value: todo.get('project', 'id') || '',
-    onChange: projectId => transact([{
+  return /*#__PURE__*/_react.default.createElement(EntitySelect, {
+    label: "Project",
+    entityType: "project",
+    value: todo.get('project', 'id'),
+    onChange: project => transact([{
       todo: {
         id: todo.get('id'),
-        'project': projectId || null
+        project
       }
     }])
   });
@@ -285,29 +242,17 @@ const TodoOwner = ({
   todo
 }) => {
   const [transact] = useTransact();
-  const [users] = useQuery({
-    $find: 'user',
-    $where: {
-      user: {
-        name: '$any'
-      }
-    }
-  });
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("label", null, "Owner:"), "\xA0", /*#__PURE__*/_react.default.createElement("select", {
-    name: "users",
-    value: todo.get('owner', 'id') || '',
-    onChange: e => transact([{
+  return /*#__PURE__*/_react.default.createElement(EntitySelect, {
+    label: "Owner",
+    entityType: "user",
+    value: todo.get('owner', 'id'),
+    onChange: owner => transact([{
       todo: {
         id: todo.get('id'),
-        owner: Number(e.target.value) || null
+        owner
       }
     }])
-  }, /*#__PURE__*/_react.default.createElement("option", {
-    value: ""
-  }), users.map(user => /*#__PURE__*/_react.default.createElement("option", {
-    key: user.get('id'),
-    value: user.get('id')
-  }, user.get('name')))));
+  });
 };
 
 const TodoDelete = ({
@@ -318,3 +263,67 @@ const TodoDelete = ({
     onClick: () => transact([['retractEntity', todo.get('id')]])
   }, "Delete");
 };
+
+const TodoFilters = () => {
+  const [filters] = useEntity({
+    identity: 'todoFilters'
+  });
+  const [transact] = useTransact();
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", null, "Show Completed?", /*#__PURE__*/_react.default.createElement("input", {
+    type: "checkbox",
+    checked: filters.get('showCompleted'),
+    onChange: e => transact([{
+      todoFilter: {
+        id: filters.get('id'),
+        showCompleted: e.target.checked
+      }
+    }])
+  })), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(EntitySelect, {
+    label: "Project",
+    entityType: "project",
+    value: filters.get('project'),
+    onChange: project => transact([{
+      todoFilter: {
+        id: filters.get('id'),
+        project
+      }
+    }])
+  }), "\xA0\xB7\xA0", /*#__PURE__*/_react.default.createElement(EntitySelect, {
+    label: "Owner",
+    entityType: "user",
+    value: filters.get('owner'),
+    onChange: owner => transact([{
+      todoFilter: {
+        id: filters.get('id'),
+        owner
+      }
+    }])
+  }));
+};
+
+const EntitySelect = _react.default.memo(({
+  label,
+  entityType,
+  value,
+  onChange
+}) => {
+  const [entities] = useQuery({
+    $find: entityType,
+    $where: {
+      [entityType]: {
+        name: '$any'
+      }
+    }
+  });
+  return /*#__PURE__*/_react.default.createElement("label", null, label, ":\xA0", /*#__PURE__*/_react.default.createElement("select", {
+    name: entityType,
+    value: value || '',
+    onChange: e => onChange && onChange(Number(e.target.value) || null)
+  }, /*#__PURE__*/_react.default.createElement("option", {
+    key: "-",
+    value: ""
+  }), entities.map(entity => /*#__PURE__*/_react.default.createElement("option", {
+    key: entity.get('id'),
+    value: entity.get('id')
+  }, entity.get('name')))));
+});

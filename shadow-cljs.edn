@@ -23,6 +23,10 @@
          :output-to "out/node-tests.js"
          :ns-regexp "-test$"
          :autorun false}
+  :test-autorun {:target :node-test
+                 :output-to "out/node-tests.js"
+                 :ns-regexp "-test$"
+                 :autorun true}
   :npm {:target :npm-module
         :output-dir "dist/js"
         :entries [homebase.react]

@@ -44,7 +44,7 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - run: yarn shadow-cljs compile dev 
+      - run: yarn shadow-cljs release dev 
 
       - name: Publish to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
