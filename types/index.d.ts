@@ -1,4 +1,3 @@
-
 export type Transaction = Array<object>;
 export type Schema = object;
 export type config = {schema?: Schema, initialData?: Transaction };
