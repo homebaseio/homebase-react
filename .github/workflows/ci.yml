@@ -47,7 +47,7 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - run: yarn shadow-cljs release npm
-      - run: yarn run bundle-ts
+      - run: yarn bundle-ts
       - run: yarn shadow-cljs compile test
 
       - run: node out/node-tests.js
