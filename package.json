@@ -8,10 +8,10 @@
   "private": false,
   "scripts": {
     "dev": "shadow-cljs watch dev",
-    "build": "rm -rf dist && shadow-cljs release npm",
-    "build:dev": "rm -rf dist && shadow-cljs compile npm",
-    "test:js": "yarn build && jest js/tests",
-    "test:js:dev": "yarn build:dev && jest js/tests",
+    "build": "rm -rf dist && shadow-cljs release npm && yarn bundle-ts",
+    "build:dev": "rm -rf dist && shadow-cljs compile npm && yarn bundle-ts",
+    "test:js": "yarn build && jest js/tests && yarn tsd",
+    "test:js:dev": "yarn build:dev && jest js/tests && yarn tsd",
     "test:cljs": "shadow-cljs compile test && node out/node-tests.js",
     "test:cljs:watch": "shadow-cljs watch test-autorun",
     "test": "yarn test:cljs && yarn test:js",
@@ -20,7 +20,8 @@
     "semantic-release": "semantic-release",
     "_postinstall": "husky install",
     "prepublish": "pinst --disable",
-    "postpublish": "pinst --enable"
+    "postpublish": "pinst --enable",
+    "bundle-ts": "./bundle-ts.sh"
   },
   "config": {
     "commitizen": {
@@ -32,7 +33,6 @@
   },
   "devDependencies": {
     "@babel/cli": "7.11.6",
-    "@babel/core": "7.11.6",
     "@babel/plugin-transform-modules-commonjs": "7.12.1",
     "@babel/plugin-transform-react-jsx": "7.10.4",
     "@commitlint/cli": "^11.0.0",
@@ -43,6 +43,7 @@
     "@semantic-release/github": "7.1.1",
     "@semantic-release/npm": "7.0.6",
     "@semantic-release/release-notes-generator": "9.0.1",
+    "@types/react": "^16.9.56",
     "babel-runtime": "6.26.0",
     "commitizen": "^4.2.2",
     "create-react-class": "15.6.3",
@@ -57,10 +58,15 @@
     "react": "16.14.0",
     "react-component-benchmark": "0.0.4",
     "react-dom": "16.14.0",
+    "react-test-renderer": "^16.14.0",
     "semantic-release": "17.2.2",
     "semantic-release-cli": "5.4.0",
-    "shadow-cljs": "2.11.4"
+    "shadow-cljs": "2.11.4",
+    "ts-jest": "^26.4.4",
+    "tsd": "^0.13.1",
+    "typescript": "^4.0.5"
   },
+  "types": "./dist/types",
   "keywords": [
     "react",
     "relational",
@@ -69,6 +75,9 @@
     "state",
     "graph"
   ],
+  "tsd": {
+    "directory": "types/tests"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/homebaseio/homebase-react.git"
