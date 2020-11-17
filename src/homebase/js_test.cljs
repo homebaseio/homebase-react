@@ -4,32 +4,51 @@
    [datascript.core :as d]
    [homebase.js :as hbjs]))
 
-(deftest test-transact
-  (testing "should succeed"
-    (is (map? (hbjs/transact! (d/create-conn)
-                              (clj->js [{"wat" {"thing" 1}}
-                                        ["retractEntity" 1]])))))
-  (testing "should fail with humanized errors"
+(def test-conn
+  (d/conn-from-db
+   (d/init-db
+    #{(d/datom 3 :todo/project 2)
+      (d/datom 2 :project/name "abc")}
+    {:todo/project {:db/valueType :db.type/ref
+                    :db/cardinality :db.cardinality/one}})))
+
+(deftest test-entity-get
+  (testing "datascript entity get"
     (is (thrown-with-msg?
          js/Error
-         #"(?s)Expected an array of transactions.*For example:"
-         (hbjs/transact! (d/create-conn) (clj->js {}))))
-    (is (thrown-with-msg?
-         js/Error
-         #"(?s)Expected 'retractEntity'.*For example:"
-         (hbjs/transact! (d/create-conn) (clj->js [[]]))))
-    (is (thrown-with-msg?
-         js/Error
-         #"(?s)Expected 'retractEntity'.*For example:"
-         (hbjs/transact! (d/create-conn) (clj->js [["notAThing"]]))))
-    (is (thrown-with-msg?
-         js/Error
-         #"(?s)Expected a numerical id.*For example:"
-         (hbjs/transact! (d/create-conn) (clj->js [["retractEntity" "wat"]]))))
-    (is (thrown-with-msg?
-         js/Error
-         #"(?s)Expected a numerical id.*For example:"
-         (hbjs/transact! (d/create-conn) (clj->js [["retractEntity"]]))))))
+         #"Cannot read property 'get' of null"
+         (.get (d/entity @(d/create-conn) nil) :db/id)))
+    (is (= 3 (:db/id (d/entity @(d/create-conn) 3))))
+    (is (= 3 (.get (d/entity @(d/create-conn) 3) :db/id)))
+    (is (nil? (.get (d/entity @(d/create-conn) 3) :todo/name)))
+    (is (nil? (get-in (d/entity @(d/create-conn) 3) [:todo/project :db/id])))
+    (is (= 2 (get-in (d/entity @test-conn 3) [:todo/project :db/id])))
+    (is (some? (get-in (d/entity @test-conn 2) [:todo/_project])))
+    (is (= 2 (.get (d/entity @test-conn 3) :todo/project :db/id)))
+    (is (= 3 (get (d/entity @test-conn 3) :db/id)))
+    (is (= 3 (.get (d/entity @test-conn 3) "id")))
+    (is (= 2 (.get (d/entity @test-conn 3) "project" "id")))
+    (is (thrown? js/Error (get (d/entity @test-conn 3) "id")))
+    (is (thrown? js/Error (get-in (d/entity @test-conn 3) ["project" "id"])))
+    (is (= "abc" (.get (d/entity @test-conn 3) "project" "name"))))
+  (testing "homebase entity get"
+    (is (some? (hbjs/entity (d/create-conn) 3)))
+    (is (= 3 (:db/id (hbjs/entity test-conn 3))))
+    (is (= 3 (get (hbjs/entity test-conn 3) "id")))
+    (is (= 3 (.get (hbjs/entity test-conn 3) "id")))
+    (is (nil? (.get (hbjs/entity (d/create-conn) 3) "name")))
+    (is (= "abc" (.get (hbjs/entity test-conn 2) "name")))
+    (is (nil? (get-in (hbjs/entity (d/create-conn) 3) ["project" "id"])))
+    (is (some? (.get (hbjs/entity test-conn 2) ":todo/_project")))
+    (is (= "abc" (.get (hbjs/entity test-conn 3) "project" "name")))
+    (is (nil? (:db/id (hbjs/entity (d/create-conn) 3))))
+    (is (nil? (.get (hbjs/entity (d/create-conn) 3) "id")))
+    (is (nil? (get (hbjs/entity (d/create-conn) 3) "id")))
+    (is (nil? (get-in (hbjs/entity (d/create-conn) 3) ["id"])))
+    (is (nil? (.get (hbjs/entity (d/create-conn) 3) "project" "id")))
+    (is (= 2 (get-in (hbjs/entity test-conn 3) ["project" "id"])))
+    (is (= "abc" (get-in (hbjs/entity test-conn 3) ["project" "name"])))))
+
 
 (deftest test-transact
   (testing "should succeed"
@@ -60,7 +79,7 @@
 
 (deftest test-entity
   (testing "should succeed"
-    (is (= 1 (:db/id (hbjs/entity (d/create-conn) (clj->js 1))))))
+    (is (nil? (:db/id (hbjs/entity (d/create-conn) (clj->js 1))))))
   (testing "should fail with humanized errors"
     (is (thrown-with-msg?
          js/Error

@@ -16,6 +16,20 @@
                       (second)
                       (clojure.string/trim))))))))
 
+(defn changed? [entities cached-entities]
+  (if (not= (count entities) (count cached-entities))
+    true
+    (reduce (fn [_ e]
+              (when (let [cached-e (get cached-entities (get e "id"))]
+                      (if (nil? cached-e)
+                        (reduced true)
+                        (reduce (fn [_ [ks v]]
+                                  (when (not= v (get-in e ks))
+                                    (reduced true)))
+                                nil cached-e)))
+                (reduced true)))
+            nil entities)))
+
 (defonce ^:export homebase-context (react/createContext))
 
 (def base-schema
@@ -34,25 +48,47 @@
 
 (defn ^:export useEntity [lookup]
   (let [conn (react/useContext homebase-context)
-        run-lookup (fn [] (try-hook "useEntity" #(hbjs/entity conn lookup)))
-        [result setResult] (react/useState (run-lookup))]
+        cached-entities (react/useMemo #(atom {}) #js [])
+        run-lookup (react/useCallback
+                    (fn run-lookup []
+                      (vary-meta (try-hook "useEntity" #(hbjs/entity conn lookup))
+                                 merge {:HBEntity/get (fn [[e ks v]] (swap! cached-entities assoc-in [(get e "id") ks] v))}))
+                    #js [lookup])
+        [result setResult] (react/useState (run-lookup))
+        listener (react/useCallback
+                  (fn entity-listener []
+                    (let [result (run-lookup)]
+                      (when (changed? #js [result] @cached-entities)
+                        (setResult result))))
+                  #js [run-lookup])]
     (react/useEffect
      (fn use-entity-effect []
        (let [key (rand)]
-         (d/listen! conn key #(setResult (run-lookup)))
-         (fn unmount-use-entity-effect [] (d/unlisten! conn key))))
+         (d/listen! conn key listener)
+         #(d/unlisten! conn key)))
      #js [lookup])
     [result]))
 
 (defn ^:export useQuery [query & args]
   (let [conn (react/useContext homebase-context)
-        run-query (fn [] (try-hook "useQuery" #(apply hbjs/q query conn args)))
-        [result setResult] (react/useState (run-query))]
+        cached-entities (react/useMemo #(atom {}) #js [])
+        run-query (react/useCallback 
+                   (fn run-query []
+                     (.map (try-hook "useQuery" #(apply hbjs/q query conn args))
+                           (fn [e] (vary-meta e merge {:HBEntity/get (fn [[e ks v]] (swap! cached-entities assoc-in [(get e "id") ks] v))}))))
+                   #js [query args])
+        [result setResult] (react/useState (run-query))
+        listener (react/useCallback
+                  (fn query-listener []
+                    (let [result (run-query)]
+                      (when (changed? result @cached-entities)
+                        (setResult result))))
+                  #js [run-query])]
     (react/useEffect
      (fn use-query-effect []
        (let [key (rand)]
-         (d/listen! conn key #(setResult (run-query)))
-         (fn unmount-use-query-effect [] (d/unlisten! conn key))))
+         (d/listen! conn key listener)
+         #(d/unlisten! conn key)))
      #js [query args])
     [result]))
 
