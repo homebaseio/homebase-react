@@ -59,7 +59,7 @@
     "react-component-benchmark": "0.0.4",
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.14.0",
-    "semantic-release": "17.2.2",
+    "semantic-release": "17.2.3",
     "semantic-release-cli": "5.4.0",
     "shadow-cljs": "2.11.4",
     "ts-jest": "^26.4.4",
