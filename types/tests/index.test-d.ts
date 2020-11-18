@@ -12,4 +12,5 @@ expectType<[Entity]>(useEntity(1));
 expectError(useEntity());
 
 expectType<[Entity[]]>(useQuery({}));
-expectError(useQuery("d"));
+expectType<[Entity[]]>(useQuery("a datalog query could live here"));
+expectError(useQuery(1));
