@@ -8,4 +8,4 @@ export type Entity = {
 export function HomebaseProvider(props: {config?:config, children:any}): any;
 export function useTransact(): [(transaction:Transaction) => any];
 export function useEntity(lookup: object | number): [Entity];
-export function useQuery(query: object, ...args: any): [Array<Entity>];
+export function useQuery(query: object | string, ...args: any): [Array<Entity>];
