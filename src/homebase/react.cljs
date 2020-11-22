@@ -2,6 +2,7 @@
   (:require
    ["react" :as react]
    [clojure.string]
+   [cljs.reader]
    [homebase.js :as hbjs]
    [datascript.core :as d]))
 
@@ -30,6 +31,20 @@
                 (reduced true)))
             nil entities)))
 
+(defn datom-select-keys [{:as d}]
+  #js [(.-e d) (str (.-a d)) (.-v d) (.-tx d) (< 0 (.-tx d))])
+
+(defn datoms->js [datoms]
+  (-> datoms
+      into-array
+      (.map datom-select-keys)))
+
+;; (defn datoms->json [datoms]
+;;   (reduce
+;;    (fn [acc {:keys [e a v]}] 
+;;      (assoc-in acc [e (namespace a) (name a)] v))
+;;    {} datoms))
+
 (defonce ^:export homebase-context (react/createContext))
 
 (def base-schema
@@ -46,13 +61,43 @@
      #js {:value conn}
      (goog.object/get props "children"))))
 
+(defn ^:export useClient []
+  (let [conn (react/useContext homebase-context)
+        key (react/useMemo rand #js [])
+        client #js {"dbToString" (react/useCallback
+                                  #(pr-str @conn)
+                                  #js [])
+                    "dbFromString" (react/useCallback
+                                    #(do (reset! conn (cljs.reader/read-string %))
+                                         (d/transact! conn [] ::silent))
+                                    #js [])
+                    "dbToDatoms" (react/useCallback
+                                  #(datoms->js (d/datoms @conn :eavt))
+                                  #js [])
+                    ;; "dbToJSON" (react/useCallback
+                    ;;             #(clj->js (datoms->json (d/datoms @conn :eavt)))
+                    ;;             #js [])
+                    "transactSilently" (react/useCallback
+                                        (fn [tx] (try-hook "useClient" #(hbjs/transact! conn tx ::silent)))
+                                        #js [])
+                    "addTransactListener" (react/useCallback
+                                           (fn [listener-fn] (d/listen! conn key #(when (not= ::silent (:tx-meta %))
+                                                                                   (listener-fn (datoms->js (:tx-data %))))))
+                                           #js [])
+                    "removeTransactListener" (react/useCallback
+                                              #(d/unlisten! conn key)
+                                              #js [])}]
+    [client]))
+  
 (defn ^:export useEntity [lookup]
   (let [conn (react/useContext homebase-context)
         cached-entities (react/useMemo #(atom {}) #js [])
         run-lookup (react/useCallback
                     (fn run-lookup []
                       (vary-meta (try-hook "useEntity" #(hbjs/entity conn lookup))
-                                 merge {:HBEntity/get (fn [[e ks v]] (swap! cached-entities assoc-in [(get e "id") ks] v))}))
+                                 merge {:HBEntity/get (fn [[e ks v]] (if (get e "id") 
+                                                                       (swap! cached-entities assoc-in [(get e "id") ks] v)
+                                                                       (reset! cached-entities {})))}))
                     #js [lookup])
         [result setResult] (react/useState (run-lookup))
         listener (react/useCallback
@@ -75,7 +120,9 @@
         run-query (react/useCallback 
                    (fn run-query []
                      (.map (try-hook "useQuery" #(apply hbjs/q query conn args))
-                           (fn [e] (vary-meta e merge {:HBEntity/get (fn [[e ks v]] (swap! cached-entities assoc-in [(get e "id") ks] v))}))))
+                           (fn [e] (vary-meta e merge {:HBEntity/get (fn [[e ks v]] (if (get e "id") 
+                                                                                      (swap! cached-entities assoc-in [(get e "id") ks] v)
+                                                                                      (reset! cached-entities {})))}))))
                    #js [query args])
         [result setResult] (react/useState (run-query))
         listener (react/useCallback
@@ -94,5 +141,7 @@
 
 (defn ^:export useTransact []
   (let [conn (react/useContext homebase-context)
-        transact (fn transact [txs] (try-hook "useTransact" #(hbjs/transact! conn txs)))]
+        transact (react/useCallback 
+                  (fn transact [tx] (try-hook "useTransact" #(hbjs/transact! conn tx)))
+                  #js [])]
     [transact]))
