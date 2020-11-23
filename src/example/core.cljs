@@ -7,7 +7,8 @@
    [reagent.core]
    [devcards.core :as dc]
    [example.counter]
-   [example.todo]))
+   [example.todo]
+   [example.todo-firebase]))
 
 (js/goog.exportSymbol "marked" marked)
 (js/goog.exportSymbol "DevcardsMarked" marked)

@@ -46,33 +46,33 @@
    "retract" :db/retract
    "retractEntity" :db.fn/retractEntity})
 
-(defn js->tx
+(defn js->tx-part
   ([tx]
    (if (object? tx)
-     (js->tx tx "db")
+     (js->tx-part tx "db")
      (let [[f e a v] tx]
        [(get js-tx-fns f) e (keywordize a) v])))
   ([data namespace]
    (reduce-kv
-    (fn js->tx-reducer [acc k v]
+    (fn js->tx-part-reducer [acc k v]
       (if (coll? v)
-        (js->tx v k)
+        (js->tx-part v k)
         (assoc acc (js->key namespace k) v)))
     {} (js->clj data))))
 
 (defn js->entity-lookup [lookup]
   (cond
     (number? lookup) lookup
-    (object? lookup) (first (js->tx lookup))
+    (object? lookup) (first (js->tx-part lookup))
     :else nil))
 
 (comment
-  (js->tx #js {"user" {"id" -2
+  (js->tx-part #js {"user" {"id" -2
                        "name" "Arpegius"}})
-  (map js->tx #js [{"todoFilter" {"identity" "todoFilters"
+  (map js->tx-part #js [{"todoFilter" {"identity" "todoFilters"
                                   "showCompleted" true
                                   "project" 0}}])
-  (first (js->tx #js {"identity" "wat"}))
+  (first (js->tx-part #js {"identity" "wat"}))
   (js->entity-lookup 1)
   (js->entity-lookup #js {"identity" "todoFilters"}))
 
@@ -195,10 +195,11 @@
   (-contains-key? [_ k] (not (nil? (lookup-entity entity [k] true))))
   Object
   (get [this & attrs]
-    (let [v (lookup-entity entity attrs true)]
-      (when-let [f (:HBEntity/get (meta this))]
-        (f [this attrs v]))
-      v)))
+    (when (seq attrs)
+      (let [v (lookup-entity entity attrs true)]
+        (when-let [f (:HBEntity/get (meta this))]
+          (f [this attrs v]))
+        v))))
 
 (defn q-entity-array [query conn & args]
   (->> (apply d/q query conn args)
@@ -207,11 +208,13 @@
 
 (declare humanize-transact-error humanize-entity-error humanize-q-error)
 
-(defn transact! [conn txs]
-  (try 
-    (d/transact! conn (mapcat (comp nil->retract js->tx) txs))
-    (catch js/Error e 
-      (throw (js/Error. (humanize-transact-error e))))))
+(defn transact! 
+  ([conn tx] (transact! conn tx nil))
+  ([conn tx tx-meta]
+   (try 
+     (d/transact! conn (mapcat (comp nil->retract js->tx-part) tx) tx-meta)
+     (catch js/Error e 
+       (throw (js/Error. (humanize-transact-error e)))))))
 
 (defn entity [conn lookup]
   (try
