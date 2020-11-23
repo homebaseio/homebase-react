@@ -176,8 +176,6 @@ const DataSaver = () => {
 
     const ref = _app.default.database().ref(`users/${userId}/entities`);
 
-    const r = Math.random();
-
     const on = action => ds => client.transactSilently([[action, ...ds.val()]]);
 
     ref.on('child_added', on('add'));

@@ -149,6 +149,21 @@ todos
 .map(todo => todo.get('name'))
 ```
 
+### `useClient`
+
+This hook returns the current database client with some helpful functions for syncing data with a backend.
+
+- `client.dbToString()` serializes the whole db, including the schema to a string
+- `client.dbFromString('a serialized db string')` replaces the current db
+- `client.dbToDatoms()` returns an array of all the facts aka datoms saved in the db
+- `client.addTransactListener((changedDatoms) => ...)` adds a listener function to all transactions
+    - use this to save data to your backend
+- `client.removeTransactionListener()` removes the transaction listener
+    - NOTE: only 1 listener can be added per useClient
+- `client.transactSilently(txData)` like `transact()` only it will not trigger any listeners
+
+Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
+
 ## Performance
 
 Homebase React tracks the attributes consumed in each component via the `entity.get` function and scopes those attributes to their respective `useEntity` or `useQuery` hook. Re-renders are only triggered when an attribute changes.
