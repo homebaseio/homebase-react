@@ -32,7 +32,7 @@
             nil entities)))
 
 (defn datom-select-keys [{:as d}]
-  #js [(.-e d) (str (.-a d)) (.-v d) (.-tx d) (< 0 (.-tx d))])
+  #js [(goog.object/get d "e") (str (goog.object/get d "a")) (goog.object/get d "v") (goog.object/get d "tx") (< 0 (goog.object/get d "tx"))])
 
 (defn datoms->js [datoms]
   (-> datoms
