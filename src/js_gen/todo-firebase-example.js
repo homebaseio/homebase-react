@@ -150,7 +150,7 @@ const SignIn = () => {
   });
 };
 
-const Todos = () => /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(DataSaver, null), /*#__PURE__*/_react.default.createElement(SignOut, null), /*#__PURE__*/_react.default.createElement(NewTodo, null), /*#__PURE__*/_react.default.createElement(TodoFilters, null), /*#__PURE__*/_react.default.createElement(TodoList, null));
+const Todos = () => /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(DataSaver, null), /*#__PURE__*/_react.default.createElement(SignOut, null), /*#__PURE__*/_react.default.createElement(NewTodo, null), /*#__PURE__*/_react.default.createElement("hr", null), /*#__PURE__*/_react.default.createElement(TodoFilters, null), /*#__PURE__*/_react.default.createElement(TodoList, null));
 
 const DataSaver = () => {
   const [client] = useClient();
@@ -221,6 +221,9 @@ const NewTodo = () => {
     }
   }, /*#__PURE__*/_react.default.createElement("input", {
     autoFocus: true,
+    style: {
+      fontSize: 20
+    },
     type: "text",
     name: "todo-name",
     placeholder: "What needs to be done?",
@@ -379,7 +382,7 @@ const TodoFilters = () => {
     identity: 'todoFilters'
   });
   const [client] = useClient();
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", null, "Show Completed?", /*#__PURE__*/_react.default.createElement("input", {
+  return /*#__PURE__*/_react.default.createElement("div", null, "Filter by:\xA0\xA0", /*#__PURE__*/_react.default.createElement("label", null, "Show Completed?", /*#__PURE__*/_react.default.createElement("input", {
     type: "checkbox",
     checked: filters.get('showCompleted'),
     onChange: e => client.transactSilently([{

@@ -116,6 +116,7 @@ const Todos = () => (
     <DataSaver />
     <SignOut />
     <NewTodo />
+    <hr/>
     <TodoFilters />
     <TodoList />
   </div>
@@ -180,6 +181,7 @@ const NewTodo = () => {
     }}>
       <input 
         autoFocus
+        style={{fontSize: 20}}
         type="text" 
         name="todo-name" 
         placeholder="What needs to be done?" 
@@ -301,6 +303,7 @@ const TodoFilters = () => {
   const [client] = useClient()
   return (
     <div>
+      Filter by:&nbsp;&nbsp;
       <label>Show Completed?
         <input 
           type="checkbox" 
