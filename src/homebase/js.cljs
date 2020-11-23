@@ -153,7 +153,7 @@
       (when k (get entity k)))))
 
 (defn entity-in-db? [entity]
-  (not (nil? (first (d/datoms (.-db entity) :eavt (:db/id entity))))))
+  (not (nil? (first (d/datoms (goog.object/get entity "db") :eavt (:db/id entity))))))
 
 (declare HBEntity)
 
