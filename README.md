@@ -153,14 +153,15 @@ todos
 
 This hook returns the current database client with some helpful functions for syncing data with a backend.
 
-- `client.dbToString()` serializes the whole db, including the schema to a string
+- `client.dbToString()` serializes the whole db including the schema to a string
 - `client.dbFromString('a serialized db string')` replaces the current db
 - `client.dbToDatoms()` returns an array of all the facts aka datoms saved in the db
 - `client.addTransactListener((changedDatoms) => ...)` adds a listener function to all transactions
     - use this to save data to your backend
 - `client.removeTransactionListener()` removes the transaction listener
-    - NOTE: only 1 listener can be added per useClient
+    - please note that only 1 listener can be added per useClient scope
 - `client.transactSilently(txData)` like `transact()` only it will not trigger any listeners
+    - use this to sync data from your backend into the client
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
 
