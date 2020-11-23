@@ -321,7 +321,7 @@ const TodoName = ({
         textDecoration: 'line-through '
       })
     },
-    value: todo.get('name'),
+    value: todo.get('name') || '',
     onChange: e => transact([{
       todo: {
         id: todo.get('id'),

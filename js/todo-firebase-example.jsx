@@ -257,7 +257,7 @@ const TodoName = ({ todo }) => {
         border: 'none', fontSize: 20, marginTop: -2, cursor: 'pointer',
         ...todo.get('isCompleted') && { textDecoration: 'line-through '}
       }}
-      value={todo.get('name')}
+      value={todo.get('name') || ''}
       onChange={e => transact([{ todo: { id: todo.get('id'), name: e.target.value }}])}
     />
   )
