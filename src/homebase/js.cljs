@@ -85,9 +85,11 @@
 (defn js->schema [schema]
   (let [schema (js->clj schema)]
     (reduce (fn js->schema-reducer [acc [nms nm k :as p]]
-              (let [v (get str->schema-key (get-in schema p))
-                    k (get str->schema-key k)]
-                (assoc-in acc [(js->key nms nm) k] v)))
+              (if-not (and nms nm k)
+                acc
+                (let [v (get str->schema-key (get-in schema p))
+                      k (get str->schema-key k)]
+                  (assoc-in acc [(js->key nms nm) k] v))))
             {} (u/paths schema))))
 
 (comment
