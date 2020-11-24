@@ -23,7 +23,7 @@ Homebase React makes state management painless by enabling you to plug a relatio
 
 ## Roadmap
 
-1. Document integration with backends
+1. Document integration with more backends
 1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
     1. Immutability
     1. History / Change Tracking
