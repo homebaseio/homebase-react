@@ -1,5 +1,7 @@
 # Homebase React
 
+![Homebase React Logo](public/images/logo-blk.png)
+
 [![CI](https://github.com/homebaseio/homebase-react/workflows/CI/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACI)
 [![CD](https://github.com/homebaseio/homebase-react/workflows/CD/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACD)
 [![NPM Version](https://img.shields.io/npm/v/homebase-react)](https://www.npmjs.com/package/homebase-react)
@@ -8,39 +10,25 @@
 
 *The graph database for delightful React state management*
 
-## Installation
 
-```bash
-# NPM
-npm install homebase-react --save
+Homebase React makes state management painless by enabling you to plug a relational graph database into your React application with just 3 lines of code. This is the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers.
 
-# Yarn
-yarn add homebase-react
-```
+## Features
+- The simplest and most declarative state management solution
+- The power of a backend relational graph database, but without having to wait on the network
+- Convenient JSON query syntax
+- Powerful Clojure style [Datalog](https://docs.datomic.com/on-prem/query.html) query syntax if you need it
+- Traverse your data graph like it's a big JSON object
+- Backup your data to the cloud
 
-## Purpose
+## Roadmap
 
-Data should be a first class citizen on the client. We deserve the ergonomics and power of relational databases not just on the server, but in our React applications.
-
-Homebase React lets you plug a relational database into your React application with just 3 lines of code. In fact, it's the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers.
-
-- Replace Redux with something simpler and more declarative
-- Stop spending time wiring up custom datatypes, reducers, caches and other bespoke state mumbo jumbo
-- Gain all the benefits of relational data like a single source of truth
-- Traverse your data graph like it's one big JSON object
-- Query your database with a convenient JSON query syntax
-- Query your database with Clojure style [Datalog](https://docs.datomic.com/on-prem/query.html) if you need more power
-- It's just data
-
-The goal of Homebase React is to be immediately more intuitive than any denormalized JSON store and over time we will eliminate all the tedious aspects of manipulating data on clients. Homebase React makes it easier to work with complex data on client by making our applications [local-first](https://news.ycombinator.com/item?id=21581444).
-
-## Examples
-### Live Demos
-You can see our hosted live demos [here](https://homebaseio.github.io/homebase-react)
-
-### Code Examples
-You can clone and run our React code examples [here](https://github.com/homebaseio/homebase-react-examples).
-
+1. Document integration with backends
+1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
+    1. Immutability
+    1. History / Change Tracking
+2. Persist to IndexedDB
+3. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
 
 ## API Overview
 
@@ -52,13 +40,12 @@ The HomebaseProvider wraps your React app and makes a relational database access
 import { HomebaseProvider, useEntity, useTransact, useQuery } from 'homebase-react'
 
 const config = {
-  // Schema is not a type system like in most DBs. 
-  // That is something we're considering, but for now it is 
-  // mainly applied at query time to simplify relational queries.
-  // The only schema currently supported is:
+  // Schema is not a type system,
+  // it's a way to simplify relational queries at query time.
+  // The schema currently supported is:
   // `type: 'ref'` which is a relationship and
   // `unique: 'identity` which enforces a uniqueness constraint 
-  // and let's you lookup entities by their unique attributes.
+  // and lets you lookup entities by their unique attributes.
   schema: {
     todo: {
       project: { type: 'ref' },
@@ -132,9 +119,9 @@ transact([['retractEntity', 1]])
 
 ### `useQuery`
 
-Use queries to return an array of entities that meet a given criteria. Our query API is powered by datalog, but exposed as JSON similar to a JS SQL driver or Mongo DB. Datalog is similar to SQL and is incredibly powerful. However only a subset of features are currently available in JSON. 
+Use queries to return an array of entities that meet a given criteria. Our query API is powered by Datalog, but exposed as JSON similar to a JS SQL driver or MongoDB. Datalog is similar to SQL and is incredibly powerful. However, only a subset of features are currently available in JSON.
 
-We are very interested in what features the community wants, and will prioritize based on feedback. In the meantime you can further filter results with JS `filter()` and `sort()`.
+We will prioritize features based on community feedback so please open an issue if there's something you need. In the meantime you can further filter results with JS `filter()` and `sort()`.
 
 ```js
 // Finds all todos with a name
@@ -166,6 +153,23 @@ This hook returns the current database client with some helpful functions for sy
     - use this to sync data from your backend into the client
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
+
+## Install
+
+```bash
+# NPM
+npm install homebase-react --save
+
+# Yarn
+yarn add homebase-react
+```
+## Examples
+### Live Demos
+You can see our hosted live demos [here](https://homebaseio.github.io/homebase-react)
+
+### Code Examples
+You can clone and run our React code examples [here](https://github.com/homebaseio/homebase-react-examples).
+
 
 ## Performance
 
@@ -201,17 +205,6 @@ const Todo = React.memo(({ todo }) => {
 
 ## Docs
 https://www.notion.so/Homebase-Alpha-Docs-0f0e22f3adcd4e9d87a13440ab0c7a0b
-
-## Roadmap
-
-1. Improve performance
-1. Document integration with backends
-1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
-    1. Immutability
-    1. History / Change Tracking
-1. Persist to IndexDB
-1. Local-first conflict resolution for offline caching and sync between multiple devices
-
 ## Development
 
 ```bash
