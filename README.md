@@ -21,6 +21,15 @@ Homebase React makes state management painless by enabling you to plug a relatio
 - Traverse your data graph like it's a big JSON object
 - Backup your data to the cloud
 
+## Install
+
+```bash
+# NPM
+npm install homebase-react --save
+
+# Yarn
+yarn add homebase-react
+```
 ## Roadmap
 
 1. Document integration with backends
@@ -154,15 +163,7 @@ This hook returns the current database client with some helpful functions for sy
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
 
-## Install
 
-```bash
-# NPM
-npm install homebase-react --save
-
-# Yarn
-yarn add homebase-react
-```
 ## Examples
 ### Live Demos
 You can see our hosted live demos [here](https://homebaseio.github.io/homebase-react)
