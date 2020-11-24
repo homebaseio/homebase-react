@@ -5,7 +5,6 @@ export type Entity = {
   get: (...params:string[]) => any;
 }
 export type Fact = [number, string, string | number | object | Array<any>, number, boolean];
-
 export type databaseClient = {
   dbToString: () => string,
   dbFromString: (dbString: string) => databaseClient,
