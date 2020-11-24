@@ -12,7 +12,7 @@ export type databaseClient = {
   dbToDatoms: () => Fact[],
   addTransactListener: (Facts: Fact[]) => void,
   removeTransactionListener: () => void,
-  transactSilently: (transaction: Transaction)=> void
+  transactSilently: (transaction: Transaction) => void
 }
 
 export function HomebaseProvider(props: {config?:config, children:any}): any;
