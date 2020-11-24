@@ -10,7 +10,7 @@ export type homebaseClient = {
   dbFromString: (dbString: string) => any,
   dbToDatoms: () => Datom[],
   addTransactionListener: (Datoms: Datom[]) => any,
-  removeTransactionListener: () => any,
+  removeTransactListener: () => any,
   transactSilently: (transaction: Transaction) => any
 }
 
