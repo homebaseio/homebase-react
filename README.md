@@ -1,6 +1,6 @@
-# Homebase React
+<img src="public/images/logo-blk.png" height="50" align="right">
 
-![Homebase React Logo](public/images/logo-blk.png)
+# Homebase React
 
 [![CI](https://github.com/homebaseio/homebase-react/workflows/CI/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACI)
 [![CD](https://github.com/homebaseio/homebase-react/workflows/CD/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACD)
