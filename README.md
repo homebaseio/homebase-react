@@ -21,6 +21,15 @@ Homebase React makes state management painless by enabling you to plug a relatio
 - Traverse your data graph like it's a big JSON object
 - Backup your data to the cloud
 
+## Roadmap
+
+1. Document integration with backends
+1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
+    1. Immutability
+    1. History / Change Tracking
+2. Persist to IndexedDB
+3. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
+
 ## Install
 
 ```bash
@@ -30,14 +39,13 @@ npm install homebase-react --save
 # Yarn
 yarn add homebase-react
 ```
-## Roadmap
 
-1. Document integration with backends
-1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
-    1. Immutability
-    1. History / Change Tracking
-2. Persist to IndexedDB
-3. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
+## Examples
+### Live Demos
+You can see our hosted live demos [here](https://homebaseio.github.io/homebase-react)
+
+### Code Examples
+You can clone and run our React code examples [here](https://github.com/homebaseio/homebase-react-examples).
 
 ## API Overview
 
@@ -163,13 +171,6 @@ This hook returns the current database client with some helpful functions for sy
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
 
-
-## Examples
-### Live Demos
-You can see our hosted live demos [here](https://homebaseio.github.io/homebase-react)
-
-### Code Examples
-You can clone and run our React code examples [here](https://github.com/homebaseio/homebase-react-examples).
 
 
 ## Performance
