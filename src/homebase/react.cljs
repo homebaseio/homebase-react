@@ -32,7 +32,7 @@
             nil entities)))
 
 (defn datom-select-keys [d]
-  #js [(.-e d) (str (.-a d)) (.-v d) (.-tx d) (< 0 (.-tx d))])
+  #js [(:e d) (str (:a d)) (:v d) (:tx d) (:added d)])
 
 (defn datoms->js [datoms]
   (-> datoms
