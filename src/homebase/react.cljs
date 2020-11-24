@@ -99,7 +99,7 @@
         run-lookup (react/useCallback
                     (fn run-lookup []
                       (vary-meta (try-hook "useEntity" #(hbjs/entity conn lookup))
-                                 merge {:HBEntity/get (fn [[e ks v]] (if (get e "id") 
+                                 merge {:HBEntity/get-cb (fn [[e ks v]] (if (get e "id") 
                                                                        (swap! cached-entities assoc-in [(get e "id") ks] v)
                                                                        (reset! cached-entities {})))}))
                     #js [lookup])
@@ -124,7 +124,7 @@
         run-query (react/useCallback 
                    (fn run-query []
                      (.map (try-hook "useQuery" #(apply hbjs/q query conn args))
-                           (fn [e] (vary-meta e merge {:HBEntity/get (fn [[e ks v]] (if (get e "id") 
+                           (fn [e] (vary-meta e merge {:HBEntity/get-cb (fn [[e ks v]] (if (get e "id") 
                                                                                       (swap! cached-entities assoc-in [(get e "id") ks] v)
                                                                                       (reset! cached-entities {})))}))))
                    #js [query args])

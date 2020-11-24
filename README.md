@@ -156,7 +156,7 @@ This hook returns the current database client with some helpful functions for sy
     - they are arrays of `[entityId, attribute, value, transactionId, isAddedBoolean]`
 - `client.addTransactListener((changedDatoms) => ...)` adds a listener function to all transactions
     - use this to save data to your backend
-- `client.removeTransactionListener()` removes the transaction listener
+- `client.removeTransactListener()` removes the transaction listener
     - please note that only 1 listener can be added per useClient scope
 - `client.transactSilently([{item: {name: ...}}])` like `transact()` only it will not trigger any listeners
     - use this to sync data from your backend into the client

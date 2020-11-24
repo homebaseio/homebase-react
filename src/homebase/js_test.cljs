@@ -47,7 +47,25 @@
     (is (nil? (get-in (hbjs/entity (d/create-conn) 3) ["id"])))
     (is (nil? (.get (hbjs/entity (d/create-conn) 3) "project" "id")))
     (is (= 2 (get-in (hbjs/entity test-conn 3) ["project" "id"])))
-    (is (= "abc" (get-in (hbjs/entity test-conn 3) ["project" "name"])))))
+    (is (= "abc" (get-in (hbjs/entity test-conn 3) ["project" "name"])))
+    (testing "ref get without schema error"
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)The `user.friend` attribute should be marked as ref.*Add this to your config:.*\{ schema: \{ user: \{ friend: \{ type: 'ref'"
+           (let [conn (d/create-conn)]
+             (hbjs/transact! conn #js [#js {:user #js {:id 1 :friend -2}}
+                                       #js {:user #js {:id -2 :avatar -3}}
+                                       #js {:avatar #js {:id -3 :uri "abc"}}])
+             (.get (hbjs/entity conn 1) "friend" "avatar" "uri"))))
+      (testing "error works for deeply nested get"
+        (is (thrown-with-msg?
+             js/Error
+             #"(?s)The `user.avatar` attribute should be marked as ref.*Add this to your config:.*\{ schema: \{ user: \{ avatar: \{ type: 'ref'"
+             (let [conn (d/create-conn {:user/friend {:db/type :db.type/ref}})]
+               (hbjs/transact! conn #js [#js {:user #js {:id 1 :friend -2}}
+                                         #js {:user #js {:id -2 :avatar -3}}
+                                         #js {:avatar #js {:id -3 :uri "abc"}}])
+               (.get (hbjs/entity conn 1) "friend" "avatar" "uri"))))))))
 
 
 (deftest test-transact
