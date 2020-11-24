@@ -157,7 +157,11 @@
 (defn entity-in-db? [entity]
   (not (nil? (first (d/datoms (goog.object/get entity "db") :eavt (:db/id entity))))))
 
-(declare HBEntity)
+(declare HBEntity 
+         humanize-get-error 
+         humanize-transact-error 
+         humanize-entity-error 
+         humanize-q-error)
 
 (defn Entity->HBEntity [v]
   (if (= Entity (type v))
@@ -166,20 +170,23 @@
 (defn lookup-entity 
   ([entity attrs] (lookup-entity entity attrs false))
   ([entity attrs nil-attrs-if-not-in-db?]
-   (Entity->HBEntity
-    (reduce
-     (fn [acc attr]
-       (if-not acc nil
-               (let [attr (keywordize attr)
-                     f (if (keyword? attr) get js-get)]
-                 (cond
-                   (and nil-attrs-if-not-in-db?
-                        (or (= :db/id attr) (= "id" attr))
-                        (not (entity-in-db? acc))) nil
-                   (set? acc) (f (first acc) attr)
-                   acc (f acc attr)
-                   :else nil))))
-     entity attrs))))
+   (try
+     (Entity->HBEntity
+      (reduce
+       (fn [acc attr]
+         (if-not acc nil
+                 (let [attr (keywordize attr)
+                       f (if (keyword? attr) get js-get)]
+                   (cond
+                     (and nil-attrs-if-not-in-db?
+                          (or (= :db/id attr) (= "id" attr))
+                          (not (entity-in-db? acc))) nil
+                     (set? acc) (f (first acc) attr)
+                     acc (f acc attr)
+                     :else nil))))
+       entity attrs))
+     (catch js/Error e
+       (throw (js/Error. (humanize-get-error e entity)))))))
 
 (extend-type Entity
   Object
@@ -199,7 +206,7 @@
   (get [this & attrs]
     (when (seq attrs)
       (let [v (lookup-entity entity attrs true)]
-        (when-let [f (:HBEntity/get (meta this))]
+        (when-let [f (:HBEntity/get-cb (meta this))]
           (f [this attrs v]))
         v))))
 
@@ -207,8 +214,6 @@
   (->> (apply d/q query conn args)
        (map (fn id->entity [[id]] (HBEntity. (d/entity conn id) nil)))
        to-array))
-
-(declare humanize-transact-error humanize-entity-error humanize-q-error)
 
 (defn transact! 
   ([conn tx] (transact! conn tx nil))
@@ -229,6 +234,17 @@
     (apply q-entity-array (js->query query) @conn (keywordize args))
     (catch js/Error e 
       (throw (js/Error. (humanize-q-error e))))))
+
+(defn humanize-get-error [error entity]
+  (condp re-find (goog.object/get error "message")
+    #"(?:(.+) is not ISeqable|Cannot use 'in' operator to search for 'db' in (.+))"
+    :>> (fn [[_ v1 v2]]
+          (let [key (ffirst (filter (fn [[_ v]] (= (or v1 v2) (str v))) entity))
+                nmspc (namespace key)
+                attr (name key)]
+            (str "The `" nmspc "." attr "` attribute should be marked as ref if you want to treat it as a relationship."
+                 "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { type: 'ref' }}}\n")))
+    (goog.object/get error "message")))
 
 (defn humanize-transact-error [error]
   (condp re-find (goog.object/get error "message")
