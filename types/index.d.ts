@@ -7,11 +7,11 @@ export type Entity = {
 export type Datom = [number, string, string | number | object | Array<any>, number, boolean];
 export type homebaseClient = {
   dbToString: () => string,
-  dbFromString: (dbString: string) => void,
+  dbFromString: (dbString: string) => any,
   dbToDatoms: () => Datom[],
-  addTransactionListener: (Datoms: Datom[]) => void,
-  removeTransactionListener: () => void,
-  transactSilently: (transaction: Transaction) => void
+  addTransactionListener: (Datoms: Datom[]) => any,
+  removeTransactionListener: () => any,
+  transactSilently: (transaction: Transaction) => any
 }
 
 export function HomebaseProvider(props: {config?:config, children:any}): any;
