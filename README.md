@@ -13,6 +13,15 @@
 
 Homebase React makes state management painless by enabling you to plug a relational graph database into your React application with just 3 lines of code. This is the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers.
 
+## Install
+
+```bash
+# NPM
+npm install homebase-react --save
+
+# Yarn
+yarn add homebase-react
+```
 ## Features
 - The simplest and most declarative state management solution
 - The power of a backend relational graph database, but without having to wait on the network
@@ -29,16 +38,6 @@ Homebase React makes state management painless by enabling you to plug a relatio
     1. History / Change Tracking
 2. Persist to IndexedDB
 3. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
-
-## Install
-
-```bash
-# NPM
-npm install homebase-react --save
-
-# Yarn
-yarn add homebase-react
-```
 
 ## Examples
 ### Live Demos
