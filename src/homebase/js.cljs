@@ -186,7 +186,6 @@
                      :else nil))))
        entity attrs))
      (catch js/Error e
-      ;  (js-debugger)
        (throw (js/Error. (humanize-get-error e entity)))))))
 
 (extend-type Entity
