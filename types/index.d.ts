@@ -15,7 +15,12 @@ export type config = {schema?: Schema, initialData?: Transaction };
  * Entities are JSON objects with extra features.
  */
 export type Entity = {
-  get: (...params:string[]) => any;
+  /**
+   * Get a value from the `Entity` given its attribute(s).
+   * You can traverse arbitrarily deep relationships by adding nested attributes to the attributes array.
+   * @param attributes a string array of parameter names
+   */
+  get: (...attributes:string[]) => any;
 }
 /**
  * Facts are richer key-value pairs that represent your data.
