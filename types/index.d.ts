@@ -59,16 +59,6 @@ export type homebaseClient = {
    */
   transactSilently: (transaction: Transaction) => any
 }
-export type Datom = [number, string, string | number | object | Array<any>, number, boolean];
-export type homebaseClient = {
-  dbToString: () => string,
-  dbFromString: (dbString: string) => any,
-  dbToDatoms: () => Datom[],
-  addTransactListener: (listener: (changedDatoms: Datom[]) => any) => any,
-  removeTransactListener: () => any,
-  transactSilently: (transaction: Transaction) => any
-}
-
 /**
  * React provider for Homebase. You must wrap Homebase applications in HomebaseProvider.
  * @param props.config an object with optional schema and initialData parameters.
