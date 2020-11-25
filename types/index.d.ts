@@ -139,4 +139,4 @@ export function useQuery(query: object | string, ...args: any): [Array<Entity>];
  * client.dbToString()
  * client.dbToDatoms()
  */
-export function useClient(): homebaseClient;
+export function useClient(): [homebaseClient];
