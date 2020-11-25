@@ -2,6 +2,10 @@
  * A database transaction
  */
 export type Transaction = Array<object>;
+/**
+ * The Schema is a way to to simplify relational queries at query time.
+ * Presently, it allows you to define relationships and uniqueness constraints.
+ */
 export type Schema = object;
 /**
  * Homebase configuration.
