@@ -11,6 +11,9 @@ export type Schema = object;
  * Homebase configuration.
  */
 export type config = {schema?: Schema, initialData?: Transaction };
+/**
+ * Entities are JSON objects with extra features.
+ */
 export type Entity = {
   get: (...params:string[]) => any;
 }
