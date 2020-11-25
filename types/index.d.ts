@@ -22,7 +22,7 @@ export type Entity = {
  */
 export type Datom = [number, string, string | number | object | Array<any>, number, boolean];
 /**
- * the homebaseClient object allows you to interact with the backend database
+ * The homebaseClient object allows you to interact with the backend database
  */
 export type homebaseClient = {
   /**
