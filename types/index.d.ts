@@ -37,7 +37,7 @@ export type homebaseClient = {
    * Adds a listener function to the given transactions so you can save data to your backend
    * @param listener - a function to call to save data on transact
    */
-  addTransactListener: (listener: () => any) => any,
+  addTransactListener: (listener: (changedDatoms: Datom[]) => any) => any,
   /**
    * Remove transaction listener. Particularly useful since only 1 listener can be added per `useClient` scope.
    */
