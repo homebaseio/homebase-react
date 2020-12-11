@@ -4,7 +4,9 @@
    [clojure.string]
    [cljs.reader]
    [homebase.js :as hbjs]
-   [datascript.core :as d]))
+   [oops.core :as oops]
+   [datascript.core :as d]
+   [datascript.impl.entity :as de]))
 
 (defn try-hook [hook-name f]
   (try (f)
@@ -24,15 +26,34 @@
   (if (not= (count entities) (count cached-entities))
     true
     (reduce (fn [_ e]
-              (when (let [cached-e (get cached-entities (get e "id"))]
-                      (if (nil? cached-e)
-                        (reduced true)
-                        (reduce (fn [_ [ks v]]
-                                  (when (not= v (get-in e ks))
-                                    (reduced true)))
-                                nil cached-e)))
-                (reduced true)))
+              (let [e ^de/Entity (.-_entity e)]
+                (when (let [cached-e (get cached-entities (get e "id"))]
+                        (if (nil? cached-e)
+                          (reduced true)
+                          (reduce (fn [_ [ks v]]
+                                    (when (not= v (get-in e ks))
+                                      (reduced true)))
+                                  nil cached-e)))
+                  (reduced true))))
             nil entities)))
+
+(defn touch-entity-cache [entity cached-entities]
+  (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {})
+  (set! ^de/Entity (.-_entity entity)
+        (vary-meta
+         ^de/Entity (.-_entity entity) merge
+         {:HBEntity/get-cb
+          (fn [[e ks v]]
+            (if (get e "id")
+              (do
+                (swap! cached-entities assoc-in [(get e "id") ks] v)
+                (oops/oset! entity
+                            (concat ["_recentlyTouchedAttributes"] (map (partial str "!") ks))
+                            v))
+              (do
+                (reset! cached-entities {})
+                (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {}))))}))
+  entity)
 
 (defn datom-select-keys [d]
   #js [(:e d) (str (:a d)) (:v d) (:tx d) (:added d)])
@@ -97,10 +118,9 @@
         cached-entities (react/useMemo #(atom {}) #js [])
         run-lookup (react/useCallback
                     (fn run-lookup []
-                      (vary-meta (try-hook "useEntity" #(hbjs/entity conn lookup))
-                                 merge {:HBEntity/get-cb (fn [[e ks v]] (if (get e "id")
-                                                                          (swap! cached-entities assoc-in [(get e "id") ks] v)
-                                                                          (reset! cached-entities {})))}))
+                      (touch-entity-cache
+                       (try-hook "useEntity" #(hbjs/entity conn lookup))
+                       cached-entities))
                     #js [lookup])
         [result setResult] (react/useState (run-lookup))
         listener (react/useCallback
@@ -123,9 +143,7 @@
         run-query (react/useCallback 
                    (fn run-query []
                      (.map (try-hook "useQuery" #(apply hbjs/q query conn args))
-                           (fn [e] (vary-meta e merge {:HBEntity/get-cb (fn [[e ks v]] (if (get e "id") 
-                                                                                      (swap! cached-entities assoc-in [(get e "id") ks] v)
-                                                                                      (reset! cached-entities {})))}))))
+                           (fn [e] (touch-entity-cache e cached-entities))))
                    #js [query args])
         [result setResult] (react/useState (run-query))
         listener (react/useCallback
