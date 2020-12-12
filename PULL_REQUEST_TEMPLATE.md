@@ -9,9 +9,9 @@
 
 ### Docs
 - [ ] added relevant docs
-- [ ] update relevant sections in the README.md
+- [ ] updated relevant sections in the README.md
 - [ ] no docs needed
 
 ### Typescript
-- [ ] add or edit relevant Typescript type declarations
+- [ ] added or edited relevant Typescript type declarations
 - [ ] no type declaration updates needed
