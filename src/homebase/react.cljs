@@ -10,12 +10,15 @@
   (try (f)
     (catch js/Error e
       (throw
-       (js/Error
-        (str (goog.object/get e "message") "\n"
-             (some->> (goog.object/get e "stack")
-                      (re-find (re-pattern (str hook-name ".*\\n(.*)\\n?")))
-                      (second)
-                      (clojure.string/trim))))))))
+       (js/Error.
+        (condp re-find (goog.object/get e "message")
+          #"No protocol method IDeref.-deref defined for type undefined"
+          "HomebaseProvider context unavailable. <HomebaseProvider> must be declared by a parent component before homebase-react hooks can be used."
+          (str (goog.object/get e "message") "\n"
+               (some->> (goog.object/get e "stack")
+                        (re-find (re-pattern (str hook-name ".*\\n(.*)\\n?")))
+                        (second)
+                        (clojure.string/trim)))))))))
 
 (defn changed? [entities cached-entities]
   (if (not= (count entities) (count cached-entities))
@@ -95,9 +98,9 @@
         run-lookup (react/useCallback
                     (fn run-lookup []
                       (vary-meta (try-hook "useEntity" #(hbjs/entity conn lookup))
-                                 merge {:HBEntity/get-cb (fn [[e ks v]] (if (get e "id") 
-                                                                       (swap! cached-entities assoc-in [(get e "id") ks] v)
-                                                                       (reset! cached-entities {})))}))
+                                 merge {:HBEntity/get-cb (fn [[e ks v]] (if (get e "id")
+                                                                          (swap! cached-entities assoc-in [(get e "id") ks] v)
+                                                                          (reset! cached-entities {})))}))
                     #js [lookup])
         [result setResult] (react/useState (run-lookup))
         listener (react/useCallback
