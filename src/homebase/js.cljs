@@ -105,14 +105,17 @@
 (defn js->datalog [data]
   (let [{find "$find" where "$where"} (js->clj data)]
     {:find [(symbol (str "?" find))]
-     :where (mapv
-             (fn build-where-clause [[e av]]
-               (let [[[a v]] (seq av)
-                     pred [(symbol (str "?" e))
-                           (keyword e a)]]
-                 (if (= v "$any") pred
-                     (into pred [v]))))
-             where)}))
+     :where (reduce-kv
+             (fn [acc nmspc attrs+values]
+               (into acc
+                     (reduce-kv
+                      (fn [acc a v]
+                        (conj acc
+                              (let [pred [(symbol (str "?" nmspc)) (js->key nmspc a)]]
+                                (if (= v "$any") pred
+                                    (into pred [v])))))
+                      [] attrs+values)))
+             [] where)}))
 
 (comment
   (=
@@ -305,7 +308,8 @@ For example:  query({
           (str "Expected to see '" var "' in both the $find and $where clauses."
                (example-js-query var)))
 
-    #"((?! is not ISeqable).+) is not ISeqable"
+    ;; #"((?! is not ISeqable).+) is not ISeqable"
+    #"No protocol method IKVReduce.-kv-reduce defined for type .*: (.*)"
     :>> (fn [[_ v]]
           (str "Expected $where clause to be a nested object, not " v "."
                (example-js-query)))

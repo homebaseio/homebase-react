@@ -8,7 +8,12 @@
   (d/conn-from-db
    (d/init-db
     #{(d/datom 3 :todo/project 2)
-      (d/datom 2 :project/name "abc")}
+      (d/datom 2 :project/name "abc")
+      (d/datom 4 :project/name "xyz")
+      (d/datom 4 :project/number 23)
+      (d/datom 4 :project/completed? true)
+      (d/datom 5 :project/name "abc")
+      (d/datom 6 :project/name "p4")}
     {:todo/project {:db/valueType :db.type/ref
                     :db/cardinality :db.cardinality/one}})))
 
@@ -110,6 +115,29 @@
                                   "$where" {"item" {"name" "$any"}}})
                         (d/create-conn))))
     (is (array? (hbjs/q (clj->js "[:find ?e :where [?e :item/name]]") (d/create-conn)))))
+  (testing "$any"
+    (is (= 4 (count (hbjs/q (clj->js {"$find" "project"
+                                      "$where" {"project" {"name" "$any"}}})
+                            test-conn)))))
+  (testing "filter by string"
+    (is (= 2 (count (hbjs/q (clj->js {"$find" "project"
+                                      "$where" {"project" {"name" "abc"}}})
+                            test-conn)))))
+  (testing "filter by bool"
+    (is (= 1 (count (hbjs/q (clj->js {"$find" "project"
+                                      "$where" {"project" {"isCompleted" true}}})
+                            test-conn)))))
+  (testing "filter by number"
+    (is (= 1 (count (hbjs/q (clj->js {"$find" "project"
+                                      "$where" {"project" {"number" 23}}})
+                            test-conn)))))
+  (testing "filter by multiple"
+    (is (= 1 (count (hbjs/q (clj->js {"$find" "project"
+                                      "$where" {"project" {"number" 23 "isCompleted" true}}})
+                            test-conn))))
+    (is (= 0 (count (hbjs/q (clj->js {"$find" "project"
+                                      "$where" {"project" {"number" 23 "isCompleted" false}}})
+                            test-conn)))))
   (testing "should fail with humanized errors"
     (is (thrown-with-msg?
          js/Error
@@ -145,6 +173,11 @@
          #"(?s)Expected \$where clause to be a nested object, not 1.*For example:"
          (hbjs/q (clj->js {"$find" "todo"
                            "$where" {"todo" 1}}) (d/create-conn))))
+    (is (thrown-with-msg?
+         js/Error
+         #"(?s)Expected \$where clause to be a nested object, not yolo.*For example:"
+         (hbjs/q (clj->js {"$find" "todo"
+                           "$where" {"todo" "yolo"}}) (d/create-conn))))
     (is (thrown-with-msg?
          js/Error
          #"(?s)Cannot parse :find, expected: \(find-rel \| find-coll \| find-tuple \| find-scalar\)"
