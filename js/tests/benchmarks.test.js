@@ -1,9 +1,9 @@
 /* eslint-env jest */
-import React from 'react';
 import Enzyme, { mount } from 'enzyme';
-import Benchmark from 'react-component-benchmark';
 import Adapter from "enzyme-adapter-react-16";
-import { HomebaseProvider, useTransact, useEntity } from '../../dist/js/homebase.react';
+import React from 'react';
+import Benchmark from 'react-component-benchmark';
+import { HomebaseProvider, useEntity, useTransact } from '../../dist/js/homebase.react';
 
 const config = {
   initialData: [{

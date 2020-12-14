@@ -4,7 +4,6 @@
    [clojure.string]
    [cljs.reader]
    [homebase.js :as hbjs]
-   [oops.core :as oops]
    [datascript.core :as d]
    [datascript.impl.entity :as de]))
 
@@ -37,6 +36,12 @@
                   (reduced true))))
             nil entities)))
 
+(defn cache->js [entity cached-entities]
+  (clj->js
+   (reduce
+    (fn [acc [ks v]] (assoc-in acc ks v))
+    {} (get @cached-entities (get entity "id")))))
+
 (defn touch-entity-cache [entity cached-entities]
   (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {})
   (set! ^de/Entity (.-_entity entity)
@@ -47,9 +52,8 @@
             (if (get e "id")
               (do
                 (swap! cached-entities assoc-in [(get e "id") ks] v)
-                (oops/oset! entity
-                            (concat ["_recentlyTouchedAttributes"] (map (partial str "!") ks))
-                            v))
+                (set! ^js/Object (.-_recentlyTouchedAttributes entity) 
+                      (cache->js e cached-entities)))
               (do
                 (reset! cached-entities {})
                 (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {}))))}))
