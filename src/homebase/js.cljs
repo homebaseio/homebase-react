@@ -4,7 +4,7 @@
    [clojure.walk :as walk]
    [camel-snake-kebab.core :as csk]
    [datascript.core :as d]
-   [datascript.impl.entity :as de :refer [Entity]]))
+   [datascript.impl.entity :as de]))
 
 (defn keywordize-str [s]
   (if (and (string? s) (= (subs s 0 1) ":"))
@@ -144,17 +144,22 @@
          (dissoc tx :db/id))
     [tx]))
 
+; This assumes that every entity only has keys of the same namespace once the :db keys are removed
+; E.g. :db/id 1, :todo/name "", :todo/email ""
+; Not: :db/id 1, :todo/name "", :email/address ""
+(defn guess-entity-ns [entity]
+  (reduce 
+   (fn [_ k] (when (not= "db" (namespace k))
+               (reduced (namespace k))))
+   nil (keys entity)))
+
 (defn js-get [entity name]
   (case name
     "id" (:db/id entity)
     "ident" (:db/ident entity)
     "identity" (:db/ident entity)
-    (let [ks (remove #{:db/id :db/ident} (keys entity))
-          ; This assumes that every entity only has keys of the same namespace once the :db keys are removed
-          ; E.g. :db/id 1, :todo/name "", :todo/email ""
-          ; Not: :db/id 1, :todo/name "", :email/address ""
-          k (when (first ks)
-              (js->key (namespace (first ks)) name))]
+    (let [maybe-ns (guess-entity-ns entity)
+          k (when maybe-ns (js->key maybe-ns name))]
       (when k (get entity k)))))
 
 (defn entity-in-db? [entity]
@@ -167,7 +172,7 @@
          humanize-q-error)
 
 (defn Entity->HBEntity [v]
-  (if (= Entity (type v))
+  (if (= de/Entity (type v))
     (HBEntity. v nil) v))
 
 (defn lookup-entity 
@@ -191,11 +196,11 @@
      (catch js/Error e
        (throw (js/Error. (humanize-get-error e entity)))))))
 
-(extend-type Entity
+(extend-type de/Entity
   Object
   (get [entity & attrs] (lookup-entity entity attrs)))
 
-(deftype HBEntity [^datascript.impl.entity/Entity entity _meta]
+(deftype HBEntity [^de/Entity entity _meta]
   IMeta
   (-meta [_] _meta)
   IWithMeta
@@ -206,16 +211,33 @@
   IAssociative
   (-contains-key? [_ k] (not (nil? (lookup-entity entity [k] true))))
   Object
-  (get [this & attrs]
+  (get [this attrs]
     (when (seq attrs)
       (let [v (lookup-entity entity attrs true)]
         (when-let [f (:HBEntity/get-cb (meta this))]
           (f [this attrs v]))
         v))))
 
+(defn Entity [^de/Entity d-entity]
+  (this-as ^Entity this
+           (set! (.-id this) (:db/id d-entity))
+           (set! (.-type this)
+                 (when-let [type (guess-entity-ns d-entity)]
+                   (csk/->camelCase type)))
+           (when-let [ident (:db/ident d-entity)] 
+             (set! (.-_ident this) ident))
+           (set! (.-_entity this) (HBEntity. d-entity nil))
+           this))
+
+(set! (.. Entity -prototype -get)
+      (fn [& entityAttributeName]
+        (this-as ^Entity this
+                 (.get (.-_entity this) entityAttributeName))))
+
 (defn q-entity-array [query conn & args]
   (->> (apply d/q query conn args)
-       (map (fn id->entity [[id]] (HBEntity. (d/entity conn id) nil)))
+       (map (fn id->entity [[id]] 
+              (Entity. (d/entity conn id))))
        to-array))
 
 (defn transact! 
@@ -228,7 +250,7 @@
 
 (defn entity [conn lookup]
   (try
-    (HBEntity. (d/entity @conn (js->entity-lookup lookup)) nil)
+    (Entity. (d/entity @conn (js->entity-lookup lookup)))
     (catch js/Error e
       (throw (js/Error. (humanize-entity-error e))))))
 

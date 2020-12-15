@@ -38,8 +38,8 @@
     (is (= "abc" (.get (d/entity @test-conn 3) "project" "name"))))
   (testing "homebase entity get"
     (is (some? (hbjs/entity (d/create-conn) 3)))
-    (is (= 3 (:db/id (hbjs/entity test-conn 3))))
-    (is (= 3 (get (hbjs/entity test-conn 3) "id")))
+    (is (= 3 (:db/id ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)))))
+    (is (= 3 (get ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) "id")))
     (is (= 3 (.get (hbjs/entity test-conn 3) "id")))
     (is (nil? (.get (hbjs/entity (d/create-conn) 3) "name")))
     (is (= "abc" (.get (hbjs/entity test-conn 2) "name")))
@@ -51,8 +51,8 @@
     (is (nil? (get (hbjs/entity (d/create-conn) 3) "id")))
     (is (nil? (get-in (hbjs/entity (d/create-conn) 3) ["id"])))
     (is (nil? (.get (hbjs/entity (d/create-conn) 3) "project" "id")))
-    (is (= 2 (get-in (hbjs/entity test-conn 3) ["project" "id"])))
-    (is (= "abc" (get-in (hbjs/entity test-conn 3) ["project" "name"])))
+    (is (= 2 (get-in ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) ["project" "id"])))
+    (is (= "abc" (get-in ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) ["project" "name"])))
     (testing "ref get without schema error"
       (is (thrown-with-msg?
            js/Error
