@@ -94,7 +94,7 @@ export type homebaseClient = {
  * @param props.config - an object with optional schema and initialData parameters.
  * @param props.children - children elements
  */
-export function HomebaseProvider(props: {config?:config, children:any}): any;
+export function HomebaseProvider(props: {config?:config, children:React.ReactNode}): React.ReactElement;
 
 /**
  * React hook to transact data to the local homebase database.
