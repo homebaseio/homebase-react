@@ -1,7 +1,7 @@
 ;; shadow-cljs configuration
 {
 ;;  :deps true
- 
+
  :source-paths
  ["src"]
 
@@ -46,14 +46,14 @@
        ;;  :js-options {:js-provider :shadow}
         :compiler-options {:optimizations :advanced
                      ;;       :target :nodejs
-
+                           :externs ["externs/npm.js" ]
                            :pretty-print  true
                      ;;       :pseudo-names true
                      ;;       :recompile-dependents true
                      ;;       :parallel-build true
                      ;;       :checked-arrays :warn
                      ;;       :infer-externs true
-                           
+
                      ;;       :ups-externs   ["datascript/externs.js"]
                            ;:optimizations :whitespace
 
