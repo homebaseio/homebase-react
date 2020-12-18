@@ -7,6 +7,8 @@
    [datascript.core :as d]
    [datascript.impl.entity :as de]))
 
+(set! *warn-on-infer* true)
+
 (defn try-hook [hook-name f]
   (try (f)
     (catch js/Error e

@@ -13,9 +13,14 @@
       (d/datom 4 :project/number 23)
       (d/datom 4 :project/completed? true)
       (d/datom 5 :project/name "abc")
-      (d/datom 6 :project/name "p4")}
+      (d/datom 6 :project/name "p4")
+      (d/datom 7 :org/project 2)
+      (d/datom 7 :org/project 4)
+      (d/datom 7 :org/project 5)}
     {:todo/project {:db/valueType :db.type/ref
-                    :db/cardinality :db.cardinality/one}})))
+                    :db/cardinality :db.cardinality/one}
+     :org/projects {:db/valueType :db.type/ref
+                    :db/cardinality :db.cardinality/many}})))
 
 (deftest test-entity-get
   (testing "datascript entity get"
@@ -137,6 +142,9 @@
                             test-conn))))
     (is (= 0 (count (hbjs/q (clj->js {"$find" "project"
                                       "$where" {"project" {"number" 23 "isCompleted" false}}})
+                            test-conn)))))
+  (testing "raw datalog with cardinality many"
+    (is (= 3 (count (hbjs/q "[:find ?e :where [7 :org/project ?e]]"
                             test-conn)))))
   (testing "should fail with humanized errors"
     (is (thrown-with-msg?

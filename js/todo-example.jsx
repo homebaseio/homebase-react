@@ -1,5 +1,5 @@
 import React from 'react'
-const { HomebaseProvider, useTransact, useQuery, useEntity } = window.homebase.react
+const { HomebaseProvider, useTransact, useQuery, useEntity, useClient } = window.homebase.react
 
 export const App = () => {
   return (
@@ -46,7 +46,7 @@ const config = {
     }, {
       project: {
         id: -3,
-        name: 'Make it'
+        name: 'Make it',
       }
     }, {
       project: {

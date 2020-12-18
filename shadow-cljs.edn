@@ -1,5 +1,8 @@
 ;; shadow-cljs configuration
-{:source-paths
+{
+;;  :deps true
+ 
+ :source-paths
  ["src"]
 
  :dependencies
@@ -27,9 +30,34 @@
                  :output-to "out/node-tests.js"
                  :ns-regexp "-test$"
                  :autorun true}
-  :npm {:target :npm-module
+  :npm {
+       ;;  :target :npm-module
+        :target :node-library
+       ;;  :runtime :browser
         :output-dir "dist/js"
-        :entries [homebase.react]
+        :output-to "dist/js/homebase.react.js"
+       ;;  :entries [homebase.react]
+        :exports {:Entity homebase.js/Entity
+                  :HomebaseProvider homebase.react/HomebaseProvider
+                  :useClient homebase.react/useClient
+                  :useEntity homebase.react/useEntity
+                  :useQuery homebase.react/useQuery
+                  :useTransact homebase.react/useTransact}
+       ;;  :js-options {:js-provider :shadow}
         :compiler-options {:optimizations :advanced
-                           :output-wrapper false
-                           :source-map false}}}}
+                     ;;       :target :nodejs
+
+                           :pretty-print  true
+                     ;;       :pseudo-names true
+                     ;;       :recompile-dependents true
+                     ;;       :parallel-build true
+                     ;;       :checked-arrays :warn
+                     ;;       :infer-externs true
+                           
+                     ;;       :ups-externs   ["datascript/externs.js"]
+                           ;:optimizations :whitespace
+
+                     ;;       :output-wrapper true
+                     ;;       :rename-prefix-namespace "HBR"
+                     ;;       :source-map true
+                           }}}}

@@ -13,7 +13,8 @@ const {
   HomebaseProvider,
   useTransact,
   useQuery,
-  useEntity
+  useEntity,
+  useClient
 } = window.homebase.react;
 
 const App = () => {

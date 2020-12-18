@@ -6,6 +6,8 @@
    [datascript.core :as d]
    [datascript.impl.entity :as de]))
 
+(set! *warn-on-infer* true)
+
 (defn keywordize-str [s]
   (if (and (string? s) (= (subs s 0 1) ":"))
     (keyword (subs s 1))
@@ -148,7 +150,7 @@
 ; E.g. :db/id 1, :todo/name "", :todo/email ""
 ; Not: :db/id 1, :todo/name "", :email/address ""
 (defn guess-entity-ns [entity]
-  (reduce 
+  (reduce
    (fn [_ k] (when (not= "db" (namespace k))
                (reduced (namespace k))))
    nil (keys entity)))
@@ -165,17 +167,17 @@
 (defn entity-in-db? [entity]
   (not (nil? (first (d/datoms (.-db entity) :eavt (:db/id entity))))))
 
-(declare HBEntity 
-         humanize-get-error 
-         humanize-transact-error 
-         humanize-entity-error 
+(declare HBEntity
+         humanize-get-error
+         humanize-transact-error
+         humanize-entity-error
          humanize-q-error)
 
 (defn Entity->HBEntity [v]
   (if (= de/Entity (type v))
     (HBEntity. v nil) v))
 
-(defn lookup-entity 
+(defn lookup-entity
   ([entity attrs] (lookup-entity entity attrs false))
   ([entity attrs nil-attrs-if-not-in-db?]
    (try
@@ -218,34 +220,35 @@
           (f [this attrs v]))
         v))))
 
-(defn Entity [^de/Entity d-entity]
-  (this-as ^Entity this
+(defn ^js/HBR.Entity Entity [^de/Entity d-entity]
+  (this-as ^js/HBR.Entity this
            (set! (.-id this) (:db/id d-entity))
            (set! (.-type this)
                  (when-let [type (guess-entity-ns d-entity)]
                    (csk/->camelCase type)))
-           (when-let [ident (:db/ident d-entity)] 
+           (when-let [ident (:db/ident d-entity)]
              (set! (.-_ident this) ident))
            (set! (.-_entity this) (HBEntity. d-entity nil))
            this))
 
 (set! (.. Entity -prototype -get)
       (fn [& entityAttributeName]
-        (this-as ^Entity this
+        (this-as ^js/HBR.Entity this
                  (.get (.-_entity this) entityAttributeName))))
 
 (defn q-entity-array [query conn & args]
   (->> (apply d/q query conn args)
-       (map (fn id->entity [[id]] 
+       (map (fn id->entity [[id :as x]]
+              (js/console.log "id and x:" id x)
               (Entity. (d/entity conn id))))
        to-array))
 
-(defn transact! 
+(defn transact!
   ([conn tx] (transact! conn tx nil))
   ([conn tx tx-meta]
-   (try 
+   (try
      (d/transact! conn (mapcat (comp nil->retract js->tx-part) tx) tx-meta)
-     (catch js/Error e 
+     (catch js/Error e
        (throw (js/Error. (humanize-transact-error e)))))))
 
 (defn entity [conn lookup]
@@ -255,9 +258,10 @@
       (throw (js/Error. (humanize-entity-error e))))))
 
 (defn q [query conn & args]
-  (try 
+  (js/console.log "q:" (pr-str (d/q (js->query query) @conn)))
+  (try
     (apply q-entity-array (js->query query) @conn (keywordize args))
-    (catch js/Error e 
+    (catch js/Error e
       (throw (js/Error. (humanize-q-error e))))))
 
 (defn humanize-get-error [error entity]
@@ -274,25 +278,25 @@
 (defn humanize-transact-error [error]
   (condp re-find (goog.object/get error "message")
     #"\[object Object\] is not ISeqable"
-    "Expected an array of transactions. 
+    "Expected an array of transactions.
 \nFor example:  transact([
-                {todo: {name: 1}}, 
+                {todo: {name: 1}},
                 {todo: {name: 2}}
               ])
 "
 
     #"Unknown operation at \[nil nil nil nil\], expected"
-    "Expected 'retractEntity'. 
+    "Expected 'retractEntity'.
 \nFor example:  transact([['retractEntity', id]])
 "
 
     #"Can't use tempid in '\[:db\.fn/retractEntity"
-    "Expected a numerical id. 
+    "Expected a numerical id.
 \nFor example:  transact([['retractEntity', 123]])
 "
 
     #"Expected number or lookup ref for entity id, got nil"
-    "Expected a numerical id. 
+    "Expected a numerical id.
 \nFor example:  transact([['retractEntity', 123]])
 "
     (goog.object/get error "message")))
@@ -308,7 +312,7 @@
 (defn example-js-query
   ([] (example-js-query "item"))
   ([nmsp] (str "\n
-For example:  query({ 
+For example:  query({
                 $find: '" nmsp "',
                 $where: { " nmsp ": { name: '$any' }}
               })
