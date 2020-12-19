@@ -10,6 +10,7 @@
 ### Docs
 - [ ] added relevant docs
 - [ ] updated relevant sections in the README.md
+- [ ] updated relevant docstrings in index.d.ts
 - [ ] no docs needed
 
 ### Typescript
