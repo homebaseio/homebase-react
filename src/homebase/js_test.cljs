@@ -4,18 +4,47 @@
    [datascript.core :as d]
    [homebase.js :as hbjs]))
 
+(def test-tx
+  (clj->js
+   [{:todo {:id 3 :project 2}}
+    {:project {:id 2 :name "abc" :number nil}}
+    {:project {:id 4 :name "xyz" :number 23 :isCompleted true}}
+    {:project {:id 5 :name "abc"}}
+    {:project {:id 6 :name "p4"}}
+    #_{:project {:id 7 :name "p5" :array [1 2 3]}}
+    #_{:org {:id 8 :projects [{:id 4} {:id 5} {:id 6}]}}
+    #_{:org {:id 9 :projects [{:project {:id 4}} {:project {:id 5}} {:project {:id 6}}]}}]))
+
+;; TODO: how will this work with the proposed JSON serializer?
+;;  - will order be preserved?
+;;  - how will we know when an array is ids or just numbers?
+;;  - what about nested objects? will they be turned into refs?
+;;  proposal - instead of
+;;  {:org {:id 7 :projects [4 5 6]}}
+;;  we could do
+;;  {:org {:id 7 :projects [{:id 4} {:id 5} {:id 6}]}}
+;;  or even
+;;  {:org {:id 7 :projects [{:project {:id 4}} {:project {:id 5}} {:project {:id 6}}]}}
+
+(deftest test-js->tx
+  (testing "everything"
+    (is (= (hbjs/js->tx test-tx)
+           '([:db/add 3 :todo/project 2]
+             [:db/add 2 :project/name "abc"]
+             [:db/retract 2 :project/number nil]
+             [:db/add 4 :project/name "xyz"]
+             [:db/add 4 :project/number 23]
+             [:db/add 4 :project/completed? true]
+             [:db/add 5 :project/name "abc"]
+             [:db/add 6 :project/name "p4"])))))
+
 (def test-conn
-  (d/conn-from-db
-   (d/init-db
-    #{(d/datom 3 :todo/project 2)
-      (d/datom 2 :project/name "abc")
-      (d/datom 4 :project/name "xyz")
-      (d/datom 4 :project/number 23)
-      (d/datom 4 :project/completed? true)
-      (d/datom 5 :project/name "abc")
-      (d/datom 6 :project/name "p4")}
-    {:todo/project {:db/valueType :db.type/ref
-                    :db/cardinality :db.cardinality/one}})))
+  (let [conn (d/create-conn
+              (hbjs/js->schema
+               (clj->js {:todo {:project {:type "ref" :cardinality "one"}}
+                         :org {:projects {:type "ref" :cardinality "many"}}})))]
+    (hbjs/transact! conn test-tx)
+    conn))
 
 (deftest test-entity-get
   (testing "datascript entity get"

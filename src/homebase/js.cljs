@@ -144,6 +144,11 @@
          (dissoc tx :db/id))
     [tx]))
 
+(defn js->tx [tx]
+  (mapcat
+   (comp nil->retract js->tx-part)
+   tx))
+
 ; This assumes that every entity only has keys of the same namespace once the :db keys are removed
 ; E.g. :db/id 1, :todo/name "", :todo/email ""
 ; Not: :db/id 1, :todo/name "", :email/address ""
@@ -244,7 +249,7 @@
   ([conn tx] (transact! conn tx nil))
   ([conn tx tx-meta]
    (try 
-     (d/transact! conn (mapcat (comp nil->retract js->tx-part) tx) tx-meta)
+     (d/transact! conn (js->tx tx) tx-meta)
      (catch js/Error e 
        (throw (js/Error. (humanize-transact-error e)))))))
 
