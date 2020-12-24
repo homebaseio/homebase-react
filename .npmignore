@@ -29,3 +29,10 @@ pom.xml.asc
 
 .hgignore
 .hg/
+
+examples/
+
+ types/
+ src/
+ public/
+ js/
