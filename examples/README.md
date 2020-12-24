@@ -3,9 +3,9 @@
 You can clone this repo to have ready to run [homebase-react](https://github.com/homebaseio/homebase-react) examples.
 
 ## Examples
-[Counter Example](counter-example/)
+[Counter Example](counter/)
 
-[Todo Example](todo-example/)
+[Todo Example](todo/)
 
 [Typescript Firebase Todo Example](typescript-firebase-todo/)
 
