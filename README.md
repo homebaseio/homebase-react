@@ -44,7 +44,7 @@ yarn add homebase-react
 You can see our hosted live demos [here](https://homebaseio.github.io/homebase-react)
 
 ### Code Examples
-You can clone and run our React code examples [here](https://github.com/homebaseio/homebase-react-examples).
+You can clone and run our React code examples [here](examples/).
 
 ## API Overview
 
