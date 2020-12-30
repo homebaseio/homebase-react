@@ -4,6 +4,7 @@
    [clojure.walk :as walk]
    [camel-snake-kebab.core :as csk]
    [datascript.core :as d]
+   [inflections.core :refer [singular]]
    [datascript.impl.entity :as de]))
 
 (defn keywordize-str [s]
@@ -29,7 +30,7 @@
 (defn js->key-not-memo [namespace key]
   (or
    (get js->db-attr-overrides key)
-   (keyword (csk/->kebab-case namespace)
+   (keyword (csk/->kebab-case (singular namespace))
             (str (if (= (subs key 0 1) "_") "_" "")
                  (csk/->kebab-case
                   (or (js->bool-key key)
@@ -46,41 +47,105 @@
    "retract" :db/retract
    "retractEntity" :db.fn/retractEntity})
 
-(defn js->tx-part
-  ([tx]
-   (if (object? tx)
-     (js->tx-part tx "db")
-     (let [[f e a v] tx]
-       [(get js-tx-fns f) e (keywordize a) v])))
-  ([data namespace]
-   (reduce-kv
-    (fn js->tx-part-reducer [acc k v]
-      (if (coll? v)
-        (js->tx-part v k)
-        (assoc acc (js->key namespace k) v)))
-    {} (js->clj data))))
+(def tx-part-colls
+  #{js/Array js/Object js/Set PersistentArrayMap PersistentVector})
 
-(defn js->entity-lookup [lookup]
-  (cond
-    (number? lookup) lookup
-    (object? lookup) (first (js->tx-part lookup))
-    :else nil))
+(defn scalar? [v]
+  (nil? (tx-part-colls (type v))))
+
+(defmulti js->tx-part "Returns a vector of datalog tx-parts"
+  (fn [temp-ids-atom key-path tx-part] 
+    (type tx-part)))
+(defmethod js->tx-part js/Array [_ _ [f e a v]]
+  [[(get js-tx-fns f) e (keywordize a) v]])
+(defmethod js->tx-part js/Object [temp-ids-atom key-path tx-part]
+  (js->tx-part temp-ids-atom key-path (js->clj tx-part)))
+;; NOTE: it would be nice to handle js/Sets, but JSON does not support them.
+;; So we could never serialize them to JSON and then import that JSON to get the same DB.
+;; I think that's more confusing than useful.
+;; (defmethod js->tx-part js/Set [temp-ids-atom key-path tx-part]
+;;   (print "😢"))
+(defmethod js->tx-part PersistentArrayMap [temp-ids-atom [[nmspc parent-id skip-map?] :as key-path] tx-part]
+  (let [id (or (get tx-part "id") parent-id (swap! temp-ids-atom dec))
+        tx-part (dissoc tx-part "id")]
+    (reduce-kv
+     (fn [acc k v]
+       (into acc
+             (if (and (map? v) (not skip-map?))
+               ;; TODO: validate that a :db.type/ref exists for this attr (js->key nmspc k)
+               (let [child-id (or (get v "id") (swap! temp-ids-atom dec))
+                     v (assoc v "id" child-id)]
+                 (into [[:db/add id (js->key nmspc k) child-id]]
+                       (js->tx-part temp-ids-atom (cons [k id] key-path) v)))
+               (js->tx-part temp-ids-atom (cons [k id] key-path) v))))
+     [] tx-part)))
+(defmethod js->tx-part PersistentVector [temp-ids-atom [[attr parent-id] [nmspc] :as key-path] tx-part]
+  ;; TODO: validate that a :db.type/ref and cardinality/many exist for (js->key nmspc k)
+  (reduce into
+   (map-indexed
+    (fn [i v]
+      (let [id (swap! temp-ids-atom dec)]
+        (into 
+         [[:db/add parent-id (js->key nmspc attr) id]
+          [:db/add id :homebase.array/order (+ 1 i)]]
+         (if (scalar? v)
+           [[:db/add id :homebase.array/value v]]
+           (let [child-id (or (get v "id")
+                              (get (second (first v)) "id")
+                              (swap! temp-ids-atom dec))]
+             (into [[:db/add id :homebase.array/ref child-id]]
+                   (js->tx-part temp-ids-atom (cons [attr child-id true] key-path) v)))))))
+    tx-part)))
+(defmethod js->tx-part :default [_ [[attr id] [nmspc]] tx-part]
+  [[(if (nil? tx-part) :db/retract :db/add)
+    id
+    (js->key nmspc attr)
+    tx-part]])
+
+(defn js->tx [tx]
+  (let [temp-ids-atom (atom -999999)]
+    (->> tx
+      (mapcat (partial js->tx-part temp-ids-atom [["db" nil true]]))
+      (sort (fn [[_ e1] [_ e2]] (compare e2 e1))))))
+
+(defn js->object-lookup 
+  ([lookup] (js->object-lookup lookup "db"))
+  ([lookup nmspc]
+   (reduce-kv
+    (fn [acc k v]
+      (cond
+        (map? v) (js->object-lookup v k)
+        :else (assoc acc (js->key nmspc k) v)))
+    {} (js->clj lookup))))
+
+(defmulti js->entity-lookup type)
+(defmethod js->entity-lookup js/Number [lookup] lookup)
+(defmethod js->entity-lookup js/Object [lookup] (first (js->object-lookup lookup)))
 
 (comment
+  (js->tx (clj->js [{:project {:id 10 :name "p6" :array [[1] [2 {:k "v"}]]}}]))
+  (js->tx (clj->js [{:org {:id 9 :projects [{:project {:extra 1}} {:project {:id 5}} {:project {:id 6 :extra "add extras like this"}}]}}]))
   (js->tx-part #js {"user" {"id" -2
-                       "name" "Arpegius"}})
+                            "name" "Arpegius"}})
+  (js->tx-part (clj->js {:project {:id 7 :name nil :array [1 2 3]}}))
   (map js->tx-part #js [{"todoFilter" {"identity" "todoFilters"
-                                  "showCompleted" true
-                                  "project" 0}}])
-  (first (js->tx-part #js {"identity" "wat"}))
+                                       "showCompleted" true
+                                       "project" 0}}])
+  (js->object-lookup #js {"identity" "wat"})
   (js->entity-lookup 1)
-  (js->entity-lookup #js {"identity" "todoFilters"}))
+  (js->entity-lookup #js {"identity" "todoFilters"})
+  (js->entity-lookup #js {"foo" #js {"bar" "todoFilters"}}))
 
 (def str->schema-key
   {"unique" :db/unique
    "identity" :db.unique/identity
+   
    "type" :db/valueType
-   "ref" :db.type/ref})
+   "ref" :db.type/ref
+   
+   "cardinality" :db/cardinality
+   "one" :db.cardinality/one
+   "many" :db.cardinality/many})
 
 (defn js->schema [schema]
   (let [schema (js->clj schema)]
@@ -137,18 +202,6 @@
     (object? query) (js->datalog query)
     :else nil))
 
-(defn nil->retract [tx]
-  (if-let [id (:db/id tx)]
-    (map (fn [[k v]]
-           [(if (nil? v) :db/retract :db/add) id k v])
-         (dissoc tx :db/id))
-    [tx]))
-
-(defn js->tx [tx]
-  (mapcat
-   (comp nil->retract js->tx-part)
-   tx))
-
 ; This assumes that every entity only has keys of the same namespace once the :db keys are removed
 ; E.g. :db/id 1, :todo/name "", :todo/email ""
 ; Not: :db/id 1, :todo/name "", :email/address ""
@@ -180,6 +233,22 @@
   (if (= de/Entity (type v))
     (HBEntity. v nil) v))
 
+(defmulti entity->js 
+  "If the entity is a set (cardinality/many) then put it in a JS array"
+  (fn [entity] (type entity)))
+(defmethod entity->js :default [entity] entity)
+(defmethod entity->js PersistentHashSet [entity-set]
+  (->> entity-set
+       (sort-by :homebase.array/order)
+       (reduce
+        (fn [acc entity] 
+          (conj acc
+                (or (:homebase.array/value entity)
+                    (:homebase.array/ref entity)
+                    entity)))
+        [])
+       to-array))
+
 (defn lookup-entity 
   ([entity attrs] (lookup-entity entity attrs false))
   ([entity attrs nil-attrs-if-not-in-db?]
@@ -189,13 +258,14 @@
        (fn [acc attr]
          (if-not acc nil
                  (let [attr (keywordize attr)
-                       f (if (keyword? attr) get js-get)]
+                       getter-fn (if (keyword? attr) get js-get)
+                       getter-fn (comp entity->js getter-fn)]
                    (cond
                      (and nil-attrs-if-not-in-db?
                           (or (= :db/id attr) (= "id" attr))
                           (not (entity-in-db? acc))) nil
-                     (set? acc) (f (first acc) attr)
-                     acc (f acc attr)
+                     (array? acc) (nth acc attr)
+                     acc (getter-fn acc attr)
                      :else nil))))
        entity attrs))
      (catch js/Error e

@@ -6,6 +6,7 @@
  [[devcards "0.2.7"]
   [datascript "1.0.1"]
   [reagent "1.0.0-alpha2"]
+  [inflections "0.13.2"]
   [camel-snake-kebab "0.4.2"]]
 
  :dev-http {3000 "public"}

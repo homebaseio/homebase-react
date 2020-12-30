@@ -6,14 +6,17 @@
 
 (def test-tx
   (clj->js
-   [{:todo {:id 3 :project 2}}
+   [{:noIdEntity {:a1 1 :a2 2}}
+    [:retractEntity 9999]
+    {:todo {:id 3 :identity "todo3" :project {:id 2}}}
     {:project {:id 2 :name "abc" :number nil}}
     {:project {:id 4 :name "xyz" :number 23 :isCompleted true}}
     {:project {:id 5 :name "abc"}}
-    {:project {:id 6 :name "p4"}}
-    #_{:project {:id 7 :name "p5" :array [1 2 3]}}
-    #_{:org {:id 8 :projects [{:id 4} {:id 5} {:id 6}]}}
-    #_{:org {:id 9 :projects [{:project {:id 4}} {:project {:id 5}} {:project {:id 6}}]}}]))
+    {:project {:id 6 :name "p4" :user {:name "Stella" :avatar {:url "http://foo.bar"}}}}
+    {:project {:id 7 :name "p5" :array [1 2 "c"]}}
+;;     {:project {:id 10 :name "p6" :array [[1] [2 {:k "v"}]]}}
+    {:org {:id 8 :projects [{:id 4} {:id 5} {:id 6 :extra "don't add extras here, this shorthand is just for ids"}]}}
+    {:org {:id 9 :projects [{:project {:id 4}} {:project {:id 5}} {:project {:id 6 :extra "add extras like this"}}]}}]))
 
 ;; TODO: how will this work with the proposed JSON serializer?
 ;;  - will order be preserved?
@@ -25,24 +28,77 @@
 ;;  {:org {:id 7 :projects [{:id 4} {:id 5} {:id 6}]}}
 ;;  or even
 ;;  {:org {:id 7 :projects [{:project {:id 4}} {:project {:id 5}} {:project {:id 6}}]}}
+;;  
+;; TODO: array order support
+;; - Maybe add a :db/order attr and break ties with :db/id
+;; - What will the API look like for reordering?
+;;   - Will you have to manually set :db/order to position you want?
+;;   
+;; TODO: isComponent support
+;; - What will the API look like?
+;; - Will we prompt people to add this to the scheme when we prompt them to add a type:'ref'?
 
 (deftest test-js->tx
   (testing "everything"
     (is (= (hbjs/js->tx test-tx)
-           '([:db/add 3 :todo/project 2]
-             [:db/add 2 :project/name "abc"]
-             [:db/retract 2 :project/number nil]
+           '([:db.fn/retractEntity 9999 nil nil]
+             [:db/add 9 :org/projects -1000017]
+             [:db/add 9 :org/projects -1000018]
+             [:db/add 9 :org/projects -1000019]
+             [:db/add 8 :org/projects -1000013]
+             [:db/add 8 :org/projects -1000014]
+             [:db/add 8 :org/projects -1000015]
+             [:db/add 7 :project/name "p5"]
+             [:db/add 7 :project/array -1000009]
+             [:db/add 7 :project/array -1000010]
+             [:db/add 7 :project/array -1000011]
+             [:db/add 6 :project/name "p4"]
+             [:db/add 6 :project/user -1000006]
+             [:db/add 6 :project/extra "don't add extras here, this shorthand is just for ids"]
+             [:db/add 6 :project/extra "add extras like this"]
+             [:db/add 5 :project/name "abc"]
              [:db/add 4 :project/name "xyz"]
              [:db/add 4 :project/number 23]
              [:db/add 4 :project/completed? true]
-             [:db/add 5 :project/name "abc"]
-             [:db/add 6 :project/name "p4"])))))
+             [:db/add 3 :db/ident "todo3"]
+             [:db/add 3 :todo/project 2]
+             [:db/add 2 :project/name "abc"]
+             [:db/retract 2 :project/number nil]
+             [:db/add -1000000 :no-id-entity/a-1 1]
+             [:db/add -1000000 :no-id-entity/a-2 2]
+             [:db/add -1000006 :user/name "Stella"]
+             [:db/add -1000006 :user/avatar -1000007]
+             [:db/add -1000007 :avatar/url "http://foo.bar"]
+             [:db/add -1000009 :homebase.array/order 1]
+             [:db/add -1000009 :homebase.array/value 1]
+             [:db/add -1000010 :homebase.array/order 2]
+             [:db/add -1000010 :homebase.array/value 2]
+             [:db/add -1000011 :homebase.array/order 3]
+             [:db/add -1000011 :homebase.array/value "c"]
+             [:db/add -1000013 :homebase.array/order 1]
+             [:db/add -1000013 :homebase.array/ref 4]
+             [:db/add -1000014 :homebase.array/order 2]
+             [:db/add -1000014 :homebase.array/ref 5]
+             [:db/add -1000015 :homebase.array/order 3]
+             [:db/add -1000015 :homebase.array/ref 6]
+             [:db/add -1000017 :homebase.array/order 1]
+             [:db/add -1000017 :homebase.array/ref 4]
+             [:db/add -1000018 :homebase.array/order 2]
+             [:db/add -1000018 :homebase.array/ref 5]
+             [:db/add -1000019 :homebase.array/order 3]
+             [:db/add -1000019 :homebase.array/ref 6])))))
 
 (def test-conn
   (let [conn (d/create-conn
-              (hbjs/js->schema
-               (clj->js {:todo {:project {:type "ref" :cardinality "one"}}
-                         :org {:projects {:type "ref" :cardinality "many"}}})))]
+              (merge
+               {:db/ident {:db/unique :db.unique/identity}
+                :homebase.array/ref {:db/type :db.type/ref 
+                                     :db/cardinality :db.cardinality/one}}
+               (hbjs/js->schema
+                (clj->js {:todo {:project {:type "ref" :cardinality "one"}}
+                          :project {:number {:unique "identity"}
+                                    :array {:type "ref" :cardinality "many"}}
+                          :org {:projects {:type "ref" :cardinality "many"}}}))))]
     (hbjs/transact! conn test-tx)
     conn))
 
@@ -82,6 +138,12 @@
     (is (nil? (.get (hbjs/entity (d/create-conn) 3) "project" "id")))
     (is (= 2 (get-in ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) ["project" "id"])))
     (is (= "abc" (get-in ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) ["project" "name"])))
+    (testing "arrays"
+      (is (= [1 2 "c"] (js->clj (.get (hbjs/entity test-conn 7) "array"))))
+      (is (= "c" (.get (hbjs/entity test-conn 7) "array" 2)))
+      (is (= "xyz" (.get (hbjs/entity test-conn 8) "projects" 0 "name")))
+      (is (= "xyz" (.get (hbjs/entity test-conn 9) "projects" 0 "name")))
+      (is (= "add extras like this" (.get (hbjs/entity test-conn 9) "projects" 2 "extra"))))
     (testing "ref get without schema error"
       (is (thrown-with-msg?
            js/Error
@@ -131,7 +193,14 @@
 
 (deftest test-entity
   (testing "should succeed"
-    (is (nil? (:db/id (hbjs/entity (d/create-conn) (clj->js 1))))))
+    (is (nil? (:db/id (hbjs/entity (d/create-conn) 1))))
+    (is (nil? (:db/id (hbjs/entity (d/create-conn) (clj->js {"identity" "foo"}))))))
+  (testing "id lookup"
+    (is (= "abc" (.get (hbjs/entity test-conn 2) "name"))))
+  (testing "identity lookup"
+    (is (= 3 (.get (hbjs/entity test-conn (clj->js {"identity" "todo3"})) "id"))))
+  (testing "unique attribute lookup"
+    (is (= "xyz" (.get (hbjs/entity test-conn (clj->js {"project" {"number" 23}})) "name"))))
   (testing "should fail with humanized errors"
     (is (thrown-with-msg?
          js/Error
@@ -145,7 +214,7 @@
                         (d/create-conn))))
     (is (array? (hbjs/q (clj->js "[:find ?e :where [?e :item/name]]") (d/create-conn)))))
   (testing "$any"
-    (is (= 4 (count (hbjs/q (clj->js {"$find" "project"
+    (is (= 5 (count (hbjs/q (clj->js {"$find" "project"
                                       "$where" {"project" {"name" "$any"}}})
                             test-conn)))))
   (testing "filter by string"

@@ -76,7 +76,9 @@
 (defonce ^:export homebase-context (react/createContext))
 
 (def base-schema
-  {:db/ident {:db/unique :db.unique/identity}})
+  {:db/ident {:db/unique :db.unique/identity}
+   :homebase.array/ref {:db/type :db.type/ref
+                        :db/cardinality :db.cardinality/one}})
 
 (defn ^:export HomebaseProvider [props]
   (let [conn (d/create-conn (if-let [schema (goog.object/getValueByKeys props #js ["config" "schema"])]
