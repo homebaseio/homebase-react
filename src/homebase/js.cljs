@@ -54,36 +54,47 @@
   (nil? (tx-part-colls (type v))))
 
 (defmulti js->tx-part "Returns a vector of datalog tx-parts"
-  (fn [temp-ids-atom key-path tx-part] 
+  (fn [schema temp-ids-atom key-path tx-part] 
     (type tx-part)))
-(defmethod js->tx-part js/Array [_ _ [f e a v]]
+(defmethod js->tx-part js/Array [_ _ _ [f e a v]]
   [[(get js-tx-fns f) e (keywordize a) v]])
-(defmethod js->tx-part js/Object [temp-ids-atom key-path tx-part]
-  (js->tx-part temp-ids-atom key-path (js->clj tx-part)))
+(defmethod js->tx-part js/Object [schema temp-ids-atom key-path tx-part]
+  (js->tx-part schema temp-ids-atom key-path (js->clj tx-part)))
 ;; NOTE: it would be nice to handle js/Sets, but JSON does not support them.
 ;; So we could never serialize them to JSON and then import that JSON to get the same DB.
-;; I think that's more confusing than useful.
+;; I think that makes supporting js/Sets more confusing than useful.
+;; If we ever extend the EDN API to provide some of the convenience features in this JS api then we can certainly support EDN sets
 ;; (defmethod js->tx-part js/Set [temp-ids-atom key-path tx-part]
 ;;   (print "😢"))
-(defmethod js->tx-part PersistentArrayMap [temp-ids-atom [[nmspc parent-id skip-map?] :as key-path] tx-part]
+(defmethod js->tx-part PersistentArrayMap [schema temp-ids-atom [[nmspc parent-id skip-map?] :as key-path] tx-part]
   (let [id (or (get tx-part "id") parent-id (swap! temp-ids-atom dec))
         tx-part (dissoc tx-part "id")]
     (reduce-kv
      (fn [acc k v]
        (into acc
              (if (and (map? v) (not skip-map?))
-               ;; TODO: validate that a :db.type/ref exists for this attr (js->key nmspc k)
                (let [child-id (or (get v "id") (swap! temp-ids-atom dec))
                      v (assoc v "id" child-id)]
+                 (when (or
+                        (not= :db.type/ref (get-in schema [(js->key nmspc k) :db/valueType]))
+                        (not= :db.cardinality/one (get-in schema [(js->key nmspc k) :db/cardinality])))
+                   (throw (js/Error. (str "The '" nmspc "." k "' attribute should be a ref type of one."
+                                          "\n\nAdd this to your config:  { schema: { " nmspc ": { " k ": { type: 'ref', cardinality: 'one' }}}\n"))))
                  (into [[:db/add id (js->key nmspc k) child-id]]
-                       (js->tx-part temp-ids-atom (cons [k id] key-path) v)))
-               (js->tx-part temp-ids-atom (cons [k id] key-path) v))))
+                       (js->tx-part schema temp-ids-atom (cons [k id] key-path) v)))
+               (js->tx-part schema temp-ids-atom (cons [k id] key-path) v))))
      [] tx-part)))
-(defmethod js->tx-part PersistentVector [temp-ids-atom [[attr parent-id] [nmspc] :as key-path] tx-part]
-  ;; TODO: validate that a :db.type/ref and cardinality/many exist for (js->key nmspc k)
+(defmethod js->tx-part PersistentVector [schema temp-ids-atom [[attr parent-id] [nmspc] :as key-path] tx-part]
+  (when (or
+         (not= :db.type/ref (get-in schema [(js->key nmspc attr) :db/valueType]))
+         (not= :db.cardinality/many (get-in schema [(js->key nmspc attr) :db/cardinality])))
+    (throw (js/Error. (str "The '" nmspc "." attr "' attribute should be a ref type of many."
+                           "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { type: 'ref', cardinality: 'many' }}}\n"))))
   (reduce into
    (map-indexed
     (fn [i v]
+      (when (vector? v)
+        (throw (js/Error. (str "Unsupported JSON in transaction: nested array of arrays `" attr ": [" v "]`. If you need to transact unnamed JSON (tuples, lists) consider serializing it to a string first via `JSON.stringify(yourData)`. If you think homebase-react should have a first class JSON datatype let us know https://github.com/homebaseio/homebase-react/discussions"))))
       (let [id (swap! temp-ids-atom dec)]
         (into 
          [[:db/add parent-id (js->key nmspc attr) id]
@@ -94,19 +105,19 @@
                               (get (second (first v)) "id")
                               (swap! temp-ids-atom dec))]
              (into [[:db/add id :homebase.array/ref child-id]]
-                   (js->tx-part temp-ids-atom (cons [attr child-id true] key-path) v)))))))
+                   (js->tx-part schema temp-ids-atom (cons [attr child-id true] key-path) v)))))))
     tx-part)))
-(defmethod js->tx-part :default [_ [[attr id] [nmspc]] tx-part]
+(defmethod js->tx-part :default [_ _ [[attr id] [nmspc]] tx-part]
   [[(if (nil? tx-part) :db/retract :db/add)
     id
     (js->key nmspc attr)
     tx-part]])
 
-(defn js->tx [tx]
+(defn js->tx [schema tx]
   (let [temp-ids-atom (atom -999999)]
     (->> tx
-      (mapcat (partial js->tx-part temp-ids-atom [["db" nil true]]))
-      (sort (fn [[_ e1] [_ e2]] (compare e2 e1))))))
+         (mapcat (partial js->tx-part schema temp-ids-atom [["db" nil true]]))
+         (sort (fn [[_ e1] [_ e2]] (compare e2 e1))))))
 
 (defn js->object-lookup 
   ([lookup] (js->object-lookup lookup "db"))
@@ -123,8 +134,8 @@
 (defmethod js->entity-lookup js/Object [lookup] (first (js->object-lookup lookup)))
 
 (comment
-  (js->tx (clj->js [{:project {:id 10 :name "p6" :array [[1] [2 {:k "v"}]]}}]))
-  (js->tx (clj->js [{:org {:id 9 :projects [{:project {:extra 1}} {:project {:id 5}} {:project {:id 6 :extra "add extras like this"}}]}}]))
+  (js->tx nil (clj->js [{:project {:array [[1] [2 {:k "v"}]]}}]))
+  (js->tx nil (clj->js [{:org {:id 9 :projects [{:project {:extra 1}} {:project {:id 5}} {:project {:id 6 :extra "add extras like this"}}]}}]))
   (js->tx-part #js {"user" {"id" -2
                             "name" "Arpegius"}})
   (js->tx-part (clj->js {:project {:id 7 :name nil :array [1 2 3]}}))
@@ -240,13 +251,6 @@
 (defmethod entity->js PersistentHashSet [entity-set]
   (->> entity-set
        (sort-by :homebase.array/order)
-       (reduce
-        (fn [acc entity] 
-          (conj acc
-                (or (:homebase.array/value entity)
-                    (:homebase.array/ref entity)
-                    entity)))
-        [])
        to-array))
 
 (defn lookup-entity 
@@ -264,7 +268,9 @@
                      (and nil-attrs-if-not-in-db?
                           (or (= :db/id attr) (= "id" attr))
                           (not (entity-in-db? acc))) nil
-                     (array? acc) (nth acc attr)
+                     (array? acc) (if (number? attr) 
+                                    (nth acc attr)
+                                    (.map acc #(getter-fn % attr)))
                      acc (getter-fn acc attr)
                      :else nil))))
        entity attrs))
@@ -319,7 +325,7 @@
   ([conn tx] (transact! conn tx nil))
   ([conn tx tx-meta]
    (try 
-     (d/transact! conn (js->tx tx) tx-meta)
+     (d/transact! conn (js->tx (:schema @conn) tx) tx-meta)
      (catch js/Error e 
        (throw (js/Error. (humanize-transact-error e)))))))
 

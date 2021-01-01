@@ -14,9 +14,21 @@
     {:project {:id 5 :name "abc"}}
     {:project {:id 6 :name "p4" :user {:name "Stella" :avatar {:url "http://foo.bar"}}}}
     {:project {:id 7 :name "p5" :array [1 2 "c"]}}
-;;     {:project {:id 10 :name "p6" :array [[1] [2 {:k "v"}]]}}
     {:org {:id 8 :projects [{:id 4} {:id 5} {:id 6 :extra "don't add extras here, this shorthand is just for ids"}]}}
     {:org {:id 9 :projects [{:project {:id 4}} {:project {:id 5}} {:project {:id 6 :extra "add extras like this"}}]}}]))
+
+(def test-schema
+  (merge
+   {:db/ident {:db/unique :db.unique/identity}
+    :homebase.array/ref {:db/type :db.type/ref
+                         :db/cardinality :db.cardinality/one}}
+   (hbjs/js->schema
+    (clj->js {:todo {:project {:type "ref" :cardinality "one"}}
+              :project {:number {:unique "identity"}
+                        :array {:type "ref" :cardinality "many"}
+                        :user {:type "ref" :cardinality "one"}}
+              :user {:avatar {:type "ref" :cardinality "one"}}
+              :org {:projects {:type "ref" :cardinality "many"}}}))))
 
 ;; TODO: how will this work with the proposed JSON serializer?
 ;;  - will order be preserved?
@@ -37,10 +49,13 @@
 ;; TODO: isComponent support
 ;; - What will the API look like?
 ;; - Will we prompt people to add this to the scheme when we prompt them to add a type:'ref'?
+;; 
+;; TODO: array item reordering and deletion
+;; - Entity unwraps the :homebase.array off the inner value. This makes it impossible to edit :homebase.array/order
 
 (deftest test-js->tx
   (testing "everything"
-    (is (= (hbjs/js->tx test-tx)
+    (is (= (hbjs/js->tx test-schema test-tx)
            '([:db.fn/retractEntity 9999 nil nil]
              [:db/add 9 :org/projects -1000017]
              [:db/add 9 :org/projects -1000018]
@@ -89,16 +104,7 @@
              [:db/add -1000019 :homebase.array/ref 6])))))
 
 (def test-conn
-  (let [conn (d/create-conn
-              (merge
-               {:db/ident {:db/unique :db.unique/identity}
-                :homebase.array/ref {:db/type :db.type/ref 
-                                     :db/cardinality :db.cardinality/one}}
-               (hbjs/js->schema
-                (clj->js {:todo {:project {:type "ref" :cardinality "one"}}
-                          :project {:number {:unique "identity"}
-                                    :array {:type "ref" :cardinality "many"}}
-                          :org {:projects {:type "ref" :cardinality "many"}}}))))]
+  (let [conn (d/create-conn test-schema)]
     (hbjs/transact! conn test-tx)
     conn))
 
@@ -139,11 +145,16 @@
     (is (= 2 (get-in ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) ["project" "id"])))
     (is (= "abc" (get-in ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) ["project" "name"])))
     (testing "arrays"
-      (is (= [1 2 "c"] (js->clj (.get (hbjs/entity test-conn 7) "array"))))
-      (is (= "c" (.get (hbjs/entity test-conn 7) "array" 2)))
-      (is (= "xyz" (.get (hbjs/entity test-conn 8) "projects" 0 "name")))
-      (is (= "xyz" (.get (hbjs/entity test-conn 9) "projects" 0 "name")))
-      (is (= "add extras like this" (.get (hbjs/entity test-conn 9) "projects" 2 "extra"))))
+      (is (= [1 2 "c"] (js->clj (.map (.get (hbjs/entity test-conn 7) "array") #(.get % "value")))))
+      (is (= "c" (.get (hbjs/entity test-conn 7) "array" 2 "value")))
+      (is (= "xyz" (.get (hbjs/entity test-conn 8) "projects" 0 "ref" "name")))
+      (is (= "xyz" (.get (hbjs/entity test-conn 9) "projects" 0 "ref" "name")))
+      (is (= "add extras like this" (.get (hbjs/entity test-conn 9) "projects" 2 "ref" "extra")))
+      (testing "shorthand for automatic mapping over array fields via .get"
+        (is (= [1 2 "c"] (js->clj (.get (hbjs/entity test-conn 7) "array" "value"))))
+        (is (= ["xyz" "abc" "p4"] (js->clj (.get (hbjs/entity test-conn 8) "projects" "ref" "name"))))
+        (testing "nil punning"
+          (is (= [nil nil nil] (js->clj (.get (hbjs/entity test-conn 8) "projects" "value" "name" "yolo")))))))
     (testing "ref get without schema error"
       (is (thrown-with-msg?
            js/Error
@@ -189,7 +200,24 @@
     (is (thrown-with-msg?
          js/Error
          #"(?s)Expected a numerical id.*For example:"
-         (hbjs/transact! (d/create-conn) (clj->js [["retractEntity"]]))))))
+         (hbjs/transact! (d/create-conn) (clj->js [["retractEntity"]]))))
+    (testing "schema recommendations"
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)The 'item.child' attribute should be a ref type of one.*Add this to your config:"
+           (hbjs/transact! (d/create-conn) (clj->js [{:item {:child {:grandChild 1}}}]))))
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)The 'item.numbers' attribute should be a ref type of many.*Add this to your config:"
+           (hbjs/transact! (d/create-conn) (clj->js [{:item {:numbers [1 2 3]}}]))))
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)The 'item.children' attribute should be a ref type of many.*Add this to your config:"
+           (hbjs/transact! (d/create-conn) (clj->js [{:item {:children [{:otherEntity {:number 1}}]}}]))))
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)Unsupported JSON in transaction: nested array of arrays `projects: \[\[1\]\]`."
+           (hbjs/transact! test-conn (clj->js [{:org {:projects [[1]]}}])))))))
 
 (deftest test-entity
   (testing "should succeed"

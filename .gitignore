@@ -4,6 +4,7 @@ out/
 dist/
 .clj-kondo/
 .lsp/
+.history/
 
 /target
 /checkouts
