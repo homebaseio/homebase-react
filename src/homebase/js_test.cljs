@@ -30,28 +30,12 @@
               :user {:avatar {:type "ref" :cardinality "one"}}
               :org {:projects {:type "ref" :cardinality "many"}}}))))
 
-;; TODO: how will this work with the proposed JSON serializer?
-;;  - will order be preserved?
-;;  - how will we know when an array is ids or just numbers?
-;;  - what about nested objects? will they be turned into refs?
-;;  proposal - instead of
-;;  {:org {:id 7 :projects [4 5 6]}}
-;;  we could do
-;;  {:org {:id 7 :projects [{:id 4} {:id 5} {:id 6}]}}
-;;  or even
-;;  {:org {:id 7 :projects [{:project {:id 4}} {:project {:id 5}} {:project {:id 6}}]}}
-;;  
-;; TODO: array order support
-;; - Maybe add a :db/order attr and break ties with :db/id
-;; - What will the API look like for reordering?
-;;   - Will you have to manually set :db/order to position you want?
-;;   
 ;; TODO: isComponent support
 ;; - What will the API look like?
 ;; - Will we prompt people to add this to the scheme when we prompt them to add a type:'ref'?
 ;; 
-;; TODO: array item reordering and deletion
-;; - Entity unwraps the :homebase.array off the inner value. This makes it impossible to edit :homebase.array/order
+;; TODO: reverse lookup support
+;; - Is there a way to support reverse lookups? e.g. project.get(':todo/_project')
 
 (deftest test-js->tx
   (testing "everything"
