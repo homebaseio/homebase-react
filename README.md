@@ -210,6 +210,7 @@ https://www.notion.so/Homebase-Alpha-Docs-0f0e22f3adcd4e9d87a13440ab0c7a0b
 
 ```bash
 yarn install
+yarn build dev
 yarn dev
 ```
 
@@ -219,6 +220,7 @@ Open http://localhost:3000
 
 ```bash
 yarn install
+yarn build dev
 yarn test
 ```
 
