@@ -3,6 +3,7 @@
    ["react" :as react]
    [clojure.string]
    [cljs.reader]
+   [goog.object]
    [homebase.js :as hbjs]
    [datascript.core :as d]
    [datascript.impl.entity :as de]))
@@ -37,10 +38,11 @@
             nil entities)))
 
 (defn cache->js [entity cached-entities]
-  (clj->js
-   (reduce
-    (fn [acc [ks v]] (assoc-in acc ks v))
-    {} (get @cached-entities (get entity "id")))))
+  (reduce
+   (fn [acc [ks v]]
+     (goog.object/set acc (str (to-array ks)) v)
+     acc)
+   #js {} (get @cached-entities (get entity "id"))))
 
 (defn touch-entity-cache [entity cached-entities]
   (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {})
