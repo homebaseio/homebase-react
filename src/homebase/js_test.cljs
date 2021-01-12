@@ -137,6 +137,8 @@
       (testing "shorthand for automatic mapping over array fields via .get"
         (is (= [1 2 "c"] (js->clj (.get (hbjs/entity test-conn 7) "array" "value"))))
         (is (= ["xyz" "abc" "p4"] (js->clj (.get (hbjs/entity test-conn 8) "projects" "ref" "name"))))
+        (is (= [1 2 3] (js->clj (.get (hbjs/entity test-conn 7) "array" "order"))))
+        (is (= [15 16 17] (js->clj (.get (hbjs/entity test-conn 7) "array" "id"))))
         (testing "nil punning"
           (is (= [nil nil nil] (js->clj (.get (hbjs/entity test-conn 8) "projects" "value" "name" "yolo")))))))
     (testing "ref get without schema error"

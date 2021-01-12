@@ -265,12 +265,12 @@
                        getter-fn (if (keyword? attr) get js-get)
                        getter-fn (comp entity->js getter-fn)]
                    (cond
+                     (array? acc) (if (number? attr)
+                                    (nth acc attr)
+                                    (.map acc #(getter-fn % attr)))
                      (and nil-attrs-if-not-in-db?
                           (or (= :db/id attr) (= "id" attr))
                           (not (entity-in-db? acc))) nil
-                     (array? acc) (if (number? attr) 
-                                    (nth acc attr)
-                                    (.map acc #(getter-fn % attr)))
                      acc (getter-fn acc attr)
                      :else nil))))
        entity attrs))
