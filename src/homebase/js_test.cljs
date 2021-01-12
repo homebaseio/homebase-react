@@ -142,7 +142,7 @@
     (testing "ref get without schema error"
       (is (thrown-with-msg?
            js/Error
-           #"(?s)The `user.friend` attribute should be marked as ref.*Add this to your config:.*\{ schema: \{ user: \{ friend: \{ type: 'ref'"
+           #"(?s)The `user.friend` attribute should be marked as ref.*Add this to your config:.*schema: \{ user: \{ friend: \{ type: 'ref'"
            (let [conn (d/create-conn)]
              (hbjs/transact! conn #js [#js {:user #js {:id 1 :friend -2}}
                                        #js {:user #js {:id -2 :avatar -3}}
@@ -151,7 +151,7 @@
       (testing "error works for deeply nested get"
         (is (thrown-with-msg?
              js/Error
-             #"(?s)The `user.avatar` attribute should be marked as ref.*Add this to your config:.*\{ schema: \{ user: \{ avatar: \{ type: 'ref'"
+             #"(?s)The `user.avatar` attribute should be marked as ref.*Add this to your config:.*schema: \{ user: \{ avatar: \{ type: 'ref'"
              (let [conn (d/create-conn {:user/friend {:db/type :db.type/ref}})]
                (hbjs/transact! conn #js [#js {:user #js {:id 1 :friend -2}}
                                          #js {:user #js {:id -2 :avatar -3}}

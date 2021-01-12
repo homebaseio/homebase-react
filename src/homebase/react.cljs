@@ -26,7 +26,7 @@
   (if (not= (count entities) (count cached-entities))
     true
     (reduce (fn [_ e]
-              (let [e ^de/Entity (.-_entity e)]
+              (let [e ^hbjs/HBEntity (.-_entity e)]
                 (when (let [cached-e (get cached-entities (get e "id"))]
                         (if (nil? cached-e)
                           (reduced true)
@@ -46,9 +46,9 @@
 
 (defn touch-entity-cache [entity cached-entities]
   (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {})
-  (set! ^de/Entity (.-_entity entity)
+  (set! ^hbjs/HBEntity (.-_entity entity)
         (vary-meta
-         ^de/Entity (.-_entity entity) merge
+         ^hbjs/HBEntity (.-_entity entity) merge
          {:HBEntity/get-cb
           (fn [[e ks v]]
             (if (get e "id")

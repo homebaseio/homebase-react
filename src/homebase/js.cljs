@@ -79,7 +79,7 @@
                         (not= :db.type/ref (get-in schema [(js->key nmspc k) :db/valueType]))
                         (not= :db.cardinality/one (get-in schema [(js->key nmspc k) :db/cardinality])))
                    (throw (js/Error. (str "The '" nmspc "." k "' attribute should be a ref type of one."
-                                          "\n\nAdd this to your config:  { schema: { " nmspc ": { " k ": { type: 'ref', cardinality: 'one' }}}\n"))))
+                                          "\n\nAdd this to your config:  schema: { " nmspc ": { " k ": { type: 'ref', cardinality: 'one' }}}\n"))))
                  (into [[:db/add id (js->key nmspc k) child-id]]
                        (js->tx-part schema temp-ids-atom (cons [k id] key-path) v)))
                (js->tx-part schema temp-ids-atom (cons [k id] key-path) v))))
@@ -89,7 +89,7 @@
          (not= :db.type/ref (get-in schema [(js->key nmspc attr) :db/valueType]))
          (not= :db.cardinality/many (get-in schema [(js->key nmspc attr) :db/cardinality])))
     (throw (js/Error. (str "The '" nmspc "." attr "' attribute should be a ref type of many."
-                           "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { type: 'ref', cardinality: 'many' }}}\n"))))
+                           "\n\nAdd this to your config:  schema: { " nmspc ": { " attr ": { type: 'ref', cardinality: 'many' }}}\n"))))
   (reduce into
    (map-indexed
     (fn [i v]
@@ -324,9 +324,9 @@
 (defn transact! 
   ([conn tx] (transact! conn tx nil))
   ([conn tx tx-meta]
-   (try 
+   (try
      (d/transact! conn (js->tx (:schema @conn) tx) tx-meta)
-     (catch js/Error e 
+     (catch js/Error e
        (throw (js/Error. (humanize-transact-error e)))))))
 
 (defn entity [conn lookup]
@@ -349,7 +349,7 @@
                 nmspc (namespace key)
                 attr (name key)]
             (str "The `" nmspc "." attr "` attribute should be marked as ref if you want to treat it as a relationship."
-                 "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { type: 'ref' }}}\n")))
+                 "\n\nAdd this to your config:  schema: { " nmspc ": { " attr ": { type: 'ref' }}}\n")))
     (goog.object/get error "message")))
 
 (defn humanize-transact-error [error]
@@ -383,7 +383,7 @@
     #"Lookup ref attribute should be marked as :db/unique: \[:([\w-]+)/([\w-]+) ((?!\]).+)\]"
     :>> (fn [[_ nmspc attr v]]
           (str "The `" nmspc "." attr "` attribute should be marked as unique if you want to lookup entities by it."
-               "\n\nAdd this to your config:  { schema: { " nmspc ": { " attr ": { unique: 'identity' }}}\n"))
+               "\n\nAdd this to your config:  schema: { " nmspc ": { " attr ": { unique: 'identity' }}}\n"))
     (goog.object/get error "message")))
 
 (defn example-js-query
