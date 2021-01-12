@@ -299,7 +299,7 @@
           (f [this attrs v]))
         v))))
 
-(defn Entity [^de/Entity d-entity]
+(defn ^{:jsdoc ["@nocollapse"]} Entity [^de/Entity d-entity]
   (this-as ^Entity this
            (set! (.-id this) (:db/id d-entity))
            (set! (.-type this)
