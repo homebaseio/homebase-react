@@ -64,7 +64,7 @@ const config = {
   // and lets you lookup entities by their unique attributes.
   schema: {
     todo: {
-      project: { type: 'ref' },
+      project: { type: 'ref', cardinality: 'one' },
       name: { unique: 'identity' }
     }
   },
@@ -73,9 +73,24 @@ const config = {
   // It's a transaction that runs on component mount.
   // Use it to hydrate your app.
   initialData: [
-    { project: { id: -1, name: 'Do it', owner: -2 } },
+    { project: { id: -1, name: 'Do it', user: -2 } },
     { todo: { project: -1, name: 'Make it' } },
     { user: { id: -2, name: 'Arpegius' } }
+  ]
+
+  // Or relationships can be specified implicitly with nested JSON
+  initialData: [
+    { 
+      todo: { 
+        name: 'Make it',
+        project: { 
+          name: 'Do it', 
+          user: { 
+            name: 'Arpegius' 
+          } 
+        } 
+      } 
+    }
   ]
 }
 
@@ -101,7 +116,7 @@ const [sameTodo] = useEntity({ todo: { name: 'Make it' } })
 sameTodo.get('id') // => 2
 
 // And most importantly you can traverse arbitrarily deep relationships.
-sameTodo.get('project', 'owner', 'name') // => 'Arpegius'
+sameTodo.get('project', 'user', 'name') // => 'Arpegius'
 ```
 
 ### `useTransact`
@@ -170,7 +185,72 @@ This hook returns the current database client with some helpful functions for sy
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
 
+### Arrays & Nested JSON
 
+Arrays and arbitrary JSON are partially supported for convenience. However in most cases its better to avoid arrays. Using a query and then sorting by an attribute is simpler and more flexible. This is because arrays add extra overhead to keep track of order.
+
+```js
+const config = {
+  schema: {
+    company: {
+      numbers: { type: 'ref', cardinality: 'many' },
+      projects: { type: 'ref', cardinality: 'many' },
+    }
+  }
+}
+
+transact([
+  { project: { id: -1, name: 'a' } },
+  { 
+    company: {
+      numbers: [1, 2, 3],
+      projects: [
+        { project: { id: -1 } },
+        { project: { name: 'b' } },
+      ]
+    }
+  }
+])
+
+// Index into arrays
+company.get('numbers', 1, 'value') // => 2
+company.get('projects', 0, 'ref', 'name') // => 'a'
+// Get the automatically assigned order
+// Order starts at 1 and increments by 1
+company.get('numbers', 0, 'order') // => 1
+company.get('projects', 0, 'order') // => 1
+company.get('projects', 1, 'order') // => 2
+// Map over individual attributes
+company.get('numbers', 'value') // => [1, 2, 3]
+company.get('projects', 'ref', 'name') // => ['a', 'b']
+```
+
+The `entity.get` API is flexible and supports indexing into arrays as well as automatically mapping over individual attributes.
+
+Array items are automatically assigned an `order` and either a `value` or a `ref` depending on if item in the array is an entity or not. To reorder an array item change its `order`.
+
+```js
+transact([
+  { 
+    id: company.get('numbers', 2, 'id'), 
+    order: (company.get('numbers', 0, 'order') 
+          + company.get('numbers', 1, 'order')) / 2
+  }
+])
+
+company.get('numbers', 'value') // => [1 3 2]
+```
+
+If you need to transact complex JSON like arrays of arrays then you're better off serializing it to a string first.
+
+```js
+// NOT supported
+transact([{ company: { matrix: [[1, 2, 3], [4, 5, 6]] } }])
+
+// Better
+transact([{ company: { matrix: JSON.stringify([[1, 2, 3], [4, 5, 6]]) } }])
+JSON.parse(company.get('matrix'))
+```
 
 ## Performance
 

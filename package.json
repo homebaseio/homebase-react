@@ -3,7 +3,7 @@
   "description": "A graph database for React.",
   "version": "0.0.0-development",
   "license": "MIT",
-  "homepage": "https://github.com/homebaseio/homebase-react",
+  "homepage": "https://homebase.io",
   "main": "./dist/js/homebase.react.js",
   "private": false,
   "scripts": {
