@@ -3,6 +3,7 @@
    ["react" :as react]
    [clojure.string]
    [cljs.reader]
+   [goog.object]
    [homebase.js :as hbjs]
    [datascript.core :as d]
    [datascript.impl.entity :as de]))
@@ -25,7 +26,7 @@
   (if (not= (count entities) (count cached-entities))
     true
     (reduce (fn [_ e]
-              (let [e ^de/Entity (.-_entity e)]
+              (let [e ^hbjs/HBEntity (.-_entity e)]
                 (when (let [cached-e (get cached-entities (get e "id"))]
                         (if (nil? cached-e)
                           (reduced true)
@@ -37,16 +38,17 @@
             nil entities)))
 
 (defn cache->js [entity cached-entities]
-  (clj->js
-   (reduce
-    (fn [acc [ks v]] (assoc-in acc ks v))
-    {} (get @cached-entities (get entity "id")))))
+  (reduce
+   (fn [acc [ks v]]
+     (goog.object/set acc (str (to-array ks)) v)
+     acc)
+   #js {} (get @cached-entities (get entity "id"))))
 
 (defn touch-entity-cache [entity cached-entities]
   (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {})
-  (set! ^de/Entity (.-_entity entity)
+  (set! ^hbjs/HBEntity (.-_entity entity)
         (vary-meta
-         ^de/Entity (.-_entity entity) merge
+         ^hbjs/HBEntity (.-_entity entity) merge
          {:HBEntity/get-cb
           (fn [[e ks v]]
             (if (get e "id")
@@ -76,7 +78,9 @@
 (defonce ^:export homebase-context (react/createContext))
 
 (def base-schema
-  {:db/ident {:db/unique :db.unique/identity}})
+  {:db/ident {:db/unique :db.unique/identity}
+   :homebase.array/ref {:db/type :db.type/ref
+                        :db/cardinality :db.cardinality/one}})
 
 (defn ^:export HomebaseProvider [props]
   (let [conn (d/create-conn (if-let [schema (goog.object/getValueByKeys props #js ["config" "schema"])]
