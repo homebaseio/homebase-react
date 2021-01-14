@@ -6,6 +6,7 @@
    [cljsjs.react.dom]
    [reagent.core]
    [devcards.core :as dc]
+   [example.array]
    [example.counter]
    [example.todo]
    [example.todo-firebase]))
