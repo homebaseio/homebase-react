@@ -8,7 +8,8 @@
 - [ ] no tests needed
 
 ### Docs
-- [ ] added relevant docs
+- [ ] added relevant docs 
+    - preview them at https://homebase.io/docs/homebase-react/{BRANCH_NAME}/overview
 - [ ] updated relevant sections in the README.md
 - [ ] updated relevant docstrings in index.d.ts
 - [ ] no docs needed
