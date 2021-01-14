@@ -1,12 +1,14 @@
-<img src="public/images/logo-blk.png" height="50" align="right">
+<img src="https://github.com/homebaseio/homebase-react/raw/master/public/images/logo-blk.png" height="50" align="right">
 
-# Homebase React
+## Homebase React
 
 [![CI](https://github.com/homebaseio/homebase-react/workflows/CI/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACI)
 [![CD](https://github.com/homebaseio/homebase-react/workflows/CD/badge.svg)](https://github.com/homebaseio/homebase-react/actions?query=workflow%3ACD)
 [![NPM Version](https://img.shields.io/npm/v/homebase-react)](https://www.npmjs.com/package/homebase-react)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/homebase-react)](https://www.npmjs.com/package/homebase-react)
 [![License](https://img.shields.io/github/license/homebaseio/homebase-react.svg)](LICENSE)
+[![GitHub Repo stars](https://img.shields.io/github/stars/homebaseio/homebase-react?style=social)](https://github.com/homebaseio/homebase-react)
+[![Twitter Follow](https://img.shields.io/twitter/follow/homebase__io?label=Follow&style=social)](https://twitter.com/homebase__io)
 
 *The graph database for delightful React state management*
 
