@@ -14,16 +14,18 @@ Read from and write to that database via hooks.
 
 ```js
 import { useCallback } from 'react'
-import { useTransact } from 'homebase-react'
+import { useEntity, useTransact } from 'homebase-react'
 
 const App = () => {
   const [counter] = useEntity(1)
   const [transact] = useTransact()
+
   const handleClick = useCallback(() => {
     transact([{ counter: { 
       id: 1, count: counter.get('count') + 1 
     } }])
   }, [counter, transact])
+
   return (
     <button onClick={handleClick}>
       Increment 
