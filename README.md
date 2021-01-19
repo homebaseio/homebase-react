@@ -103,7 +103,7 @@ const RootComponent = () => (
 
 ### `useEntity` and `entity.get`
 
-Entities are the building blocks of the Homebase data model. They are like JSON objects with bonus features. In particular **you can traverse arbitrarily deep relationship without actually denormalizing and nesting your data**.
+Entities are the building blocks of the Homebase data model. They are like JSON objects with bonus features. In particular **you can traverse arbitrarily deep relationships without actually denormalizing and nesting your data**.
 
 ```js
 // You can get an entity by its id and get attributes off of it.
@@ -285,7 +285,7 @@ const Todo = React.memo(({ todo }) => {
 
 
 ## Docs
-https://www.notion.so/Homebase-Alpha-Docs-0f0e22f3adcd4e9d87a13440ab0c7a0b
+https://homebase.io/docs/homebase-react/main/overview
 ## Development
 
 ```bash
