@@ -22,6 +22,10 @@ npm install homebase-react --save
 # Yarn
 yarn add homebase-react
 ```
+
+## Docs
+https://homebase.io/docs/homebase-react/main/overview
+
 ## Features
 - The simplest and most declarative state management solution
 - The power of a backend relational graph database, but without having to wait on the network
@@ -185,107 +189,6 @@ This hook returns the current database client with some helpful functions for sy
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
 
-### Arrays & Nested JSON
-
-Arrays and arbitrary JSON are partially supported for convenience. However in most cases its better to avoid arrays. Using a query and then sorting by an attribute is simpler and more flexible. This is because arrays add extra overhead to keep track of order.
-
-```js
-const config = {
-  schema: {
-    company: {
-      numbers: { type: 'ref', cardinality: 'many' },
-      projects: { type: 'ref', cardinality: 'many' },
-    }
-  }
-}
-
-transact([
-  { project: { id: -1, name: 'a' } },
-  { 
-    company: {
-      numbers: [1, 2, 3],
-      projects: [
-        { project: { id: -1 } },
-        { project: { name: 'b' } },
-      ]
-    }
-  }
-])
-
-// Index into arrays
-company.get('numbers', 1, 'value') // => 2
-company.get('projects', 0, 'ref', 'name') // => 'a'
-// Get the automatically assigned order
-// Order starts at 1 and increments by 1
-company.get('numbers', 0, 'order') // => 1
-company.get('projects', 0, 'order') // => 1
-company.get('projects', 1, 'order') // => 2
-// Map over individual attributes
-company.get('numbers', 'value') // => [1, 2, 3]
-company.get('projects', 'ref', 'name') // => ['a', 'b']
-```
-
-The `entity.get` API is flexible and supports indexing into arrays as well as automatically mapping over individual attributes.
-
-Array items are automatically assigned an `order` and either a `value` or a `ref` depending on if item in the array is an entity or not. To reorder an array item change its `order`.
-
-```js
-transact([
-  { 
-    id: company.get('numbers', 2, 'id'), 
-    order: (company.get('numbers', 0, 'order') 
-          + company.get('numbers', 1, 'order')) / 2
-  }
-])
-
-company.get('numbers', 'value') // => [1 3 2]
-```
-
-If you need to transact complex JSON like arrays of arrays then you're better off serializing it to a string first.
-
-```js
-// NOT supported
-transact([{ company: { matrix: [[1, 2, 3], [4, 5, 6]] } }])
-
-// Better
-transact([{ company: { matrix: JSON.stringify([[1, 2, 3], [4, 5, 6]]) } }])
-JSON.parse(company.get('matrix'))
-```
-
-## Performance
-
-Homebase React tracks the attributes consumed in each component via the `entity.get` function and scopes those attributes to their respective `useEntity` or `useQuery` hook. Re-renders are only triggered when an attribute changes.
-
-The default caching reduces unnecessary re-renders and virtual DOM thrashing a lot. That said, it is still possible to trigger more re-renders than you might want.
-
-One top level `useQuery` + prop drilling the entities it returns will cause all children to re-render on any change to the parent or their siblings.
-
-To fix this we recommend passing ids to children, not whole entities. Instead get the entity in the child with `useEntity(id)`. This creates a new scope for each child so they are not affected by changes in the state of the parent or sibling components.
-
-```js
-const TodoList = () => {
-  const [todos] = useQuery({
-    $find: 'todo',
-    $where: { todo: { name: '$any' } }
-  })
-  return (todos.map(t => <Todo key={t.get('id')} id={t.get('id')} />))
-}
-
-// Good
-const Todo = React.memo(({ id }) => {
-  const [todo] = useEntity(id)
-  // ...
-})
-
-// Bad
-const Todo = React.memo(({ todo }) => {
-  // ...
-})
-```
-
-
-## Docs
-https://homebase.io/docs/homebase-react/main/overview
 ## Development
 
 ```bash
