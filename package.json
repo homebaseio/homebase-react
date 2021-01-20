@@ -94,5 +94,6 @@
   "author": "Chris Smothers <chris@homebase.io> (https://homebase.io)",
   "contributors": [
     "JB Rubinovitz <jb@homebase.io> (https://homebase.io)"
-  ]
+  ],
+  "dependencies": {}
 }
