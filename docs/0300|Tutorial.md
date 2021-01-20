@@ -28,7 +28,7 @@ Like any good database we support schema on read.
 At the moment schema is only for relationships and uniqueness constraints. It does not support typing of attributes, e.g. strings, integers, dates. We're working on adding the option to opt into schema on write support. This will provide basic type checking like you see in SQL.
 
 ```jsx
-schema: {
+const schema = {
   project: {
     name: {
       unique: 'identity'
@@ -53,38 +53,36 @@ Hydrate your application with initial data. Here we add an initial user, project
 This data is a transaction that runs on database creation to seed your DB.
 
 ```jsx
-const initialData: [
-   {
-      user: {
-        // negative numbers can be used as temporary ids in a transaction
-        id: -1, 
-        name: 'Stella' 
-      }
-    }, {
-      project: {
-        id: -3,
-        name: 'To the stars'
-      }
-   
-    }, {
-      todo: {
-        name: 'Fix ship',
-        owner: -1,
-        project: -3,
-        isCompleted: true,
-        createdAt: new Date('2003/11/10')
-     }
-    }, {
-      todoFilter: {
-        // identity is a special attribute for user generated ids
-        // E.g. this is a setting that should be easy to lookup by name
-        identity: 'todoFilters',
-        showCompleted: true,
-        project: 0
-      }
+const initialData = [
+  {
+    user: {
+      // negative numbers can be used as temporary ids in a transaction
+      id: -1, 
+      name: 'Stella' 
     }
-  ]
-}
+  }, {
+    project: {
+      id: -3,
+      name: 'To the stars'
+    }
+  }, {
+    todo: {
+      name: 'Fix ship',
+      owner: -1,
+      project: -3,
+      isCompleted: true,
+      createdAt: new Date('2003/11/10')
+    }
+  }, {
+    todoFilter: {
+      // identity is a special attribute for user generated ids
+      // E.g. this is a setting that should be easy to lookup by name
+      identity: 'todoFilters',
+      showCompleted: true,
+      project: 0
+    }
+  }
+]
 ```
 
 ## Config
@@ -365,33 +363,15 @@ const config = {
   // starting data on DB creation to hydrate your components.
   initialData: [
     {
-      todoFilter: {
-        // identity is a special unique attribute for user generated ids
-        // E.g. todoFilters are settings that should be easy to lookup by their identity
-        identity: 'todoFilters',
-        showCompleted: true
-      }
-    }, {
       user: {
-        // Negative numbers can be used as temporary ids in a transaction.
-        // Use them to relate multiple entities together at once.
+        // negative numbers can be used as temporary ids in a transaction
         id: -1, 
         name: 'Stella' 
       }
     }, {
-      user: {
-        id: -2,
-        name: 'Arpegius'
-      }
-    }, {
       project: {
         id: -3,
-        name: 'Make it'
-      }
-    }, {
-      project: {
-        id: -4,
-        name: 'Do it'
+        name: 'To the stars'
       }
     }, {
       todo: {
@@ -402,11 +382,12 @@ const config = {
         createdAt: new Date('2003/11/10')
       }
     }, {
-      todo: {
-        name: 'Go home',
-        owner: -2,
-        project: -4,
-        createdAt: new Date('2003/11/10')
+      todoFilter: {
+        // identity is a special attribute for user generated ids
+        // E.g. this is a setting that should be easy to lookup by name
+        identity: 'todoFilters',
+        showCompleted: true,
+        project: 0
       }
     }
   ]
