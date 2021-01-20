@@ -1,8 +1,10 @@
 This tutorial takes you through our [Todo Example](https://homebaseio.github.io/homebase-react/#!/example.todo).
 
-## Entry Point
+## HomebaseProvider
 
 Let's get started.
+
+`HomebaseProvider` is a component that wraps your React app and creates a local relational database. This database is then accessible to any child components via React Hooks.
 
 ```jsx
 import React from 'react'
