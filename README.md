@@ -24,7 +24,7 @@ yarn add homebase-react
 ```
 
 ## Docs
-https://homebase.io/docs/homebase-react/main/overview
+https://homebase.io/docs/homebase-react
 
 ## Features
 - The simplest and most declarative state management solution
