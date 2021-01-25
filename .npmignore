@@ -31,8 +31,8 @@ pom.xml.asc
 .hg/
 
 examples/
-
- types/
- src/
- public/
- js/
+types/
+src/
+public/
+js/
+docs/
