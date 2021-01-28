@@ -28,3 +28,4 @@ pom.xml.asc
 
 .hgignore
 .hg/
+.vscode
