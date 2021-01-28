@@ -224,7 +224,7 @@
                (reduced (namespace k))))
    nil (keys entity)))
 
-(defn js-get [entity name]
+(defn js-get [^de/Entity entity name]
   (case name
     "id" (:db/id entity)
     "ident" (:db/ident entity)
@@ -233,30 +233,47 @@
           k (when maybe-ns (js->key maybe-ns name))]
       (when k (get entity k)))))
 
-(defn entity-in-db? [entity]
-  (not (nil? (first (d/datoms (.-db entity) :eavt (:db/id entity))))))
-
-(declare HBEntity 
+(declare HBEntity
          Entity
-         humanize-get-error 
-         humanize-transact-error 
-         humanize-entity-error 
+         humanize-get-error
+         humanize-transact-error
+         humanize-entity-error
          humanize-q-error)
 
-(defn Entity->HBEntity [v]
-  (if (instance? de/Entity v)
-    (HBEntity. v nil) v))
+(defn any-entity->d-entity [entity]
+  (let [hb-entity (if (instance? Entity entity) (.-_entity entity) entity)
+        d-entity (if (instance? HBEntity hb-entity) (.-entity hb-entity) hb-entity)]
+    d-entity))
+
+(defn entity-in-db? [^de/Entity d-entity]
+  (when d-entity
+    (not (nil? (first (d/datoms (.-db d-entity) :eavt (:db/id d-entity)))))))
+
+(defn new-entity [^de/Entity d-entity meta]
+  (let [e ^Entity (Entity. d-entity)]
+    (set! ^HBEntity (.-_entity e)
+          (vary-meta ^HBEntity (.-_entity e) merge meta))
+    e))
 
 (defmulti entity->js 
   "If the entity is a set (cardinality/many) then put it in a JS array"
-  (fn [entity] (type entity)))
-(defmethod entity->js :default [entity] entity)
-(defmethod entity->js PersistentHashSet [entity-set]
+  (fn [meta entity] 
+    (type entity)))
+(defmethod entity->js :default [_ v] v)
+; TODO: why is HBEntity matching nil?
+(defmethod entity->js HBEntity [meta ^HBEntity hb-entity]
+  (when hb-entity (new-entity (.-_entity hb-entity) meta)))
+(defmethod entity->js de/Entity [meta ^de/Entity d-entity]
+  (when d-entity (new-entity d-entity meta)))
+(defmethod entity->js PersistentHashSet [meta entity-set]
   (->> entity-set
        (sort-by :homebase.array/order)
+       (map (partial entity->js meta))
        to-array))
 
-(defn humanize-error [f error-humanize-f]
+(defn humanize-error 
+  "Attempts to rewrite any errors to be more JS friendly"
+  [error-humanize-f f]
   (if *debug*
     (f)
     (try
@@ -264,48 +281,39 @@
       (catch js/Error e
         (throw (js/Error. (error-humanize-f e)))))))
 
-(defn lookup-entity 
+(defn lookup-entity
+  "Takes a homebase.js/Entity and a seq of attributes. Looks up the attribute path on the entity. Returns a scalar or homebase.js/Entity or js/Array of scalars or Entities."
   ([entity attrs] (lookup-entity entity attrs false))
-  ([entity attrs nil-attrs-if-not-in-db?]
+  ([entity attrs nil-attrs-if-not-in-db?] (lookup-entity entity attrs nil-attrs-if-not-in-db? nil))
+  ([entity attrs nil-attrs-if-not-in-db? get-cb]
    (humanize-error
+    #(humanize-get-error % entity)
     (fn []
-      (Entity->HBEntity
-       (reduce
-        (fn [acc attr]
-          (if-not acc nil
-                  (let [attr (keywordize attr)
-                        getter-fn (if (keyword? attr) get js-get)
-                        getter-fn (comp entity->js getter-fn)]
-                    (cond
-                      (array? acc) (if (number? attr)
-                                     (nth acc attr)
-                                     (.map acc #(getter-fn % attr)))
-                      (and nil-attrs-if-not-in-db?
-                           (or (= :db/id attr) (= "id" attr))
-                           (not (entity-in-db? acc))) nil
-                      acc (getter-fn acc attr)
-                      :else nil))))
-        entity attrs)))
-    #(humanize-get-error % entity))))
+      (reduce
+       (fn [acc attr]
+         (if-not acc
+           nil
+           (let [attr (keywordize attr)
+                 getter-fn (if (keyword? attr) get js-get)
+                 getter-fn (comp (partial entity->js {:HBEntity/get-cb get-cb})
+                                 getter-fn)
+                 result (cond
+                          (array? acc) (if (number? attr)
+                                         (nth acc attr)
+                                         (.map acc #(getter-fn (any-entity->d-entity %) attr)))
+                          (and nil-attrs-if-not-in-db?
+                               (or (= :db/id attr) (= "id" attr))
+                               (not (entity-in-db? (any-entity->d-entity acc)))) nil
+                          acc (getter-fn (any-entity->d-entity acc) attr)
+                          :else nil)]
+             result)))
+       entity attrs))
+    )))
 
 ; TODO: Deprecate. This should not be needed now that all userland Entities should be homebase.js/Entity
 (extend-type de/Entity
   Object
-  (get [entity & attrs] (lookup-entity entity attrs)))
-
-(defn thread-get-cb [get-cb d-entity]
-  (let [e ^Entity (Entity. d-entity)]
-    (set! ^HBEntity (.-_entity e)
-          (vary-meta
-           ^HBEntity (.-_entity e) merge
-           {:HBEntity/get-cb get-cb}))
-    e))
-
-(defn clean-js-get-value [v get-cb]
-  (cond
-    (instance? de/Entity v) (thread-get-cb get-cb v)
-    (and (array? v) (instance? de/Entity (nth v 0))) (.map v (partial thread-get-cb get-cb))
-    :else v))
+  (get [entity & attrs] (lookup-entity (Entity. entity) attrs)))
 
 (deftype HBEntity [^de/Entity entity _meta]
   IMeta
@@ -313,17 +321,17 @@
   IWithMeta
   (-with-meta [_ new-meta] (HBEntity. entity new-meta))
   ILookup
-  (-lookup [_ attr] (lookup-entity entity [attr] true))
-  (-lookup [_ attr not-found] (or (lookup-entity entity [attr] true) not-found))
+  (-lookup [_ attr] (lookup-entity (Entity. entity) [attr] true))
+  (-lookup [_ attr not-found] (or (lookup-entity (Entity. entity) [attr] true) not-found))
   IAssociative
-  (-contains-key? [_ k] (not (nil? (lookup-entity entity [k] true))))
+  (-contains-key? [_ k] (not (nil? (lookup-entity (Entity. entity) [k] true))))
   Object
   (get [this attrs]
     (when (seq attrs)
-      (let [v (lookup-entity entity attrs true)
-            f (:HBEntity/get-cb (meta this))]
-        (when f (f [this attrs v]))
-        (clean-js-get-value v f)))))
+      (let [get-cb (:HBEntity/get-cb (meta this))
+            v (lookup-entity entity attrs true get-cb)]
+        (when get-cb (get-cb [this attrs v]))
+        v))))
 
 (defn ^{:jsdoc ["@nocollapse"]} Entity [^de/Entity d-entity]
   (this-as ^Entity this
@@ -331,7 +339,7 @@
            (set! (.-type this)
                  (when-let [type (guess-entity-ns d-entity)]
                    (csk/->camelCase type)))
-           (when-let [ident (:db/ident d-entity)] 
+           (when-let [ident (:db/ident d-entity)]
              (set! (.-_ident this) ident))
            (set! (.-_entity this) (HBEntity. d-entity nil))
            this))
@@ -340,6 +348,12 @@
       (fn [& entityAttributeName]
         (this-as ^Entity this
                  (.get (.-_entity this) entityAttributeName))))
+
+(extend-type Entity
+  ILookup
+  (-lookup
+   ([this attr] (lookup-entity this [attr] true))
+   ([this attr not-found] (or (lookup-entity this [attr] true) not-found))))
 
 (defn q-entity-array [query conn & args]
   (->> (apply d/q query conn args)
@@ -350,19 +364,19 @@
 (defn transact! 
   ([conn tx] (transact! conn tx nil))
   ([conn tx tx-meta]
-   (humanize-error 
-    #(d/transact! conn (js->tx (:schema @conn) tx) tx-meta)
-    humanize-transact-error)))
+   (humanize-error
+    humanize-transact-error
+    #(d/transact! conn (js->tx (:schema @conn) tx) tx-meta))))
 
 (defn entity [conn lookup]
   (humanize-error
-   #(Entity. (d/entity @conn (js->entity-lookup lookup)))
-   humanize-entity-error))
+   humanize-entity-error
+   #(Entity. (d/entity @conn (js->entity-lookup lookup)))))
 
 (defn q [query conn & args]
   (humanize-error
-   #(apply q-entity-array (js->query query) @conn (keywordize args))
-   humanize-q-error))
+   humanize-q-error
+   #(apply q-entity-array (js->query query) @conn (keywordize args))))
 
 (defn humanize-get-error [error entity]
   (condp re-find (goog.object/get error "message")

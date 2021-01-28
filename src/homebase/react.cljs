@@ -26,7 +26,7 @@
 
 (defn debug-msg [return-value & msgs]
   (when (and (number? hbjs/*debug*) (>= hbjs/*debug* 2)) 
-    (apply js/console.log "homebase-react" msgs))
+    (apply js/console.log "%c homebase-react " "background: yellow" msgs))
   return-value)
 
 (defn changed? [entities cached-entities track-count?]
@@ -49,7 +49,7 @@
                           (reduce (fn [_ [ks old-v]]
                                     ;; TODO: go back to (get-in e ks) -- (.get e ks) hits the cache  
                                     ;; This is currently blocked by (get-in e ks) causing some issues because it does not return HBEntities                                                                     
-                                    (let [new-v (.get e ks)]
+                                    (let [new-v (get-in e ks)]
                                       (when (and (not= 0 (compare old-v new-v))
                                                  ;; Ignore Entities and arrays of Entities
                                                  (not (or (instance? hbjs/Entity new-v)
@@ -59,6 +59,7 @@
                                         (reduced (debug-msg true "cache:miss" "value changed"
                                                             #js {:entity-id (get e "id")
                                                                  :attr-path (clj->js ks)
+                                                                 :e e
                                                                  :old-v old-v
                                                                  :new-v new-v
                                                                  :entities (clj->js entities)
