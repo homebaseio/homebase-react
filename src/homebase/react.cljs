@@ -39,33 +39,30 @@
                #js {:entities (clj->js entities)
                     :cache (clj->js cached-entities)})
     (reduce (fn [_ e]
-              (let [e ^hbjs/HBEntity (.-_entity e)]
-                (when (let [cached-e (get cached-entities (get e "id"))]
-                        (if (nil? cached-e)
-                          (reduced (debug-msg true "cache:miss" "not in cache"
-                                              #js {:entity-id (get e "id")
-                                                   :entities (clj->js entities)
-                                                   :cache (clj->js cached-entities)}))
-                          (reduce (fn [_ [ks old-v]]
-                                    ;; TODO: go back to (get-in e ks) -- (.get e ks) hits the cache  
-                                    ;; This is currently blocked by (get-in e ks) causing some issues because it does not return HBEntities                                                                     
-                                    (let [new-v (get-in e ks)]
-                                      (when (and (not= 0 (compare old-v new-v))
+              (when (let [cached-e (get cached-entities (get e "id"))]
+                      (if (nil? cached-e)
+                        (reduced (debug-msg true "cache:miss" "not in cache"
+                                            #js {:entity-id (get e "id")
+                                                 :entities (clj->js entities)
+                                                 :cache (clj->js cached-entities)}))
+                        (reduce (fn [_ [ks old-v]]
+                                  (let [new-v (get-in e ks)]
+                                    (when (and (not= 0 (compare old-v new-v))
                                                  ;; Ignore Entities and arrays of Entities
-                                                 (not (or (instance? hbjs/Entity new-v)
-                                                          (and (array? new-v)
-                                                               (= (count new-v) (count old-v))
-                                                               (instance? hbjs/Entity (nth new-v 0))))))
-                                        (reduced (debug-msg true "cache:miss" "value changed"
-                                                            #js {:entity-id (get e "id")
-                                                                 :attr-path (clj->js ks)
-                                                                 :e e
-                                                                 :old-v old-v
-                                                                 :new-v new-v
-                                                                 :entities (clj->js entities)
-                                                                 :cache (clj->js cached-entities)})))))
-                                  nil cached-e)))
-                  (reduced true))))
+                                               (not (or (instance? hbjs/Entity new-v)
+                                                        (and (array? new-v)
+                                                             (= (count new-v) (count old-v))
+                                                             (instance? hbjs/Entity (nth new-v 0))))))
+                                      (reduced (debug-msg true "cache:miss" "value changed"
+                                                          #js {:entity-id (get e "id")
+                                                               :attr-path (clj->js ks)
+                                                               :e e
+                                                               :old-v old-v
+                                                               :new-v new-v
+                                                               :entities (clj->js entities)
+                                                               :cache (clj->js cached-entities)})))))
+                                nil cached-e)))
+                (reduced true)))
             nil entities)))
 
 (defn cache->js [entity cached-entities]
@@ -76,23 +73,22 @@
    #js {} (get @cached-entities (get entity "id"))))
 
 (defn touch-entity-cache [entity cached-entities]
-  (when hbjs/*debug* (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {}))
-  (set! ^hbjs/HBEntity (.-_entity entity)
-        (vary-meta
-         ^hbjs/HBEntity (.-_entity entity) merge
-         {:HBEntity/get-cb
-          (fn [[e ks v]]
-            (if (get e "id")
-              (do
-                (swap! cached-entities assoc-in [(get e "id") ks] v)
-                (when hbjs/*debug*
-                  (set! ^js/Object (.-_recentlyTouchedAttributes entity)
-                        (cache->js e cached-entities))))
-              (do
-                (reset! cached-entities {})
-                (when hbjs/*debug*
-                  (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {})))))}))
-  entity)
+  (let [get-cb (fn [[e ks v]]
+                 (if (get e "id")
+                   (do
+                     (swap! cached-entities assoc-in [(get e "id") ks] v)
+                     (when hbjs/*debug*
+                       (set! ^js/Object (.-_recentlyTouchedAttributes entity)
+                             (cache->js e cached-entities))))
+                   (do
+                     (reset! cached-entities {})
+                     (when hbjs/*debug*
+                       (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {})))))
+        _ (when hbjs/*debug* (set! ^js/Object (.-_recentlyTouchedAttributes entity) #js {}))
+        ; Use (set! ...) instead of (vary-meta) to preserve the reference to the original entity
+        ;; entity (vary-meta entity merge {:Entity/get-cb get-cb})
+        _ (set! ^hbjs/Entity (.-_meta entity) {:Entity/get-cb get-cb})]
+    entity))
 
 (defn datom-select-keys [d]
   #js [(:e d) (str (:a d)) (:v d) (:tx d) (:added d)])
