@@ -311,7 +311,7 @@
   (get ^{:deprecated "0.5.1"
          :superseded-by "homebase.js/Entity.prototype.get()"} 
     [entity & attrs] 
-    (lookup-entity (new-entity entity) attrs)))
+    (lookup-entity (Entity. entity nil nil nil nil) attrs)))
 
 (deftype Entity [^de/Entity _entity _meta id _ident type]
   IMeta
@@ -325,11 +325,10 @@
   (-contains-key? [this k] (not (nil? (lookup-entity this [k] true))))
   Object
   (get [this & attrs]
-    (when (seq attrs)
-      (let [get-cb (:Entity/get-cb (meta this))
-            v (lookup-entity _entity attrs true get-cb)]
-        (when get-cb (get-cb [this attrs v]))
-        v))))
+    (let [get-cb (:Entity/get-cb (meta this))
+          v (lookup-entity this attrs true get-cb)]
+      (when get-cb (get-cb [this attrs v]))
+      v)))
 
 (defn q-entity-array [query conn & args]
   (->> (apply d/q query conn args)
@@ -358,7 +357,8 @@
   (condp re-find (goog.object/get error "message")
     #"(?:(.+) is not ISeqable|Cannot use 'in' operator to search for 'db' in (.+))"
     :>> (fn [[_ v1 v2]]
-          (let [key (ffirst (filter (fn [[_ v]] (= (or v1 v2) (str v))) entity))
+          (let [d-entity ^de/Entity (.-_entity entity)
+                key (ffirst (filter (fn [[_ v]] (= (or v1 v2) (str v))) d-entity))
                 nmspc (namespace key)
                 attr (name key)]
             (str "The `" nmspc "." attr "` attribute should be marked as ref if you want to treat it as a relationship."

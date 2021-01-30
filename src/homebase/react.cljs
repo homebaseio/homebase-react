@@ -4,6 +4,7 @@
    [clojure.string]
    [cljs.reader]
    [goog.object]
+   [clojure.set]
    [homebase.js :as hbjs]
    [datascript.core :as d]
    [datascript.impl.entity :as de]))
