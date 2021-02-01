@@ -7,6 +7,8 @@
    [inflections.core :refer [singular]]
    [datascript.impl.entity :as de]))
 
+(def ^:dynamic *debug* false)
+
 (defn keywordize-str [s]
   (if (and (string? s) (= (subs s 0 1) ":"))
     (keyword (subs s 1))
@@ -222,7 +224,7 @@
                (reduced (namespace k))))
    nil (keys entity)))
 
-(defn js-get [entity name]
+(defn js-get [^de/Entity entity name]
   (case name
     "id" (:db/id entity)
     "ident" (:db/ident entity)
@@ -231,121 +233,132 @@
           k (when maybe-ns (js->key maybe-ns name))]
       (when k (get entity k)))))
 
-(defn entity-in-db? [entity]
-  (not (nil? (first (d/datoms (.-db entity) :eavt (:db/id entity))))))
+(declare
+ Entity
+ humanize-get-error
+ humanize-transact-error
+ humanize-entity-error
+ humanize-q-error)
 
-(declare HBEntity 
-         humanize-get-error 
-         humanize-transact-error 
-         humanize-entity-error 
-         humanize-q-error)
+(defn new-entity
+  ([d-entity] (new-entity d-entity nil))
+  ([d-entity meta]
+   (Entity.
+    d-entity meta (:db/id d-entity) (:db/ident d-entity)
+    (when-let [type (guess-entity-ns d-entity)]
+      (csk/->camelCase type)))))
 
-(defn Entity->HBEntity [v]
-  (if (= de/Entity (type v))
-    (HBEntity. v nil) v))
+(defn entity-in-db? [^de/Entity d-entity]
+  (when d-entity
+    (not (nil? (first (d/datoms (.-db d-entity) :eavt (:db/id d-entity)))))))
 
 (defmulti entity->js 
   "If the entity is a set (cardinality/many) then put it in a JS array"
-  (fn [entity] (type entity)))
-(defmethod entity->js :default [entity] entity)
-(defmethod entity->js PersistentHashSet [entity-set]
+  (fn [meta entity] 
+    (type entity)))
+(defmethod entity->js :default [_ v] v)
+(defmethod entity->js de/Entity [meta ^de/Entity d-entity]
+  (when d-entity (new-entity d-entity meta)))
+(defmethod entity->js PersistentHashSet [meta entity-set]
   (->> entity-set
        (sort-by :homebase.array/order)
+       (map (partial entity->js meta))
        to-array))
 
-(defn lookup-entity 
+(defn humanize-error 
+  "Attempts to rewrite any errors to be more JS friendly"
+  [error-humanize-f f]
+  (if *debug*
+    (f)
+    (try
+      (f)
+      (catch js/Error e
+        (throw (js/Error. (error-humanize-f e)))))))
+
+(defn any-entity->d-entity [entity]
+  (if (instance? Entity entity) (.-_entity entity) entity))
+
+(defn lookup-entity
+  "Takes a homebase.js/Entity and a seq of attributes. Looks up the attribute path on the entity. Returns a scalar or homebase.js/Entity or js/Array of scalars or Entities."
   ([entity attrs] (lookup-entity entity attrs false))
-  ([entity attrs nil-attrs-if-not-in-db?]
-   (try
-     (Entity->HBEntity
+  ([entity attrs nil-attrs-if-not-in-db?] (lookup-entity entity attrs nil-attrs-if-not-in-db? nil))
+  ([entity attrs nil-attrs-if-not-in-db? get-cb]
+   (humanize-error
+    #(humanize-get-error % entity)
+    (fn []
       (reduce
        (fn [acc attr]
-         (if-not acc nil
-                 (let [attr (keywordize attr)
-                       getter-fn (if (keyword? attr) get js-get)
-                       getter-fn (comp entity->js getter-fn)]
-                   (cond
-                     (array? acc) (if (number? attr)
-                                    (nth acc attr)
-                                    (.map acc #(getter-fn % attr)))
-                     (and nil-attrs-if-not-in-db?
-                          (or (= :db/id attr) (= "id" attr))
-                          (not (entity-in-db? acc))) nil
-                     acc (getter-fn acc attr)
-                     :else nil))))
-       entity attrs))
-     (catch js/Error e
-       (throw (js/Error. (humanize-get-error e entity)))))))
+         (if-not acc
+           nil
+           (let [attr (keywordize attr)
+                 getter-fn (if (keyword? attr) get js-get)
+                 getter-fn (comp (partial entity->js {:Entity/get-cb get-cb})
+                                 getter-fn)
+                 result (cond
+                          (array? acc) (if (number? attr)
+                                         (nth acc attr)
+                                         (.map acc #(getter-fn (any-entity->d-entity %) attr)))
+                          (and nil-attrs-if-not-in-db?
+                               (or (= :db/id attr) (= "id" attr))
+                               (not (entity-in-db? (any-entity->d-entity acc)))) nil
+                          acc (getter-fn (any-entity->d-entity acc) attr)
+                          :else nil)]
+             result)))
+       entity attrs)))))
 
 (extend-type de/Entity
   Object
-  (get [entity & attrs] (lookup-entity entity attrs)))
+  (get ^{:deprecated "0.5.1"
+         :superseded-by "homebase.js/Entity.prototype.get()"} 
+    [entity & attrs] 
+    (lookup-entity (Entity. entity nil nil nil nil) attrs)))
 
-(deftype HBEntity [^de/Entity entity _meta]
+(deftype Entity [^de/Entity _entity _meta id _ident type]
   IMeta
   (-meta [_] _meta)
   IWithMeta
-  (-with-meta [_ new-meta] (HBEntity. entity new-meta))
+  (-with-meta [_ new-meta] (Entity. _entity new-meta id _ident type))
   ILookup
-  (-lookup [_ attr] (lookup-entity entity [attr] true))
-  (-lookup [_ attr not-found] (or (lookup-entity entity [attr] true) not-found))
+  (-lookup [this attr] (lookup-entity this [attr] true))
+  (-lookup [this attr not-found] (or (lookup-entity this [attr] true) not-found))
   IAssociative
-  (-contains-key? [_ k] (not (nil? (lookup-entity entity [k] true))))
+  (-contains-key? [this k] (not (nil? (lookup-entity this [k] true))))
   Object
-  (get [this attrs]
-    (when (seq attrs)
-      (let [v (lookup-entity entity attrs true)]
-        (when-let [f (:HBEntity/get-cb (meta this))]
-          (f [this attrs v]))
-        v))))
-
-(defn ^{:jsdoc ["@nocollapse"]} Entity [^de/Entity d-entity]
-  (this-as ^Entity this
-           (set! (.-id this) (:db/id d-entity))
-           (set! (.-type this)
-                 (when-let [type (guess-entity-ns d-entity)]
-                   (csk/->camelCase type)))
-           (when-let [ident (:db/ident d-entity)] 
-             (set! (.-_ident this) ident))
-           (set! (.-_entity this) (HBEntity. d-entity nil))
-           this))
-
-(set! (.. Entity -prototype -get)
-      (fn [& entityAttributeName]
-        (this-as ^Entity this
-                 (.get (.-_entity this) entityAttributeName))))
+  (get [this & attrs]
+    (let [get-cb (:Entity/get-cb (meta this))
+          v (lookup-entity this attrs true get-cb)]
+      (when get-cb (get-cb [this attrs v]))
+      v)))
 
 (defn q-entity-array [query conn & args]
   (->> (apply d/q query conn args)
        (map (fn id->entity [[id]] 
-              (Entity. (d/entity conn id))))
+              (new-entity (d/entity conn id) nil)))
        to-array))
 
 (defn transact! 
   ([conn tx] (transact! conn tx nil))
   ([conn tx tx-meta]
-   (try
-     (d/transact! conn (js->tx (:schema @conn) tx) tx-meta)
-     (catch js/Error e
-       (throw (js/Error. (humanize-transact-error e)))))))
+   (humanize-error
+    humanize-transact-error
+    #(d/transact! conn (js->tx (:schema @conn) tx) tx-meta))))
 
 (defn entity [conn lookup]
-  (try
-    (Entity. (d/entity @conn (js->entity-lookup lookup)))
-    (catch js/Error e
-      (throw (js/Error. (humanize-entity-error e))))))
+  (humanize-error
+   humanize-entity-error
+   #(new-entity (d/entity @conn (js->entity-lookup lookup)) nil)))
 
 (defn q [query conn & args]
-  (try 
-    (apply q-entity-array (js->query query) @conn (keywordize args))
-    (catch js/Error e 
-      (throw (js/Error. (humanize-q-error e))))))
+  (humanize-error
+   humanize-q-error
+   #(apply q-entity-array (js->query query) @conn (keywordize args))))
 
 (defn humanize-get-error [error entity]
   (condp re-find (goog.object/get error "message")
     #"(?:(.+) is not ISeqable|Cannot use 'in' operator to search for 'db' in (.+))"
     :>> (fn [[_ v1 v2]]
-          (let [key (ffirst (filter (fn [[_ v]] (= (or v1 v2) (str v))) entity))
+          (let [d-entity ^de/Entity (.-_entity entity)
+                key (ffirst (filter (fn [[_ v]] (= (or v1 v2) (str v))) d-entity))
                 nmspc (namespace key)
                 attr (name key)]
             (str "The `" nmspc "." attr "` attribute should be marked as ref if you want to treat it as a relationship."
