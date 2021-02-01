@@ -31,40 +31,53 @@
   return-value)
 
 (defn changed? [entities cached-entities track-count?]
-  #_(js/console.log ">>"
-                  track-count?
-                  #js {:entities (clj->js entities)
-                       :cache (clj->js cached-entities)})
-  (if (and track-count? (not= (count entities) (count cached-entities)))
+  (cond
+    (and track-count? 
+         (not= (count entities) (count cached-entities)))
     (debug-msg true "cache:miss" "count of entities != cache"
                #js {:entities (clj->js entities)
                     :cache (clj->js cached-entities)})
-    (reduce (fn [_ e]
-              (when (let [cached-e (get cached-entities (get e "id"))]
-                      (if (nil? cached-e)
-                        (reduced (debug-msg true "cache:miss" "not in cache"
-                                            #js {:entity-id (get e "id")
-                                                 :entities (clj->js entities)
-                                                 :cache (clj->js cached-entities)}))
-                        (reduce (fn [_ [ks old-v]]
-                                  (let [new-v (get-in e ks)]
-                                    (when (and (not= 0 (compare old-v new-v))
-                                                 ;; Ignore Entities and arrays of Entities
-                                               (not (or (instance? hbjs/Entity new-v)
-                                                        (and (array? new-v)
-                                                             (= (count new-v) (count old-v))
-                                                             (instance? hbjs/Entity (nth new-v 0))))))
-                                      (reduced (debug-msg true "cache:miss" "value changed"
-                                                          #js {:entity-id (get e "id")
-                                                               :attr-path (clj->js ks)
-                                                               :e e
-                                                               :old-v old-v
-                                                               :new-v new-v
-                                                               :entities (clj->js entities)
-                                                               :cache (clj->js cached-entities)})))))
-                                nil cached-e)))
-                (reduced true)))
-            nil entities)))
+
+    (and track-count?
+         (not (clojure.set/superset?
+               (set (keys cached-entities))
+               (set (map #(get % "id") entities)))))
+    (debug-msg true "cache:miss" "cache not superset of entities"
+               #js {:entities (clj->js entities)
+                    :cache (clj->js cached-entities)})
+
+    :else
+    (reduce
+     (fn [_ e]
+       (when (let [id (get e "id")
+                   cached-e (get cached-entities id)]
+               (if (nil? cached-e)
+                 (if-not id
+                   (reduced false) ; This entity has probably been removed, do not force a rerender
+                   (reduced (debug-msg true "cache:miss" "not in cache"
+                                       #js {:entity-id id
+                                            :entities (clj->js entities)
+                                            :cache (clj->js cached-entities)})))
+                 (reduce (fn [_ [ks old-v]]
+                           (let [e-without-cache (hbjs/Entity. ^de/Entity (.-_entity e) nil nil nil nil)
+                                 new-v (.apply (.-get e-without-cache) e-without-cache (into-array ks))]
+                             (when (and (not= 0 (compare old-v new-v))
+                                        ;; Ignore Entities and arrays of Entities
+                                        (not (or (instance? hbjs/Entity new-v)
+                                                 (and (array? new-v)
+                                                      (= (count new-v) (count old-v))
+                                                      (instance? hbjs/Entity (nth new-v 0))))))
+                               (reduced (debug-msg true "cache:miss" "value changed"
+                                                   #js {:entity-id id
+                                                        :attr-path (clj->js ks)
+                                                        :e e
+                                                        :old-v old-v
+                                                        :new-v new-v
+                                                        :entities (clj->js entities)
+                                                        :cache (clj->js cached-entities)})))))
+                         nil cached-e)))
+         (reduced true)))
+     nil entities)))
 
 (defn cache->js [entity cached-entities]
   (reduce
@@ -173,7 +186,8 @@
         run-query (react/useCallback 
                    (fn run-query []
                      (let [result (try-hook "useQuery" #(apply hbjs/q query conn args))]
-                       (when (not= (count result) (count @cached-entities))
+                       (when (and (not= (count result) (count @cached-entities))
+                                  (not= 0 (count result)))
                          (reset! cached-entities {}))
                        (.map result (fn [e] (touch-entity-cache e cached-entities)))))
                    #js [query args])
