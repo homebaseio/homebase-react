@@ -88,10 +88,10 @@ const SyncToFirebase = () => {
   const [client] = useClient()
   const [currentUser] = useEntity({ identity: 'currentUser' })
   const userId = currentUser.get('uid')
-  const cardinalityManyAttrs = new Set([':block/children', ':block/refs'])
-  const blackListAttrs = new Set([':block/editing?', ':block/editing-starting-caret-index'])
   const transactListener = React.useCallback(
     (changedDatoms) => {
+      const cardinalityManyAttrs = new Set([':block/children', ':block/refs'])
+      const blackListAttrs = new Set([':block/editing?', ':block/editing-starting-caret-index'])
       const numDatomChanges = changedDatoms.reduce(
         (acc, [id, attr]) => ({ ...acc, [id + attr]: (acc[id + attr] || 0) + 1 }),
         {},
@@ -115,20 +115,21 @@ const SyncToFirebase = () => {
     },
     [userId],
   )
-  const softTransact = (tx) => {
-    try {
-      client.transactSilently(tx)
-    } catch (er) {
-      tx.forEach((txPart) => {
-        try {
-          client.transactSilent([txPart])
-        } catch (err) {
-          console.warn(err, txPart)
-        }
-      })
-    }
-  }
   React.useEffect(() => {
+    const softTransact = (tx) => {
+      try {
+        client.transactSilently(tx)
+      } catch (er) {
+        tx.forEach((txPart) => {
+          try {
+            client.transactSilent([txPart])
+          } catch (err) {
+            // eslint-disable-next-line no-console
+            console.warn(err, txPart)
+          }
+        })
+      }
+    }
     // Homebase -> Firebase
     client.addTransactListener(transactListener)
     // Firebase -> Homebase
@@ -155,7 +156,7 @@ const SyncToFirebase = () => {
       ref.off('child_removed', onRetract)
       ref.off('child_changed', onAdd)
     }
-  }, [userId])
+  }, [userId, client, transactListener])
   return null
 }
 

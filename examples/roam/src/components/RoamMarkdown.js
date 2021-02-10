@@ -39,7 +39,7 @@ const useFindOrCreatePage = (title, refBlockId) => {
         },
       ])
     }
-  }, [block])
+  }, [block, transact, title, refBlockId])
   return [block]
 }
 
