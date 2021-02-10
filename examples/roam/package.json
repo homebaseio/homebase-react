@@ -1,0 +1,69 @@
+{
+  "name": "roam",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.0.0",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@webscopeio/react-textarea-autocomplete": "^4.7.3",
+    "autoprefixer": "^9",
+    "firebase": "^8.2.6",
+    "firebaseui": "^4.7.3",
+    "homebase-react": "^0.5.1",
+    "lodash": "^4.17.20",
+    "nanoid": "^3.1.20",
+    "postcss": "^7",
+    "react": "^16.14.0",
+    "react-autosize-textarea": "^6.0.0",
+    "react-dom": "^16.14.0",
+    "react-markdown": "^5.0.3",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "react-syntax-highlighter": "^15.4.3",
+    "remark-gfm": "^1.0.0",
+    "styled-components": "^5.2.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "web-vitals": "^0.2.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-add-react-displayname": "^0.0.5",
+    "babel-plugin-styled-components": "^1.12.0",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "4.0.0",
+    "prettier": "^2.2.1"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
