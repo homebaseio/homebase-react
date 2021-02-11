@@ -10,6 +10,8 @@ const Blocks = () => {
     $where: { block: { isNode: true } },
   })
 
+  // Add a page for the current date if none exists
+  // Yes, this is hacky :P
   React.useEffect(() => {
     setTimeout(() => {
       try {
@@ -34,7 +36,7 @@ const Blocks = () => {
   }, [transact])
 
   return blocks
-    .sort((a, b) => (a.get('time') > b.get('time') ? 1 : -1))
+    .sort((a, b) => (a.get('time') > b.get('time') ? -1 : 1))
     .map((block) => <Block key={block.get('id')} id={block.get('id')} withPlaceholder />)
 }
 

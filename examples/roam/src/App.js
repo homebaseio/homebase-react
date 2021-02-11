@@ -91,18 +91,34 @@ const SyncToFirebase = () => {
   const transactListener = React.useCallback(
     (changedDatoms) => {
       const cardinalityManyAttrs = new Set([':block/children', ':block/refs'])
-      const blackListAttrs = new Set([':block/editing?', ':block/editing-starting-caret-index'])
+      const localOnlyAttrs = new Set([':block/editing?', ':block/editing-starting-caret-index'])
+      // Find the datoms that were changed more than once
       const numDatomChanges = changedDatoms.reduce(
         (acc, [id, attr]) => ({ ...acc, [id + attr]: (acc[id + attr] || 0) + 1 }),
         {},
       )
+      // Only send one change to firebase per datom
       const datomsForFirebase = changedDatoms.filter(
         // eslint-disable-next-line no-unused-vars
         ([id, attr, _, __, isAdded]) => !(!isAdded && numDatomChanges[id + attr] > 1),
       )
       datomsForFirebase.forEach(([id, attr, v, tx, isAdded]) => {
-        if (!blackListAttrs.has(attr)) {
+        if (!localOnlyAttrs.has(attr)) {
           const ref = firebase.database().ref(
+            // This example uses firebase realtime database with the following rules.
+            // {
+            //   "rules": {
+            //     "users": {
+            //       "$uid": {
+            //         ".read": "$uid === auth.uid",
+            //         ".write": "$uid === auth.uid"
+            //       }
+            //     }
+            //   }
+            // }
+            // Every user has a unique namespace with full read/write permission.
+            // For single page apps like this we can write the raw datoms to this namespace.
+            // Here we are generating a unique key for every datom.
             `users/${userId}/entities/${id}|${attr.replace('/', '|')}|${
               // add the value to the key of cardinality many datoms since they are only unique when their value is included
               cardinalityManyAttrs.has(attr) ? v : ''

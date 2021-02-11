@@ -12,10 +12,12 @@ import RoamMarkdown from './RoamMarkdown'
 
 const Ref = ({ id }) => {
   const [block] = useEntity(id)
-
+  // Adding '_' to 'children' does a reverse ref lookup, in this case finding the parent.
+  // Since children is a cardinality many reference the parent is returned in an array.
+  const parentUid = block.get('_children', 0, 'uid')
   return (
     <div className="my-4">
-      <Link to={`/page/${block.get('_children', 0, 'uid')}`} className="text-blue-500">
+      <Link to={`/page/${parentUid}`} className="text-blue-500">
         {block.get('_children', 0, 'title') || block.get('_children', 0, 'string')}
       </Link>
       <div className="py-2 px-4 bg-gray-100 rounded">
@@ -170,6 +172,7 @@ const BlockEditString = ({ id: inputId }) => {
         '[[': {
           dataProvider: (token) => {
             const re = new RegExp(token.slice(1), 'i')
+            // Filter the page titles autocomplete list
             return [...titles.filter((title) => re.test(title)).slice(0, 9), token.slice(1)]
           },
           component: ({ entity }) => <div className="py-1 px-2">{entity}</div>,
@@ -183,14 +186,15 @@ const BlockEditString = ({ id: inputId }) => {
           const order = block.get('order') || 0
           const siblingOrders = block.get('_children', 0, 'children', 'order')
           const nextSiblingOrder = siblingOrders.filter((v) => v > order).sort()[0] || order + 2
-          const newBlockOrder = (order + nextSiblingOrder) / 2.0
+          const orderBetweenCurrentBlockAndNextSibling = (order + nextSiblingOrder) / 2.0
           transact([
             // Create the new sibling block
             {
               block: {
                 id: -1,
                 open: true,
-                order: newBlockOrder,
+                // Insert it right after the current block
+                order: orderBetweenCurrentBlockAndNextSibling,
                 page: block.get('page', 'id') || id,
                 uid: nanoid(9),
                 time: Date.now(),
@@ -213,7 +217,11 @@ const BlockEditString = ({ id: inputId }) => {
               },
             },
           ])
-        } else if (!textareaString?.length && e.key === 'Backspace') {
+        } else if (
+          !textareaString?.length &&
+          !block.get('string')?.length &&
+          e.key === 'Backspace'
+        ) {
           e.preventDefault()
           transact([['retractEntity', id]])
         } else if (e.key === 'Tab' && e.shiftKey) {
