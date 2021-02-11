@@ -4,18 +4,93 @@
    [datascript.core :as d]
    [homebase.js :as hbjs]))
 
+(def test-tx
+  (clj->js
+   [{:noIdEntity {:a1 1 :a2 2}}
+    [:retractEntity 9999]
+    {:todo {:id 3 :identity "todo3" :project {:id 2}}}
+    {:project {:id 2 :name "abc" :number nil}}
+    {:project {:id 4 :name "xyz" :number 23 :isCompleted true}}
+    {:project {:id 5 :name "abc"}}
+    {:project {:id 6 :name "p4" :user {:name "Stella" :avatar {:url "http://foo.bar"}}}}
+    {:project {:id 7 :name "p5" :array [1 2 "c"]}}
+    {:org {:id 8 :projects [{:id 4} {:id 5} {:id 6 :extra "don't add extras here, this shorthand is just for ids"}]}}
+    {:org {:id 9 :projects [{:project {:id 4}} {:project {:id 5}} {:project {:id 6 :extra "add extras like this"}}]}}]))
+
+(def test-schema
+  (merge
+   {:db/ident {:db/unique :db.unique/identity}
+    :homebase.array/ref {:db/type :db.type/ref
+                         :db/cardinality :db.cardinality/one}}
+   (hbjs/js->schema
+    (clj->js {:todo {:project {:type "ref" :cardinality "one"}}
+              :project {:number {:unique "identity"}
+                        :array {:type "ref" :cardinality "many"}
+                        :user {:type "ref" :cardinality "one"}}
+              :user {:avatar {:type "ref" :cardinality "one"}}
+              :org {:projects {:type "ref" :cardinality "many"}}}))))
+
+;; TODO: isComponent support
+;; - What will the API look like?
+;; - Will we prompt people to add this to the scheme when we prompt them to add a type:'ref'?
+;; 
+;; TODO: reverse lookup support
+;; - Is there a way to support reverse lookups? e.g. project.get(':todo/_project')
+
+(deftest test-js->tx
+  (testing "everything"
+    (is (= (hbjs/js->tx test-schema test-tx)
+           '([:db.fn/retractEntity 9999 nil nil]
+             [:db/add 9 :org/projects -1000017]
+             [:db/add 9 :org/projects -1000018]
+             [:db/add 9 :org/projects -1000019]
+             [:db/add 8 :org/projects -1000013]
+             [:db/add 8 :org/projects -1000014]
+             [:db/add 8 :org/projects -1000015]
+             [:db/add 7 :project/name "p5"]
+             [:db/add 7 :project/array -1000009]
+             [:db/add 7 :project/array -1000010]
+             [:db/add 7 :project/array -1000011]
+             [:db/add 6 :project/name "p4"]
+             [:db/add 6 :project/user -1000006]
+             [:db/add 6 :project/extra "don't add extras here, this shorthand is just for ids"]
+             [:db/add 6 :project/extra "add extras like this"]
+             [:db/add 5 :project/name "abc"]
+             [:db/add 4 :project/name "xyz"]
+             [:db/add 4 :project/number 23]
+             [:db/add 4 :project/completed? true]
+             [:db/add 3 :db/ident "todo3"]
+             [:db/add 3 :todo/project 2]
+             [:db/add 2 :project/name "abc"]
+             [:db/retract 2 :project/number nil]
+             [:db/add -1000000 :no-id-entity/a-1 1]
+             [:db/add -1000000 :no-id-entity/a-2 2]
+             [:db/add -1000006 :user/name "Stella"]
+             [:db/add -1000006 :user/avatar -1000007]
+             [:db/add -1000007 :avatar/url "http://foo.bar"]
+             [:db/add -1000009 :homebase.array/order 1]
+             [:db/add -1000009 :homebase.array/value 1]
+             [:db/add -1000010 :homebase.array/order 2]
+             [:db/add -1000010 :homebase.array/value 2]
+             [:db/add -1000011 :homebase.array/order 3]
+             [:db/add -1000011 :homebase.array/value "c"]
+             [:db/add -1000013 :homebase.array/order 1]
+             [:db/add -1000013 :homebase.array/ref 4]
+             [:db/add -1000014 :homebase.array/order 2]
+             [:db/add -1000014 :homebase.array/ref 5]
+             [:db/add -1000015 :homebase.array/order 3]
+             [:db/add -1000015 :homebase.array/ref 6]
+             [:db/add -1000017 :homebase.array/order 1]
+             [:db/add -1000017 :homebase.array/ref 4]
+             [:db/add -1000018 :homebase.array/order 2]
+             [:db/add -1000018 :homebase.array/ref 5]
+             [:db/add -1000019 :homebase.array/order 3]
+             [:db/add -1000019 :homebase.array/ref 6])))))
+
 (def test-conn
-  (d/conn-from-db
-   (d/init-db
-    #{(d/datom 3 :todo/project 2)
-      (d/datom 2 :project/name "abc")
-      (d/datom 4 :project/name "xyz")
-      (d/datom 4 :project/number 23)
-      (d/datom 4 :project/completed? true)
-      (d/datom 5 :project/name "abc")
-      (d/datom 6 :project/name "p4")}
-    {:todo/project {:db/valueType :db.type/ref
-                    :db/cardinality :db.cardinality/one}})))
+  (let [conn (d/create-conn test-schema)]
+    (hbjs/transact! conn test-tx)
+    conn))
 
 (deftest test-entity-get
   (testing "datascript entity get"
@@ -38,8 +113,8 @@
     (is (= "abc" (.get (d/entity @test-conn 3) "project" "name"))))
   (testing "homebase entity get"
     (is (some? (hbjs/entity (d/create-conn) 3)))
-    (is (= 3 (:db/id ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)))))
-    (is (= 3 (get ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) "id")))
+    (is (= 3 (:db/id (hbjs/entity test-conn 3))))
+    (is (= 3 (get (hbjs/entity test-conn 3) "id")))
     (is (= 3 (.get (hbjs/entity test-conn 3) "id")))
     (is (nil? (.get (hbjs/entity (d/create-conn) 3) "name")))
     (is (= "abc" (.get (hbjs/entity test-conn 2) "name")))
@@ -51,12 +126,25 @@
     (is (nil? (get (hbjs/entity (d/create-conn) 3) "id")))
     (is (nil? (get-in (hbjs/entity (d/create-conn) 3) ["id"])))
     (is (nil? (.get (hbjs/entity (d/create-conn) 3) "project" "id")))
-    (is (= 2 (get-in ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) ["project" "id"])))
-    (is (= "abc" (get-in ^hbjs/HBEntity (.-_entity (hbjs/entity test-conn 3)) ["project" "name"])))
+    (is (= 2 (get-in (hbjs/entity test-conn 3) ["project" "id"])))
+    (is (= "abc" (get-in (hbjs/entity test-conn 3) ["project" "name"])))
+    (testing "arrays"
+      (is (= [1 2 "c"] (js->clj (.map (.get (hbjs/entity test-conn 7) "array") #(.get % "value")))))
+      (is (= "c" (.get (hbjs/entity test-conn 7) "array" 2 "value")))
+      (is (= "xyz" (.get (hbjs/entity test-conn 8) "projects" 0 "ref" "name")))
+      (is (= "xyz" (.get (hbjs/entity test-conn 9) "projects" 0 "ref" "name")))
+      (is (= "add extras like this" (.get (hbjs/entity test-conn 9) "projects" 2 "ref" "extra")))
+      (testing "shorthand for automatic mapping over array fields via .get"
+        (is (= [1 2 "c"] (js->clj (.get (hbjs/entity test-conn 7) "array" "value"))))
+        (is (= ["xyz" "abc" "p4"] (js->clj (.get (hbjs/entity test-conn 8) "projects" "ref" "name"))))
+        (is (= [1 2 3] (js->clj (.get (hbjs/entity test-conn 7) "array" "order"))))
+        (is (= [15 16 17] (js->clj (.get (hbjs/entity test-conn 7) "array" "id"))))
+        (testing "nil punning"
+          (is (= [nil nil nil] (js->clj (.get (hbjs/entity test-conn 8) "projects" "value" "name" "yolo")))))))
     (testing "ref get without schema error"
       (is (thrown-with-msg?
            js/Error
-           #"(?s)The `user.friend` attribute should be marked as ref.*Add this to your config:.*\{ schema: \{ user: \{ friend: \{ type: 'ref'"
+           #"(?s)The `user.friend` attribute should be marked as ref.*Add this to your config:.*schema: \{ user: \{ friend: \{ type: 'ref'"
            (let [conn (d/create-conn)]
              (hbjs/transact! conn #js [#js {:user #js {:id 1 :friend -2}}
                                        #js {:user #js {:id -2 :avatar -3}}
@@ -65,7 +153,7 @@
       (testing "error works for deeply nested get"
         (is (thrown-with-msg?
              js/Error
-             #"(?s)The `user.avatar` attribute should be marked as ref.*Add this to your config:.*\{ schema: \{ user: \{ avatar: \{ type: 'ref'"
+             #"(?s)The `user.avatar` attribute should be marked as ref.*Add this to your config:.*schema: \{ user: \{ avatar: \{ type: 'ref'"
              (let [conn (d/create-conn {:user/friend {:db/type :db.type/ref}})]
                (hbjs/transact! conn #js [#js {:user #js {:id 1 :friend -2}}
                                          #js {:user #js {:id -2 :avatar -3}}
@@ -98,11 +186,35 @@
     (is (thrown-with-msg?
          js/Error
          #"(?s)Expected a numerical id.*For example:"
-         (hbjs/transact! (d/create-conn) (clj->js [["retractEntity"]]))))))
+         (hbjs/transact! (d/create-conn) (clj->js [["retractEntity"]]))))
+    (testing "schema recommendations"
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)The 'item.child' attribute should be a ref type of one.*Add this to your config:"
+           (hbjs/transact! (d/create-conn) (clj->js [{:item {:child {:grandChild 1}}}]))))
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)The 'item.numbers' attribute should be a ref type of many.*Add this to your config:"
+           (hbjs/transact! (d/create-conn) (clj->js [{:item {:numbers [1 2 3]}}]))))
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)The 'item.children' attribute should be a ref type of many.*Add this to your config:"
+           (hbjs/transact! (d/create-conn) (clj->js [{:item {:children [{:otherEntity {:number 1}}]}}]))))
+      (is (thrown-with-msg?
+           js/Error
+           #"(?s)Unsupported JSON in transaction: nested array of arrays `projects: \[\[1\]\]`."
+           (hbjs/transact! test-conn (clj->js [{:org {:projects [[1]]}}])))))))
 
 (deftest test-entity
   (testing "should succeed"
-    (is (nil? (:db/id (hbjs/entity (d/create-conn) (clj->js 1))))))
+    (is (nil? (:db/id (hbjs/entity (d/create-conn) 1))))
+    (is (nil? (:db/id (hbjs/entity (d/create-conn) (clj->js {"identity" "foo"}))))))
+  (testing "id lookup"
+    (is (= "abc" (.get (hbjs/entity test-conn 2) "name"))))
+  (testing "identity lookup"
+    (is (= 3 (.get (hbjs/entity test-conn (clj->js {"identity" "todo3"})) "id"))))
+  (testing "unique attribute lookup"
+    (is (= "xyz" (.get (hbjs/entity test-conn (clj->js {"project" {"number" 23}})) "name"))))
   (testing "should fail with humanized errors"
     (is (thrown-with-msg?
          js/Error
@@ -116,7 +228,7 @@
                         (d/create-conn))))
     (is (array? (hbjs/q (clj->js "[:find ?e :where [?e :item/name]]") (d/create-conn)))))
   (testing "$any"
-    (is (= 4 (count (hbjs/q (clj->js {"$find" "project"
+    (is (= 5 (count (hbjs/q (clj->js {"$find" "project"
                                       "$where" {"project" {"name" "$any"}}})
                             test-conn)))))
   (testing "filter by string"

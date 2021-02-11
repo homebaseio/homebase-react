@@ -3,11 +3,11 @@
   "description": "A graph database for React.",
   "version": "0.0.0-development",
   "license": "MIT",
-  "homepage": "https://github.com/homebaseio/homebase-react",
+  "homepage": "https://homebase.io",
   "main": "./dist/js/homebase.react.js",
   "private": false,
   "scripts": {
-    "dev": "shadow-cljs watch dev",
+    "dev": "shadow-cljs watch dev & babel js --out-dir src/js_gen --watch && kill $!",
     "build": "rm -rf dist && shadow-cljs release npm && yarn bundle-ts",
     "build:dev": "rm -rf dist && shadow-cljs compile npm && yarn bundle-ts",
     "test:js": "yarn build && jest js/tests && yarn tsd",
@@ -94,5 +94,6 @@
   "author": "Chris Smothers <chris@homebase.io> (https://homebase.io)",
   "contributors": [
     "JB Rubinovitz <jb@homebase.io> (https://homebase.io)"
-  ]
+  ],
+  "dependencies": {}
 }
