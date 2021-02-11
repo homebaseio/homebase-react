@@ -2,6 +2,9 @@ node_modules/
 public/js
 out/
 dist/
+.clj-kondo/
+.lsp/
+.history/
 
 /target
 /checkouts
@@ -25,3 +28,4 @@ pom.xml.asc
 
 .hgignore
 .hg/
+.vscode

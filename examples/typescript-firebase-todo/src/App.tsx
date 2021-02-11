@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -82,7 +83,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 const firebaseUI = new firebaseui.auth.AuthUI(firebase.auth())
 
-const AuthPrompt = ({ children } : {children: any}) => { const [transact] = useTransact()
+const AuthPrompt = ({ children } : {children: any}) => { 
+  const [transact] = useTransact()
   const [currentUser] = useEntity({ identity: 'currentUser' })
   const [client] = useClient()
   React.useEffect(() => {
