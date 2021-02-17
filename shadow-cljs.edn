@@ -17,7 +17,7 @@
         :asset-path "/js"
         :compiler-options {:devcards :true
                            :output-feature-set :es6}
-        :modules {:main {:init-fn example.core/init}}
+        :modules {:main {:init-fn dev.example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
                                "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
   :test {:target :node-test
