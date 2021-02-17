@@ -1,8 +1,8 @@
-(ns example.todo-firebase
+(ns dev.example.todo-firebase
   (:require 
    [devcards.core :as dc]
    [homebase.react]
-   ["../js_gen/todo-firebase-example" :as react-example])
+   ["./js_compiled/todo-firebase" :as react-example])
   (:require-macros
    [devcards.core :refer [defcard-rg defcard-doc]]
    [dev.macros :refer [inline-resource]]))
@@ -12,10 +12,10 @@
 
 (def code-snippet 
   (clojure.string/replace-first
-   (inline-resource "js/todo-firebase-example.jsx")
+   (inline-resource "src/dev/example/js/todo-firebase.jsx")
    "const { HomebaseProvider, useClient, useTransact, useQuery, useEntity } = window.homebase.react"
    "import { HomebaseProvider, useClient, useTransact, useQuery, useEntity } from 'homebase-react'"))
 (defcard-doc
-  "[🔗GitHub](https://github.com/homebaseio/homebase-react/blob/master/js/todo-firebase-example.jsx)"
+  "[🔗GitHub](https://github.com/homebaseio/homebase-react/blob/master/src/dev/example/js/todo-firebase.jsx)"
   (str "```javascript\n" code-snippet "\n```"))
 

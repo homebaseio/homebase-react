@@ -7,10 +7,19 @@ exports.App = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _app = _interopRequireDefault(require("firebase/app"));
+
+require("firebase/auth");
+
+require("firebase/database");
+
+var _firebaseui = _interopRequireDefault(require("firebaseui"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const {
   HomebaseProvider,
+  useClient,
   useTransact,
   useQuery,
   useEntity
@@ -19,7 +28,7 @@ const {
 const App = () => {
   return /*#__PURE__*/_react.default.createElement(HomebaseProvider, {
     config: config
-  }, /*#__PURE__*/_react.default.createElement(Todos, null));
+  }, /*#__PURE__*/_react.default.createElement(AuthPrompt, null, /*#__PURE__*/_react.default.createElement(Todos, null)));
 };
 
 exports.App = App;
@@ -28,8 +37,8 @@ const config = {
   // unique constraints and relationships.
   // It is not a type system, yet.
   schema: {
-    project: {
-      name: {
+    user: {
+      uid: {
         unique: 'identity'
       }
     },
@@ -74,26 +83,127 @@ const config = {
       id: -4,
       name: 'Do it'
     }
-  }, {
-    todo: {
-      name: 'Fix ship',
-      owner: -1,
-      project: -3,
-      isCompleted: true,
-      createdAt: new Date('2003/11/10')
-    }
-  }, {
-    todo: {
-      name: 'Go home',
-      owner: -2,
-      project: -4,
-      createdAt: new Date('2003/11/10')
-    }
   }]
 };
+const firebaseConfig = {
+  apiKey: "AIzaSyC31X8R5-doWtVmbBRD0xCue09HfydfjzI",
+  authDomain: "homebase-react.firebaseapp.com",
+  databaseURL: "https://homebase-react.firebaseio.com",
+  projectId: "homebase-react",
+  storageBucket: "homebase-react.appspot.com",
+  messagingSenderId: "1056367825432",
+  appId: "1:1056367825432:web:a6aaba7bee5e8a43e6296d",
+  measurementId: "G-FJ9BNZDFCE"
+};
 
-const Todos = () => {
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(NewTodo, null), /*#__PURE__*/_react.default.createElement(TodoFilters, null), /*#__PURE__*/_react.default.createElement(TodoList, null));
+_app.default.initializeApp(firebaseConfig);
+
+const firebaseUI = new _firebaseui.default.auth.AuthUI(_app.default.auth());
+
+const AuthPrompt = ({
+  children
+}) => {
+  const [transact] = useTransact();
+  const [currentUser] = useEntity({
+    identity: 'currentUser'
+  });
+  const [client] = useClient();
+
+  _react.default.useEffect(() => {
+    window.emptyDB = client.dbToString();
+    return _app.default.auth().onAuthStateChanged(user => {
+      if (user) {
+        transact([{
+          user: {
+            uid: user.uid,
+            name: user.displayName
+          }
+        }]);
+        client.transactSilently([{
+          currentUser: {
+            identity: 'currentUser',
+            uid: user.uid
+          }
+        }]);
+      }
+    });
+  }, []);
+
+  if (currentUser.get('uid')) return children;
+  return /*#__PURE__*/_react.default.createElement(SignIn, null);
+};
+
+const SignIn = () => {
+  _react.default.useEffect(() => {
+    firebaseUI.start('#firebaseui-auth-container', {
+      signInFlow: 'popup',
+      signInSuccessUrl: window.location.href,
+      signInOptions: [_app.default.auth.EmailAuthProvider.PROVIDER_ID, _app.default.auth.GoogleAuthProvider.PROVIDER_ID],
+      callbacks: {
+        signInSuccessWithAuthResult: () => false
+      }
+    });
+  }, []);
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    id: "firebaseui-auth-container"
+  });
+};
+
+const Todos = () => /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(DataSaver, null), /*#__PURE__*/_react.default.createElement(SignOut, null), /*#__PURE__*/_react.default.createElement(NewTodo, null), /*#__PURE__*/_react.default.createElement("hr", null), /*#__PURE__*/_react.default.createElement(TodoFilters, null), /*#__PURE__*/_react.default.createElement(TodoList, null));
+
+const DataSaver = () => {
+  const [client] = useClient();
+  const [currentUser] = useEntity({
+    identity: 'currentUser'
+  });
+  const userId = currentUser.get('uid');
+
+  const transactListener = _react.default.useCallback(changedDatoms => {
+    const numDatomChanges = changedDatoms.reduce((acc, [id, attr]) => ({ ...acc,
+      [id + attr]: (acc[id + attr] || 0) + 1
+    }), {});
+    const datomsForFirebase = changedDatoms.filter(([id, attr, _, __, isAdded]) => !(!isAdded && numDatomChanges[id + attr] > 1));
+    datomsForFirebase.forEach(([id, attr, v, tx, isAdded]) => {
+      const ref = _app.default.database().ref(`users/${userId}/entities/${id}|${attr.replace('/', '|')}`);
+
+      isAdded ? ref.set([id, attr, v, tx, isAdded]) : ref.remove();
+    });
+  }, [userId]);
+
+  _react.default.useEffect(() => {
+    client.addTransactListener(transactListener);
+
+    const ref = _app.default.database().ref(`users/${userId}/entities`);
+
+    const on = action => ds => client.transactSilently([[action, ...ds.val()]]);
+
+    ref.on('child_added', on('add'));
+    ref.on('child_removed', on('retract'));
+    ref.on('child_changed', on('add'));
+    return () => {
+      client.removeTransactListener();
+      ref.off('child_added', on('add'));
+      ref.off('child_removed', on('retract'));
+      ref.off('child_changed', on('add'));
+    };
+  }, [userId]);
+
+  return null;
+};
+
+const SignOut = () => {
+  const [client] = useClient();
+  return /*#__PURE__*/_react.default.createElement("button", {
+    style: {
+      float: 'right'
+    },
+    onClick: () => {
+      client.dbFromString(window.emptyDB);
+
+      _app.default.auth().signOut();
+    }
+  }, "Sign Out");
 };
 
 const NewTodo = () => {
@@ -104,13 +214,16 @@ const NewTodo = () => {
       transact([{
         todo: {
           name: e.target.elements['todo-name'].value,
-          createdAt: new Date()
+          createdAt: Date.now()
         }
       }]);
       e.target.reset();
     }
   }, /*#__PURE__*/_react.default.createElement("input", {
     autoFocus: true,
+    style: {
+      fontSize: 20
+    },
     type: "text",
     name: "todo-name",
     placeholder: "What needs to be done?",
@@ -148,7 +261,7 @@ const TodoList = () => {
 // or sibling Todos don't trigger unnecessary re-renders.
 
 
-const Todo = _react.default.memo(({
+const Todo = /*#__PURE__*/_react.default.memo(({
   id
 }) => {
   const [todo] = useEntity(id);
@@ -173,7 +286,7 @@ const Todo = _react.default.memo(({
     style: {
       color: 'grey'
     }
-  }, todo.get('createdAt').toLocaleString()));
+  }, new Date(todo.get('createdAt')).toLocaleString()));
 });
 
 const TodoCheck = ({
@@ -211,7 +324,7 @@ const TodoName = ({
         textDecoration: 'line-through '
       })
     },
-    defaultValue: todo.get('name'),
+    value: todo.get('name') || '',
     onChange: e => transact([{
       todo: {
         id: todo.get('id'),
@@ -268,11 +381,11 @@ const TodoFilters = () => {
   const [filters] = useEntity({
     identity: 'todoFilters'
   });
-  const [transact] = useTransact();
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", null, "Show Completed?", /*#__PURE__*/_react.default.createElement("input", {
+  const [client] = useClient();
+  return /*#__PURE__*/_react.default.createElement("div", null, "Filter by:\xA0\xA0", /*#__PURE__*/_react.default.createElement("label", null, "Show Completed?", /*#__PURE__*/_react.default.createElement("input", {
     type: "checkbox",
     checked: filters.get('showCompleted'),
-    onChange: e => transact([{
+    onChange: e => client.transactSilently([{
       todoFilter: {
         id: filters.get('id'),
         showCompleted: e.target.checked
@@ -282,7 +395,7 @@ const TodoFilters = () => {
     label: "Project",
     entityType: "project",
     value: filters.get('project'),
-    onChange: project => transact([{
+    onChange: project => client.transactSilently([{
       todoFilter: {
         id: filters.get('id'),
         project
@@ -292,7 +405,7 @@ const TodoFilters = () => {
     label: "Owner",
     entityType: "user",
     value: filters.get('owner'),
-    onChange: owner => transact([{
+    onChange: owner => client.transactSilently([{
       todoFilter: {
         id: filters.get('id'),
         owner
@@ -301,7 +414,7 @@ const TodoFilters = () => {
   }));
 };
 
-const EntitySelect = _react.default.memo(({
+const EntitySelect = /*#__PURE__*/_react.default.memo(({
   label,
   entityType,
   value,
