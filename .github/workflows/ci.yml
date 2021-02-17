@@ -51,5 +51,5 @@ jobs:
       - run: yarn shadow-cljs compile test
 
       - run: node out/node-tests.js
-      - run: yarn jest js/tests
+      - run: yarn jest src/*
       - run: yarn tsd
