@@ -190,7 +190,7 @@ const LoadInitialData = ({ children }) => {
       }
     })
     async function init() {
-      const res = await fetch('/edn/Datahike-Research.edn')
+      const res = await fetch('/edn/hn-jan-feb.edn')
       window.defaultDB = await res.text()
       setTimeout(() => {
         if (!currentUser) client.dbFromString(window.defaultDB)
