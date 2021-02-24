@@ -147,7 +147,10 @@ const renderers = (blockId) => ({
       {children}
     </code>
   ),
-  code: ({ language, value }) => <CodeBlock language={language}>{value}</CodeBlock>,
+  code: ({ language, value }) => {
+    if (value) return <CodeBlock language={language}>{value}</CodeBlock>
+    return null
+  },
   paragraph: ({ children }) => children,
   text: ({ value }) => {
     // Adds support for Roam style markup
