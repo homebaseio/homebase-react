@@ -3,8 +3,25 @@ import { nanoid } from 'nanoid'
 import React from 'react'
 import ReactMarkdownWithHTML from 'react-markdown/with-html'
 import { Link } from 'react-router-dom'
+import { TwitterTweetEmbed } from 'react-twitter-embed'
 import gfm from 'remark-gfm'
+import styled from 'styled-components'
 import CodeBlock from './CodeBlock'
+
+const TweetWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  & > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+`
+const matchTweetId = /twitter.com\/.*status\/([\d]+)/im
+const findTweetId = (text) => {
+  const match = text.match(matchTweetId)
+  return match && match[1]
+}
 
 const useFindOrCreatePage = (title, refBlockId) => {
   const [block] = useEntity({ block: { title } })
@@ -130,7 +147,10 @@ const renderers = (blockId) => ({
       {children}
     </code>
   ),
-  code: ({ language, value }) => <CodeBlock language={language}>{value}</CodeBlock>,
+  code: ({ language, value }) => {
+    if (value) return <CodeBlock language={language}>{value}</CodeBlock>
+    return null
+  },
   paragraph: ({ children }) => children,
   text: ({ value }) => {
     // Adds support for Roam style markup
@@ -140,7 +160,19 @@ const renderers = (blockId) => ({
         /(^.+?::)|(#\[\[.+?\]\])|(\s|^)(#.+?)(\s|\n|\n\r|$)|((?!#)\[\[.+?\]\])|(\(\(.+?\)\))|(^:hiccup \[:hr\]$)/gs,
       )
       .filter(Boolean)
-    return sections.map(renderTextSection(blockId))
+    const roamifiedText = sections.map(renderTextSection(blockId))
+    const tweetId = findTweetId(value)
+    if (tweetId) {
+      return (
+        <>
+          {roamifiedText}
+          <TweetWrap>
+            <TwitterTweetEmbed tweetId={tweetId} />
+          </TweetWrap>
+        </>
+      )
+    }
+    return roamifiedText
   },
 })
 

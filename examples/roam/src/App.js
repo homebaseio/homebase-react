@@ -190,7 +190,7 @@ const LoadInitialData = ({ children }) => {
       }
     })
     async function init() {
-      const res = await fetch('/edn/Datahike-Research.edn')
+      const res = await fetch('/edn/hn.edn')
       window.defaultDB = await res.text()
       setTimeout(() => {
         if (!currentUser) client.dbFromString(window.defaultDB)
@@ -205,7 +205,7 @@ const LoadInitialData = ({ children }) => {
 }
 
 const Header = () => (
-  <header className="container mx-auto flex justify-between items-center md:flex-row flex-col">
+  <header className="container mx-auto px-2 flex justify-between items-center md:flex-row flex-col">
     <h1 className="text-2xl font-bold">
       <Link to="/">Hombase React - Roam Demo</Link>
     </h1>
@@ -252,7 +252,7 @@ export default function App() {
         <Router>
           <ScrollToTop />
           <Header />
-          <main className="container mx-auto">
+          <main className="max-w-lg mx-auto px-2">
             <NotLoggedInBanner />
             <Switch>
               <Route path="/" exact>

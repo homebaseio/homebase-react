@@ -8,7 +8,7 @@
    This script normalizes all attributes to the 'block' namespace."
   (:require [clojure.pprint]))
 
-;; (def input (read-string (slurp "scripts/convert_roam_edn/datasets/Datahike-Research.edn")))
+;; (def input (read-string (slurp "scripts/convert_roam_edn/datasets/hn.edn")))
 (def input (read-string (slurp (first *command-line-args*))))
 
 (def output
