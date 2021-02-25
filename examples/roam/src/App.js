@@ -223,6 +223,22 @@ const Header = () => (
   </header>
 )
 
+const IntroBanner = () => (
+  <div className="w-full py-2 px-4 rounded bg-gray-100 border border-gray-300 text-gray-600 mb-2">
+    This is a demo of the{' '}
+    <a
+      className="text-blue-500"
+      target="_blank"
+      rel="noreferrer"
+      href="https://github.com/homebaseio/homebase-react"
+    >
+      homebase-react
+    </a>{' '}
+    state management library. It brings the same ClojureScript graph database used by Roam Research
+    to React in a JS friendly way.
+  </div>
+)
+
 const NotLoggedInBanner = () => {
   const [currentUser] = useEntity({ identity: 'currentUser' })
   if (currentUser.get('uid')) return null
@@ -251,18 +267,21 @@ export default function App() {
       <LoadInitialData>
         <Router>
           <ScrollToTop />
-          <Header />
-          <main className="max-w-lg mx-auto px-2">
-            <NotLoggedInBanner />
-            <Switch>
-              <Route path="/" exact>
-                <Blocks />
-              </Route>
-              <Route path="/page/:uid">
-                <PageUid />
-              </Route>
-            </Switch>
-          </main>
+          <div className="m-2">
+            <Header />
+            <main className="max-w-lg mx-auto p-2">
+              <IntroBanner />
+              <NotLoggedInBanner />
+              <Switch>
+                <Route path="/" exact>
+                  <Blocks />
+                </Route>
+                <Route path="/page/:uid">
+                  <PageUid />
+                </Route>
+              </Switch>
+            </main>
+          </div>
         </Router>
       </LoadInitialData>
     </HomebaseProvider>
