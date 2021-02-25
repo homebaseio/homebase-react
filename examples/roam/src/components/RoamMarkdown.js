@@ -128,7 +128,7 @@ const renderTextSection = (blockId) => (text, i) => {
 
 const renderers = (blockId) => ({
   link: ({ href, children }) => (
-    <a href={href} className="text-blue-500" target="_blank" rel="noopener noreferrer">
+    <a href={href} className="text-blue-500 break-all" target="_blank" rel="noopener noreferrer">
       {children}
     </a>
   ),
