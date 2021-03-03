@@ -188,7 +188,6 @@ This hook returns the current database client with some helpful functions for sy
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
 
-
 ## Roadmap
 
 1. Document integration with more backends
