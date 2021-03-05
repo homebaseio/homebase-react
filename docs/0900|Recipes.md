@@ -1,6 +1,6 @@
-## Syncing to Database Recipie with Firebase 
+## Syncing to Firebase 
 
-The example below shows a recipe for syncing Homebase with Firebase. To communicate with our backend we use the addTransactListener() method that is part of our useClient() API call. addTransactListener() takes in a function as a parameter. transactListener is the function that looks at all of our Datoms that have changed and updates them in Firebase. We also need a way to sync our backend data with Homebase. transactSilently() allows us to do exactly that and it is also part of the useClient() API call. We have a function called softTransact() which will take in a queue with all the changes that have been made in our database and use transactSilently() to notify Homebase of those changes. Debounced is used here to only improve performance as it allows us to wait for a certain number of changes to accumulate before updating Homebase.
+The example below shows a recipe for keeping Homebase React in sync with Firebase. `client.addTransactListener(callback)` lets you listen to every local transaction and send those updates to Firebase. We also need a way to sync Firebase with Homebase React. In this example we create a namespace on Firebase for each user based on their firebase uid and listen to all changes in that namespace. client.` transactSilently(tx)` allows us save changes received from Firebase without triggering our transactListener function and sending those changes back to Firebase endlessly.
 
 ```js
 import { HomebaseProvider, useClient, useEntity, useTransact } from 'homebase-react';
@@ -14,8 +14,10 @@ const SyncToFirebase = () => {
     const userId = currentUser.get('uid')
     const transactListener = React.useCallback(
       (changedDatoms) => {
-        const cardinalityManyAttrs = new Set([])
-        const localOnlyAttrs = new Set([])
+        const cardinalityManyAttrs = new Set([]) // E.g. ':project/todos' or ':user/friends'
+        const localOnlyAttrs = new Set([]) // E.g. ':current-user/uid' these are attributes you don't 
+        // want to save to Firebase, but also don't want to have to call `client.transactSilently()` everytime you change them.
+        
         // Find the datoms that were changed more than once
         const numDatomChanges = changedDatoms.reduce(
           (acc, [id, attr]) => ({ ...acc, [id + attr]: (acc[id + attr] || 0) + 1 }),
