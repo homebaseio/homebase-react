@@ -8,10 +8,25 @@
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/homebase-react)](https://www.npmjs.com/package/homebase-react)
 [![License](https://img.shields.io/github/license/homebaseio/homebase-react.svg)](LICENSE)
 
-*The graph database for delightful React state management*
+*The React state management library for write-heavy applications*
+
+## What and Why
+
+As data and our need to annotate and organize it grows, so does our need for supporting state in *write-heavy* applications.
+
+To solve this problem, modern write-heavy applications such as Superhuman, Roam Research, and Facebook Messenger built their own embedded data layers to enable these more sophisticated user experiences. 
+
+Homebase-react enables developers to access the same embedded datalog database as Roam Research through React hooks. You no longer have to build out a team or learn specialized tools like Clojure in order to build a delightful write-heavy application.
 
 
-Homebase React makes state management painless by enabling you to plug a relational graph database into your React application with just 3 lines of code. This is the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers.
+## Testimonials
+> "Homebase is executing on the vision of data usage, portability, and management we had when building Firebase. We never got there. I'm excited!"
+
+- James Tamplin, Founder/CEO of Firebase
+
+> Datalog is the future of end-user programming, personal productivity software, p2p software, etc.
+
+- Chet Corcos, Founding Engineer of Notion
 
 ## Install
 
@@ -26,22 +41,6 @@ yarn add homebase-react
 ## Docs
 https://homebase.io/docs/homebase-react
 
-## Features
-- The simplest and most declarative state management solution
-- The power of a backend relational graph database, but without having to wait on the network
-- Convenient JSON query syntax
-- Powerful Clojure style [Datalog](https://docs.datomic.com/on-prem/query.html) query syntax if you need it
-- Traverse your data graph like it's a big JSON object
-- Backup your data to the cloud
-
-## Roadmap
-
-1. Document integration with more backends
-1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
-    1. Immutability
-    1. History / Change Tracking
-2. Persist to IndexedDB
-3. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
 
 ## Examples
 ### Live Demos
@@ -188,6 +187,18 @@ This hook returns the current database client with some helpful functions for sy
     - use this to sync data from your backend into the client
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
+
+## Roadmap
+
+1. Document integration with more backends
+2. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
+    1. Immutability
+    2. History / Change Tracking
+3. Persist to IndexedDB
+4. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
+
+## Limitations
+Homebase React is currently not a good choice for read-heavy applications (e.g. Twitter, ecommerce). We plan to support these query patterns with our [platform](http://homebase.io) eventually.
 
 ## Development
 
