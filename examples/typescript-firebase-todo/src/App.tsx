@@ -22,10 +22,9 @@ export default function App() {
 declare const window: any;
 
 const config = {
-  // Schema is only used to enforce 
+  // Lookup helpers are used to enforce 
   // unique constraints and relationships.
-  // It is not a type system, yet.
-  schema: {
+  lookupHelpers: {
     user: { uid: { unique: 'identity' } },
     todo: {
       // refs are relationships

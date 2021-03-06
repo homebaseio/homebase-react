@@ -15,7 +15,7 @@ const {
   useEntity
 } = window.homebase.react;
 const config = {
-  schema: {
+  lookupHelpers: {
     store: {
       items: {
         type: 'ref',

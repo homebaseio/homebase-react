@@ -81,7 +81,7 @@
                         (not= :db.type/ref (get-in schema [(js->key nmspc k) :db/valueType]))
                         (not= :db.cardinality/one (get-in schema [(js->key nmspc k) :db/cardinality])))
                    (throw (js/Error. (str "The '" nmspc "." k "' attribute should be a ref type of one."
-                                          "\n\nAdd this to your config:  schema: { " nmspc ": { " k ": { type: 'ref', cardinality: 'one' }}}\n"))))
+                                          "\n\nAdd this to your config:  lookupHelpers: { " nmspc ": { " k ": { type: 'ref', cardinality: 'one' }}}\n"))))
                  (into [[:db/add id (js->key nmspc k) child-id]]
                        (js->tx-part schema temp-ids-atom (cons [k id] key-path) v)))
                (js->tx-part schema temp-ids-atom (cons [k id] key-path) v))))
@@ -91,7 +91,7 @@
          (not= :db.type/ref (get-in schema [(js->key nmspc attr) :db/valueType]))
          (not= :db.cardinality/many (get-in schema [(js->key nmspc attr) :db/cardinality])))
     (throw (js/Error. (str "The '" nmspc "." attr "' attribute should be a ref type of many."
-                           "\n\nAdd this to your config:  schema: { " nmspc ": { " attr ": { type: 'ref', cardinality: 'many' }}}\n"))))
+                           "\n\nAdd this to your config:  lookupHelpers: { " nmspc ": { " attr ": { type: 'ref', cardinality: 'many' }}}\n"))))
   (reduce into
    (map-indexed
     (fn [i v]
@@ -268,7 +268,7 @@
 (defn humanize-error 
   "Attempts to rewrite any errors to be more JS friendly"
   [error-humanize-f f]
-  (if *debug*
+  (if (and (number? *debug*) (>= *debug* 2))
     (f)
     (try
       (f)
@@ -357,13 +357,16 @@
   (condp re-find (goog.object/get error "message")
     #"(?:(.+) is not ISeqable|Cannot use 'in' operator to search for 'db' in (.+))"
     :>> (fn [[_ v1 v2]]
-          (let [d-entity ^de/Entity (.-_entity entity)
-                key (ffirst (filter (fn [[_ v]] (= (or v1 v2) (str v))) d-entity))
-                nmspc (namespace key)
-                attr (name key)]
-            (str "The `" nmspc "." attr "` attribute should be marked as ref if you want to treat it as a relationship."
-                 "\n\nAdd this to your config:  schema: { " nmspc ": { " attr ": { type: 'ref' }}}\n")))
-    (goog.object/get error "message")))
+          (try
+            (let [d-entity ^de/Entity (.-_entity entity)
+                  key (ffirst (filter (fn [[_ v]] (= (or v1 v2) (str v))) d-entity))
+                  nmspc (namespace key)
+                  attr (name key)]
+              (str "The `" nmspc "." attr "` attribute should be marked as ref if you want to treat it as a relationship."
+                   "\n\nAdd this to your config:  lookupHelpers: { " nmspc ": { " attr ": { type: 'ref' }}}\n"))
+            (catch js/Error e
+              "Bad get lookup. Make sure to add relationships to the config so you can query across them.")))
+    "Bad get lookup. Make sure to add relationships to the config so you can query across them."))
 
 (defn humanize-transact-error [error]
   (condp re-find (goog.object/get error "message")
@@ -396,7 +399,7 @@
     #"Lookup ref attribute should be marked as :db/unique: \[:([\w-]+)/([\w-]+) ((?!\]).+)\]"
     :>> (fn [[_ nmspc attr v]]
           (str "The `" nmspc "." attr "` attribute should be marked as unique if you want to lookup entities by it."
-               "\n\nAdd this to your config:  schema: { " nmspc ": { " attr ": { unique: 'identity' }}}\n"))
+               "\n\nAdd this to your config:  lookupHelpers: { " nmspc ": { " attr ": { unique: 'identity' }}}\n"))
     (goog.object/get error "message")))
 
 (defn example-js-query

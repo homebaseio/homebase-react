@@ -16,18 +16,15 @@ const {
   useEntity
 } = window.homebase.react;
 
-const App = () => {
-  return /*#__PURE__*/_react.default.createElement(HomebaseProvider, {
-    config: config
-  }, /*#__PURE__*/_react.default.createElement(Todos, null));
-};
+const App = () => /*#__PURE__*/_react.default.createElement(HomebaseProvider, {
+  config: config
+}, /*#__PURE__*/_react.default.createElement(Todos, null));
 
 exports.App = App;
 const config = {
-  // Schema is only used to enforce 
+  // Lookup helpers are used to enforce
   // unique constraints and relationships.
-  // It is not a type system, yet.
-  schema: {
+  lookupHelpers: {
     project: {
       name: {
         unique: 'identity'
@@ -43,7 +40,7 @@ const config = {
       }
     }
   },
-  // Initial data let's you conveniently transact some 
+  // Initial data let's you conveniently transact some
   // starting data on DB creation to hydrate your components.
   initialData: [{
     todoFilter: {
@@ -92,9 +89,7 @@ const config = {
   }]
 };
 
-const Todos = () => {
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(NewTodo, null), /*#__PURE__*/_react.default.createElement(TodoFilters, null), /*#__PURE__*/_react.default.createElement(TodoList, null));
-};
+const Todos = () => /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(NewTodo, null), /*#__PURE__*/_react.default.createElement(TodoFilters, null), /*#__PURE__*/_react.default.createElement(TodoList, null));
 
 const NewTodo = () => {
   const [transact] = useTransact();
@@ -143,7 +138,7 @@ const TodoList = () => {
     id: todo.get('id')
   })));
 }; // PERFORMANCE: By accepting an `id` prop instead of a whole `todo` entity
-// this component stays disconnected from the useQuery in the parent TodoList. 
+// this component stays disconnected from the useQuery in the parent TodoList.
 // useEntity creates a separate scope for every Todo so changes to TodoList
 // or sibling Todos don't trigger unnecessary re-renders.
 

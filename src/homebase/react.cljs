@@ -126,7 +126,8 @@
                         :db/cardinality :db.cardinality/one}})
 
 (defn ^:export HomebaseProvider [props]
-  (let [schema (goog.object/getValueByKeys props #js ["config" "schema"])
+  (let [schema (or (goog.object/getValueByKeys props #js ["config" "schema"])
+                   (goog.object/getValueByKeys props #js ["config" "lookupHelpers"]))
         initial-tx (goog.object/getValueByKeys props #js ["config" "initialData"])
         debug (goog.object/getValueByKeys props #js ["config" "debug"])
         _ (when debug (set! hbjs/*debug* debug))

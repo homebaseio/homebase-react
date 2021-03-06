@@ -16,12 +16,21 @@ export type Transaction = Array<object>;
 export type Schema = object;
 
 /**
+ * Add lookup helpers to simplify relational queries. Define relationships and uniqueness constraints in just one place.
+ * @example
+ * { todo: { project: { type: 'ref' } 
+ *           name: { unique: 'identity' } } }
+ */
+export type LookupHelpers = object;
+
+/**
  * A homebase configuration.
  * @typedef {Object} config
  * @property {?object} schema - an optional schema
+ * @property {?object} lookupHelpers - optional lookupHelpers
  * @property {?array} initialData - an optional initial transaction
  */
-export type config = {schema?: Schema, initialData?: Transaction };
+export type config = {schema?: Schema, lookupHelpers?: LookupHelpers, initialData?: Transaction };
 
 /**
  * A reactive reference to an entity's data.
@@ -52,7 +61,7 @@ export type Datom = [number, string, string | number | object | Array<any>, numb
  */
 export type homebaseClient = {
   /**
-   * Serializes the whole db including the schema to a string.
+   * Serializes the whole db including the lookupHelpers to a string.
    * @returns {string} Returns the whole db as a string
    */
   dbToString: () => string,
@@ -91,7 +100,7 @@ export type homebaseClient = {
 
 /**
  * The Homebase React context component. It creates a local database and feeds it to child hooks. Put it high in your component tree.
- * @param props.config - an object with optional schema and initialData parameters.
+ * @param props.config - an object with optional lookupHelpers and initialData parameters.
  * @param props.children - children elements
  */
 export function HomebaseProvider(props: {config?:config, children:React.ReactNode}): React.ReactElement;

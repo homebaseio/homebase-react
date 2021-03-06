@@ -12,23 +12,21 @@ import { HomebaseProvider, useTransact, useQuery, useEntity } from 'homebase-rea
 
 export const App = () => {
   return (
-    <HomebaseProvider config={{ schema, initialData }}>
+    <HomebaseProvider config={{ lookupHelpers, initialData }}>
       <Todos/>
     </HomebaseProvider>
   )
 }
 ```
 
-## Schema
+## Lookup Helpers
 
 Unlike other state managers, Homebase does not try to create yet another design pattern for state. Instead, we store state in a way we already know and love: as a relational graph database.
 
-Like any good database we support schema on read.
-
-At the moment schema is only for relationships and uniqueness constraints. It does not support typing of attributes, e.g. strings, integers, dates. We're working on adding the option to opt into schema on write support. This will provide basic type checking like you see in SQL.
+Lookup helpers make relationships and uniqueness constraints something you declare once and then never need to worry about again. Subsequent queries and transactions will take these properties into account so you never have to write a join query.
 
 ```jsx
-const schema = {
+const lookupHelpers = {
   project: {
     name: {
       unique: 'identity'
@@ -91,7 +89,7 @@ And now we're ready to go. 🚀
 
 ```jsx
 const config = {
-	schema,
+	lookupHelpers,
 	initialData
 }
 ```
@@ -348,10 +346,9 @@ export const App = () => {
 }
 
 const config = {
-  // Schema is only used to enforce 
+  // Lookup helpers are used to enforce 
   // unique constraints and relationships.
-  // It is not a type system, yet.
-  schema: {
+  lookupHelpers: {
     project: { name: { unique: 'identity' } },
     todo: {
       // refs are relationships
