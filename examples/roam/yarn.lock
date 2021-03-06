@@ -6298,7 +6298,7 @@ hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.1.0:
   dependencies:
     react-is "^16.7.0"
 
-homebase-react@^0.5.1:
+homebase-react@latest:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/homebase-react/-/homebase-react-0.5.2.tgz#27dc72989921f79174584dc557a488a20b930543"
   integrity sha512-cJNcmsEbDg0F/fhSkUfe3lJ/tqhgOk/rHE7iC6zoUah9xufuFfNTwaxaArqdyF4m3SxWASCA4DznKYXFUZs9vQ==

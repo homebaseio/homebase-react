@@ -53,19 +53,18 @@ You can clone and run our React code examples [here](examples/).
 
 ### `HomebaseProvider`
 
-The HomebaseProvider wraps your React app and makes a relational database accessible to all of your components. Configure it with `schema` and `initialData`.
+The HomebaseProvider wraps your React app and makes a relational database accessible to all of your components. Configure it with `lookupHelpers` and `initialData`.
 
 ```js
 import { HomebaseProvider, useEntity, useTransact, useQuery } from 'homebase-react'
 
 const config = {
-  // Schema is not a type system,
-  // it's a way to simplify relational queries at query time.
-  // The schema currently supported is:
+  // Lookup helpers simplify relational queries at query time.
+  // The helpers currently supported are:
   // `type: 'ref'` which is a relationship and
   // `unique: 'identity` which enforces a uniqueness constraint 
   // and lets you lookup entities by their unique attributes.
-  schema: {
+  lookupHelpers: {
     todo: {
       project: { type: 'ref', cardinality: 'one' },
       name: { unique: 'identity' }
@@ -174,7 +173,7 @@ todos
 
 This hook returns the current database client with some helpful functions for syncing data with a backend.
 
-- `client.dbToString()` serializes the whole db including the schema to a string
+- `client.dbToString()` serializes the whole db including the lookupHelpers to a string
 - `client.dbFromString('a serialized db string')` replaces the current db
 - `client.dbToDatoms()` returns an array of all the facts aka datoms saved in the db
     - datoms are the smallest unit of data in the database, like a key value pair but better

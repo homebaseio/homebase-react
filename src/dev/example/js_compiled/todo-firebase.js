@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.App = void 0;
 
-var _react = _interopRequireDefault(require("react"));
-
 var _app = _interopRequireDefault(require("firebase/app"));
 
 require("firebase/auth");
@@ -14,6 +12,8 @@ require("firebase/auth");
 require("firebase/database");
 
 var _firebaseui = _interopRequireDefault(require("firebaseui"));
+
+var _react = _interopRequireDefault(require("react"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,18 +25,15 @@ const {
   useEntity
 } = window.homebase.react;
 
-const App = () => {
-  return /*#__PURE__*/_react.default.createElement(HomebaseProvider, {
-    config: config
-  }, /*#__PURE__*/_react.default.createElement(AuthPrompt, null, /*#__PURE__*/_react.default.createElement(Todos, null)));
-};
+const App = () => /*#__PURE__*/_react.default.createElement(HomebaseProvider, {
+  config: config
+}, /*#__PURE__*/_react.default.createElement(AuthPrompt, null, /*#__PURE__*/_react.default.createElement(Todos, null)));
 
 exports.App = App;
 const config = {
-  // Schema is only used to enforce 
+  // Lookup helpers are used to enforce
   // unique constraints and relationships.
-  // It is not a type system, yet.
-  schema: {
+  lookupHelpers: {
     user: {
       uid: {
         unique: 'identity'
@@ -52,7 +49,7 @@ const config = {
       }
     }
   },
-  // Initial data let's you conveniently transact some 
+  // Initial data let's you conveniently transact some
   // starting data on DB creation to hydrate your components.
   initialData: [{
     todoFilter: {
@@ -86,14 +83,14 @@ const config = {
   }]
 };
 const firebaseConfig = {
-  apiKey: "AIzaSyC31X8R5-doWtVmbBRD0xCue09HfydfjzI",
-  authDomain: "homebase-react.firebaseapp.com",
-  databaseURL: "https://homebase-react.firebaseio.com",
-  projectId: "homebase-react",
-  storageBucket: "homebase-react.appspot.com",
-  messagingSenderId: "1056367825432",
-  appId: "1:1056367825432:web:a6aaba7bee5e8a43e6296d",
-  measurementId: "G-FJ9BNZDFCE"
+  apiKey: 'AIzaSyC31X8R5-doWtVmbBRD0xCue09HfydfjzI',
+  authDomain: 'homebase-react.firebaseapp.com',
+  databaseURL: 'https://homebase-react.firebaseio.com',
+  projectId: 'homebase-react',
+  storageBucket: 'homebase-react.appspot.com',
+  messagingSenderId: '1056367825432',
+  appId: '1:1056367825432:web:a6aaba7bee5e8a43e6296d',
+  measurementId: 'G-FJ9BNZDFCE'
 };
 
 _app.default.initializeApp(firebaseConfig);
@@ -256,7 +253,7 @@ const TodoList = () => {
     id: todo.get('id')
   })));
 }; // PERFORMANCE: By accepting an `id` prop instead of a whole `todo` entity
-// this component stays disconnected from the useQuery in the parent TodoList. 
+// this component stays disconnected from the useQuery in the parent TodoList.
 // useEntity creates a separate scope for every Todo so changes to TodoList
 // or sibling Todos don't trigger unnecessary re-renders.
 

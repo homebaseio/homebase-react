@@ -250,7 +250,7 @@ const NotLoggedInBanner = () => {
 }
 
 const config = {
-  schema: {
+  lookupHelpers: {
     block: {
       uid: { unique: 'identity' },
       title: { unique: 'identity' },

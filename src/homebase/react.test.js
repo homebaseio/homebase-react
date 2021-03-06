@@ -13,7 +13,7 @@ import {
 } from '../../dist/js/homebase.react'
 
 const config = {
-  schema: {
+  lookupHelpers: {
     item: {
       name: { unique: 'identity' },
       parent: { type: 'ref', cardinality: 'one' },

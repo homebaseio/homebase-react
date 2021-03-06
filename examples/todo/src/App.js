@@ -1,5 +1,5 @@
+import { HomebaseProvider, useEntity, useQuery, useTransact } from 'homebase-react'
 import React from 'react'
-import { HomebaseProvider, useEntity, useTransact, useQuery } from 'homebase-react'
 import './App.css'
 
 export default function App() {
@@ -11,10 +11,9 @@ export default function App() {
 }
 
 const config = {
-  // Schema is only used to enforce 
+  // Lookup helpers are used to enforce 
   // unique constraints and relationships.
-  // It is not a type system, yet.
-  schema: {
+  lookupHelpers: {
     project: { name: { unique: 'identity' } },
     todo: {
       // refs are relationships
