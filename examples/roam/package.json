@@ -14,7 +14,7 @@
     "autoprefixer": "^9",
     "firebase": "^8.2.6",
     "firebaseui": "^4.7.3",
-    "homebase-react": "latest",
+    "homebase-react": "^0.5.3",
     "lodash": "^4.17.20",
     "nanoid": "^3.1.20",
     "postcss": "^7",
