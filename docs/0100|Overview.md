@@ -8,10 +8,13 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/homebaseio/homebase-react?style=social)](https://github.com/homebaseio/homebase-react)
 [![Twitter Follow](https://img.shields.io/twitter/follow/homebase__io?label=Follow&style=social)](https://twitter.com/homebase__io)
 
-*The graph database for delightful React state management*
+## What and Why
 
+As data and our need to annotate and organize it grows, so does our need for supporting state in *write-heavy* applications.
 
-Homebase React makes state management painless by enabling you to plug a relational graph database into your React application with just 3 lines of code. This is the same database that powers Roam Research and many other ClojureScript applications, but with an API that's familiar to React and JS developers.
+To solve this problem, modern write-heavy applications such as Superhuman, Roam Research, and Facebook Messenger built their own embedded data layers to enable these more sophisticated user experiences. 
+
+Homebase-react enables developers to access the same embedded datalog database as Roam Research through React hooks. You no longer have to build out a team or learn specialized tools like Clojure in order to build a delightful write-heavy application.
 
 ## Install
 
@@ -22,19 +25,12 @@ npm install homebase-react --save
 # Yarn
 yarn add homebase-react
 ```
-## Features
-- The simplest and most declarative state management solution
-- The power of a backend relational graph database, but without having to wait on the network
-- Convenient JSON query syntax
-- Powerful Clojure style [Datalog](https://docs.datomic.com/on-prem/query.html) query syntax if you need it
-- Traverse your data graph like it's a big JSON object
-- Backup your data to the cloud
 
-## Roadmap
+## Testimonials
+> "Homebase is executing on the vision of data usage, portability, and management we had when building Firebase. We never got there. I'm excited!"
 
-1. Document integration with more backends
-1. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
-    1. Immutability
-    1. History / Change Tracking
-2. Persist to IndexedDB
-3. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
+- James Tamplin, Founder/CEO of Firebase
+
+> Datalog is the future of end-user programming, personal productivity software, p2p software, etc.
+
+- Chet Corcos, Founding Engineer of Notion
