@@ -187,6 +187,16 @@ This hook returns the current database client with some helpful functions for sy
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
 
+##  Debugging tips
+
+If you set `debug` to `true` in your configuration, you will be able to access the `_recentlyTouchedAttributes` attribute on entities. `_recentlyTouchedAttributes` will show any cached attributes for a given entity. This is helpful for approximating that entity's schema and values.
+
+```js
+  <HomebaseProvider config={ debug: true }>
+    <App/>
+  </HomebaseProvider>
+```
+
 ## Roadmap
 
 1. Document integration with more backends
