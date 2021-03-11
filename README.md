@@ -192,7 +192,7 @@ Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/
 If you set `debug` to `true` in your configuration, you will be able to access the `_recentlyTouchedAttributes` attribute on entities. `_recentlyTouchedAttributes` will show any cached attributes for a given entity. This is helpful for approximating that entity's schema and values.
 
 ```js
-  <HomebaseProvider config={ debug: true }>
+  <HomebaseProvider config={{ debug: true }}>
     <App/>
   </HomebaseProvider>
 ```
