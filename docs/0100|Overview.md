@@ -27,10 +27,10 @@ yarn add homebase-react
 ```
 
 ## Testimonials
-> "Homebase is executing on the vision of data usage, portability, and management we had when building Firebase. We never got there. I'm excited!"
-
-- James Tamplin, Founder/CEO of Firebase
+> Homebase is executing on the vision of data usage, portability, and management we had when building Firebase. We never got there. I'm excited!
+>
+> —James Tamplin, Founder/CEO of Firebase
 
 > Datalog is the future of end-user programming, personal productivity software, p2p software, etc.
-
-- Chet Corcos, Founding Engineer of Notion
+>
+> —Chet Corcos, Founding Engineer of Notion
