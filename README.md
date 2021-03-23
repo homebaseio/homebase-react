@@ -126,7 +126,7 @@ sameTodo.get('project', 'user', 'name') // => 'Arpegius'
 Transactions let you create, update and delete multiple entities simultaneously. All changes will reactively update any components that depend on the changed data.
 
 ```js
-const transact = useTransact()
+const [transact] = useTransact()
 
 // A transaction is an array of nested objects and or arrays.
 // Leaving the id blank will create a new entity.
