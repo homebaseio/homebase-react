@@ -121,6 +121,7 @@ const TodoList = () => {
     $find: 'todo',
     $where: { todo: { name: '$any' } },
   })
+  console.log(todos)
   return (
     <div>
       {todos
@@ -234,8 +235,7 @@ const TodoFilters = () => {
           type="checkbox"
           checked={filters.get('showCompleted')}
           onChange={(e) =>
-            transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked } }])
-          }
+            transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked } }])}
         />
       </label>
       &nbsp;·&nbsp;

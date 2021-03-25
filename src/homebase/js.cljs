@@ -5,7 +5,10 @@
    [camel-snake-kebab.core :as csk]
    [datascript.core :as d]
    [inflections.core :refer [singular]]
+   [datalog-console.chrome.formatters :as dcf]
    [datascript.impl.entity :as de]))
+
+(dcf/install!)
 
 (def ^:dynamic *debug* false)
 

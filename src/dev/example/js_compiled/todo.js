@@ -128,6 +128,7 @@ const TodoList = () => {
       }
     }
   });
+  console.log(todos);
   return /*#__PURE__*/_react.default.createElement("div", null, todos.filter(todo => {
     if (!filters.get('showCompleted') && todo.get('isCompleted')) return false;
     if (filters.get('project') && todo.get('project', 'id') !== filters.get('project')) return false;
