@@ -38,13 +38,14 @@ yarn add homebase-react
 ##  Debugging
 Homebase React uses ClojureScript and its corresponding data format EDN internally. We then compile all of that to Javascript using the Google Closure Compiler (closure not clojure, I know right) to get as small a bundle as possible. Then we provide APIs (react hooks) that accept JSON and do all the conversion to EDN and back again behind the scenes.
 
-EDN and Clojure provide far more safety and extensibility than JSON and Javascript. Clojure being immutable by default and EDN being extensible. This lets us build and support features that would be unwieldy in JSON or JS. 
+EDN and Clojure provide far more safety and extensibility than JSON and Javascript. Clojure being immutable by default and EDN being extensible. This lets us build and support features that would be unwieldy in JSON and JS. 
 
 However, the tradeoffs are:
-1. A larger bundle since some of the Clojure runtime cannot be compiled away even thought the closure compiler is really aggressive.
+
+1. A larger bundle size. Some of the Clojure runtime cannot be compiled away even though the closure compiler is really aggressive.
 2. Clojure error messages sometimes leak into JS land. We try to annotate the ones we know about so they make sense to JS devs, but it's far from perfect and if you see something weird please create an issue.
-3. Our code is released already minified. We do this because most people do not develop with the google closure compiler and other build tools are not nearly as effective at optimizing this code. This makes debugging homebase-react while developing a bit harder since the code is not very readable, but we think the tradeoff is worth it to provide a smaller bundle size.
-4. Confusing console logs since EDN data looks different from JSON and to add to that, homebase-react mostly deals in entities, which are lazy and not very helpful when logged with the default console formatting. See custom chrome formatters below for an improvement.
+3. Our code is released already minified. We do this because most people do not develop with the google closure compiler and other build tools are not nearly as effective at optimizing this code. This makes debugging homebase-react while developing a bit harder since the code is not very readable, but we think the tradeoff is worth it to provide a smaller bundle size. And to compensate we try to build enough supporting dev tooling so you never need to read the compiled source.
+4. Confusing console logs. EDN data looks different from JSON and to add to that, homebase-react mostly outputs entities, which are lazy data types and not very helpful when logged out with the default console formatting. See custom chrome formatters below for a vastly improved logging experience.
 
 ### Custom chrome console log formatters
 If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium browser like Brave or Edge you'll get significantly more meaningful logs for entities `console.log(anEntity)` due to our use of custom chrome :formatters. These custom formatters allow us to perform lazy database queries to fetch all of an entity's attributes, including references to other entities and all reverse references to the current entity. They give you full access to your data graph with any entity as an entry point.
@@ -52,15 +53,15 @@ If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium brows
 #### To enable chrome custom formatters
 **1.** Open the preferences panel in chrome devtools by clicking the cog.
 
-<img alt="image of chrome devtools preferences button" src="https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_1.png?raw=true" width="400">
+![image of chrome devtools preferences button](https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_1.png?raw=true)
 
 **2.** Toggle `Enabled custom formatters` on.
 
-<img alt="image of chrome devtools custom formatters toggle" src="https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_2.png?raw=true" width="400">
+![image of chrome devtools custom formatters toggle](https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_2.png?raw=true)
 
 **3.** Keep the chrome console open and refresh the page. Any logged out entities should now have the custom formatting.
 
-<img alt="image of custom entity chrome console logs" src="https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_3.png?raw=true" width="400">
+![image of custom entity chrome console logs](https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_3.png?raw=true)
 
 **Live demo:** open the console while on the [todo example](https://homebaseio.github.io/homebase-react/#!/dev.example.todo) page.
 
