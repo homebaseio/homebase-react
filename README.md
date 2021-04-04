@@ -200,7 +200,7 @@ However, the tradeoffs are:
 4. Confusing console logs. EDN data looks different from JSON and to add to that, homebase-react mostly outputs entities, which are lazy data types and not very helpful when logged out with the default console formatting. See custom chrome formatters below for a vastly improved logging experience.
 
 ### Custom chrome console log formatters
-If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium browser like Brave or Edge you'll get significantly more meaningful logs for entities `console.log(anEntity)` due to our use of custom chrome :formatters. These custom formatters allow us to perform lazy database queries to fetch all of an entity's attributes, including references to other entities and all reverse references to the current entity. They give you full access to your data graph with any entity as an entry point.
+If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium browser like Brave or Edge you'll get significantly more meaningful logs for entities `console.log(anEntity)` due to our use of custom chrome :formatters. These custom formatters allow us to perform lazy database queries to fetch all of an entity's attributes, including references to other entities and all reverse references to the current entity. They let you access your entire data graph from the console, with any logged out entity as an entry point.
 
 #### To enable chrome custom formatters
 **1.** Open the preferences panel in chrome devtools by clicking the cog.

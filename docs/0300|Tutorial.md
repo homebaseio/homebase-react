@@ -1,8 +1,14 @@
 This tutorial takes you through our [Todo Example](https://homebaseio.github.io/homebase-react/#!/example.todo).
 
+## Custom chrome formatters
+
+> We recommend everyone start by [enabling custom chrome formatters](/docs/homebase-react/main/debugging#custom-chrome-console-log-formatters) for a much better debugging experience.
+
+![image of custom entity chrome console logs](https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_3.png?raw=true)
+
 ## HomebaseProvider
 
-Let's get started.
+Welcome back. Let's get started for real.
 
 `HomebaseProvider` is a component that wraps your React app and creates a local relational database. This database is then accessible to any child components via React Hooks.
 
