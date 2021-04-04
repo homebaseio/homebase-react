@@ -1,5 +1,5 @@
 import React from 'react'
-// import { HomebaseProvider, useEntity, useQuery, useTransact } from '../dist/js/homebase.react'
+
 const { HomebaseProvider, useTransact, useQuery, useEntity } = window.homebase.react
 
 export const App = () => (
@@ -235,8 +235,7 @@ const TodoFilters = () => {
           type="checkbox"
           checked={filters.get('showCompleted')}
           onChange={(e) =>
-            transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked } }])
-          }
+            transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked } }])}
         />
       </label>
       &nbsp;·&nbsp;

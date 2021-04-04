@@ -9,7 +9,6 @@ var _react = _interopRequireDefault(require("react"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { HomebaseProvider, useEntity, useQuery, useTransact } from '../dist/js/homebase.react'
 const {
   HomebaseProvider,
   useTransact,
