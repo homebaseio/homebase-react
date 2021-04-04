@@ -193,15 +193,15 @@ Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/
 If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium browser like Brave or Edge you'll get significantly more meaningful logs for entities `console.log(anEntity)` due to our use of custom chrome :formatters. These custom formatters allow us to perform lazy database queries to fetch all of an entity's attributes, including references to other entities and all reverse references to the current entity. They give you full access to your data graph with any entity as an entry point.
 
 #### To enable chrome custom formatters
-Open the preferences panel in chrome devtools by clicking the cog.
+**1.** Open the preferences panel in chrome devtools by clicking the cog.
 
 <img alt="image of chrome devtools preferences button" src="public/images/enable_chrome_formatters_1.png" width="400">
 
-Toggle `Enabled custom formatters` on.
+**2.** Toggle `Enabled custom formatters` on.
 
 <img alt="image of chrome devtools custom formatters toggle" src="public/images/enable_chrome_formatters_2.png" width="400">
 
-Keep the chrome console open and refresh the page. Any logged out entities should now have the custom formatting.
+**3.** Keep the chrome console open and refresh the page. Any logged out entities should now have the custom formatting.
 
 <img alt="image of custom entity chrome console logs" src="public/images/enable_chrome_formatters_3.png" width="400">
 
@@ -223,12 +223,15 @@ If you set `debug` to `true` in your configuration, you will be able to access t
 
 ## Roadmap
 
-1. Document integration with more backends
-2. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
+1. Improve developer tools: custom chrome formatters, DB admin console extension
+2. Rewrite React ↔ Homebase cache
+    1. Support async DB access (for Datahike)
+    2. Reactive query planning (better perf on pages with lots of live reads)
+3. Swap [Datascript](https://github.com/tonsky/datascript) out for [Datahike](https://github.com/replikativ/datahike)
     1. Immutability
     2. History / Change Tracking
-3. Persist to IndexedDB
-4. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
+4. Persist to IndexedDB
+5. [Local-first](https://www.inkandswitch.com/local-first.html) conflict resolution for offline caching and sync between multiple devices
 
 ## Limitations
 Homebase React is currently not a good choice for read-heavy applications (e.g. Twitter, ecommerce). We plan to support these query patterns with our [platform](http://homebase.io) eventually.
