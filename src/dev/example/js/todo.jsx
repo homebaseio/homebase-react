@@ -1,5 +1,5 @@
 import React from 'react'
-
+// import { HomebaseProvider, useEntity, useQuery, useTransact } from '../dist/js/homebase.react'
 const { HomebaseProvider, useTransact, useQuery, useEntity } = window.homebase.react
 
 export const App = () => (
@@ -145,6 +145,7 @@ const TodoList = () => {
 // or sibling Todos don't trigger unnecessary re-renders.
 const Todo = React.memo(({ id }) => {
   const [todo] = useEntity(id)
+  console.log(todo)
   return (
     <div>
       <div

@@ -189,6 +189,30 @@ Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/
 
 ##  Debugging tips
 
+### Custom chrome :formatters
+If you develop with [Chrome](https://www.google.com/chrome/) you'll get significantly more meaningful logs for entities `console.log(anEntity)` due to our use of custom chrome :formatters which allow us to perform lazy database queries to fetch all of an entity's attributes, including references to other entities and all reverse references to the current entity.
+
+#### To enable chrome custom formatters
+Open the preferences panel in chrome devtools by clicking the cog.
+
+![image of chrome devtools preferences button](public/images/enable_chrome_formatters_1.png)
+
+Toggle `Enabled custom formatters` on.
+
+![image of chrome devtools custom formatters toggle](public/images/enable_chrome_formatters_2.png)
+
+Keep the chrome console open and refresh the page. Any logged out entities should now have the custom formatting.
+
+![image of chrome devtools preferences button](public/images/enable_chrome_formatters_3.png)
+
+**Live demo:** open the console while on the [todo example](https://homebaseio.github.io/homebase-react/#!/dev.example.todo) page.
+
+**Remember**: for custom formatters to work `console.log(anEntity)` must be called *after* you open the chrome console. Anything logged out before you open the console will not have custom formatting applied because chrome processes those logs in the background.
+
+### *Deprecated* `_recentlyTouchedAttributes`
+
+*Use custom chrome formatters.*
+
 If you set `debug` to `true` in your configuration, you will be able to access the `_recentlyTouchedAttributes` attribute on entities. `_recentlyTouchedAttributes` will show any cached attributes for a given entity. This is helpful for approximating that entity's schema and values.
 
 ```js

@@ -32,5 +32,8 @@
         :output-dir "dist/js"
         :entries [homebase.react]
         :compiler-options {:optimizations :advanced
+                           :externs ["datascript/externs.js"]
+                           :pseudo-names false
+                           :pretty-print false
                            :output-wrapper false
                            :source-map false}}}}

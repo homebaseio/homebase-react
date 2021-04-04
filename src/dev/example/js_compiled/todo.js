@@ -9,6 +9,7 @@ var _react = _interopRequireDefault(require("react"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import { HomebaseProvider, useEntity, useQuery, useTransact } from '../dist/js/homebase.react'
 const {
   HomebaseProvider,
   useTransact,
@@ -147,6 +148,7 @@ const Todo = /*#__PURE__*/_react.default.memo(({
   id
 }) => {
   const [todo] = useEntity(id);
+  console.log(todo);
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       display: 'flex',
