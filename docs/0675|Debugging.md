@@ -1,6 +1,6 @@
-Homebase React uses ClojureScript and its corresponding data format EDN internally. We then compile all of that to Javascript using the Google Closure Compiler (closure not clojure, I know right) to get as small a bundle as possible. Then we provide APIs (react hooks) that accept JSON and do all the conversion to EDN and back again behind the scenes.
+Homebase React uses ClojureScript and its corresponding data format EDN internally. We then compile all of that to Javascript using the Google Closure Compiler (closure not clojure) to get as small a bundle as possible. Then we provide APIs (react hooks) that accept JSON and do all the conversion to EDN and back again behind the scenes.
 
-EDN and Clojure provide far more safety and extensibility than JSON and Javascript. Clojure being immutable by default and EDN being extensible. This lets us build and support features that would be unwieldy in JSON and JS. 
+EDN and Clojure provide far more safety and extensibility than JSON and Javascript; Clojure being immutable by default and EDN being extensible. This lets us build and support features that would be unwieldy in JSON and JS.
 
 However, the tradeoffs are:
 

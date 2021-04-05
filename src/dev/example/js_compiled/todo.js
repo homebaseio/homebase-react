@@ -146,7 +146,9 @@ const TodoList = () => {
 const Todo = /*#__PURE__*/_react.default.memo(({
   id
 }) => {
-  const [todo] = useEntity(id);
+  const [todo] = useEntity(id); // Try opening the console in Chrome with custom formatters enabled
+  // https://homebase.io/docs/homebase-react/main/debugging#custom-chrome-formatters
+
   console.log(todo);
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
     style: {
