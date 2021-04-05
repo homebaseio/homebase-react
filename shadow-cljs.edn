@@ -20,9 +20,14 @@
                  :output-to "out/node-tests.js"
                  :ns-regexp "-test$"
                  :autorun true}
-  :npm {:target :npm-module
+  :npm {:target :node-library
+        :output-to "dist/js/homebase.react.js"
         :output-dir "dist/js"
-        :entries [homebase.react]
+        :exports {:HomebaseProvider homebase.react/HomebaseProvider
+                  :useClient homebase.react/useClient
+                  :useTransact homebase.react/useTransact
+                  :useEntity homebase.react/useEntity
+                  :useQuery homebase.react/useQuery}
         :compiler-options {:optimizations :advanced
                            :externs ["datascript/externs.js"]
                            :pseudo-names false

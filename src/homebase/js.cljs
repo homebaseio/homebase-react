@@ -9,6 +9,8 @@
    [devtools.protocols :as dtp :refer [IFormat]]
    [datascript.impl.entity :as de]))
 
+(dcf/install!)
+
 (def ^:dynamic *debug* false)
 
 (defn keywordize-str [s]
