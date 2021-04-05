@@ -7,6 +7,7 @@
         :output-dir "public/js"
         :asset-path "/js"
         :compiler-options {:devcards :true
+                           :externs ["datascript/externs.js"]
                            :output-feature-set :es6}
         :modules {:main {:init-fn dev.example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
