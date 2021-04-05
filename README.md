@@ -202,7 +202,8 @@ However, the tradeoffs are:
 ### Custom chrome console log formatters
 If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium browser like Brave or Edge you'll get significantly more meaningful logs for entities `console.log(anEntity)` due to our use of custom chrome :formatters. These custom formatters allow us to perform lazy database queries to fetch all of an entity's attributes, including references to other entities and all reverse references to the current entity. They let you access your entire data graph from the console, with any logged out entity as an entry point.
 
-#### To enable chrome custom formatters
+**To enable custom chrome formatters**
+
 **1.** Open the preferences panel in chrome devtools by clicking the cog.
 
 <img alt="image of chrome devtools preferences button" src="public/images/enable_chrome_formatters_1.png" width="400">
@@ -221,7 +222,7 @@ If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium brows
 
 ### *DEPRECATED* `_recentlyTouchedAttributes`
 
-*Use [custom chrome formatters](#custom-chrome-console-log-formatters) instead.*
+*Use [custom chrome formatters](#custom-chrome-formatters) instead.*
 
 If you set `debug` to `true` in your configuration, you will be able to access the `_recentlyTouchedAttributes` attribute on entities. `_recentlyTouchedAttributes` will show any cached attributes for a given entity. This is helpful for approximating that entity's schema and values.
 
