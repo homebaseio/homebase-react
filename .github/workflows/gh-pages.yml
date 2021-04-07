@@ -1,8 +1,6 @@
 name: Publish Examples
 
-on:
-  push:
-    branches: [ master ]
+on: push
 
 jobs:
   publish-examples:
@@ -14,6 +12,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - uses: DeLaGuardo/setup-clojure@3.2
+        with:
+          cli: 1.10.1.693
       
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -46,9 +52,25 @@ jobs:
 
       - run: yarn shadow-cljs release dev 
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
       - name: Publish to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: public # The folder the action should deploy.
+          branch: gh-pages
+          folder: public
+          target-folder: branches/${{ steps.extract_branch.outputs.branch }}
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: proj-dev-homebase-react
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+          SLACK_ICON: https://github.com/homebaseio.png?size=200
+          SLACK_MESSAGE: "- :github: Branch: <https://github.com/homebaseio/homebase-react/tree/${{ steps.extract_branch.outputs.branch }}|${{ steps.extract_branch.outputs.branch }}>\n- :card_file_box: devcards: https://homebaseio.github.io/homebase-react/branches/${{ steps.extract_branch.outputs.branch }}/index.html"
+          SLACK_TITLE: "Published ${{ steps.extract_branch.outputs.branch }} to GitHub Pages :rocket:"
+          SLACK_USERNAME: Homebase
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
