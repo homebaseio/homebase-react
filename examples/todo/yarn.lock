@@ -5348,10 +5348,10 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-homebase-react@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/homebase-react/-/homebase-react-0.5.3.tgz#bffcce2d7f5b1d33391623dbd754f5e22df3920a"
-  integrity sha512-3Uya6yD6N57skVbrpSb1ia8eRZAnDJNvqyxMbvqaFtUyJGFqyfqWN9Qiz5h17WSnkoeC/YMs1ejFRrNPLx0jIw==
+homebase-react@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/homebase-react/-/homebase-react-0.5.4.tgz#b6c31ebb2c8852503c752ed81a010b104b9cd751"
+  integrity sha512-7TRm3ofQVRjc94PuVpT8UtFTD42L3ULC5o7fPrnY/7pYOBupU2pgGmV6upYmTf/WWK8T5wlcDtKl6OnBhbJnfw==
 
 hoopy@^0.1.4:
   version "0.1.4"
