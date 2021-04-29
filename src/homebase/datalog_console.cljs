@@ -2,10 +2,10 @@
   (:require [goog.object :as gobj]
             [cljs.reader]))
 
+(js/document.documentElement.setAttribute "__datalog-inspect-remote-installed__" true)
 
 (defn init-datalog-console
   [{:keys [conn]}]
-  (js/document.documentElement.setAttribute "__datalog-inspect-remote-installed__" true)
   (.addEventListener js/window "message"
                      (fn [event]
                        (when-let [devtool-message (gobj/getValueByKeys event "data" "devtool-message")]
