@@ -8,7 +8,7 @@
   [{:keys [conn]}]
   (.addEventListener js/window "message"
                      (fn [event]
-                       (when-let [devtool-message (gobj/getValueByKeys event "data" "devtool-message")]
+                       (when-let [devtool-message (gobj/getValueByKeys event "data" "datalog-console.client/devtool-message")]
                          (let [msg-type (:type (cljs.reader/read-string devtool-message))]
                            (case msg-type
 
