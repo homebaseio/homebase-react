@@ -1,8 +1,9 @@
 /* eslint-disable react/button-has-type */
 import '@testing-library/jest-dom/extend-expect'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import 'jest-performance-testing'
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import { perf, wait } from 'react-performance-testing'
 import {
   HomebaseProvider,
@@ -307,18 +308,44 @@ describe('client', () => {
     const [order] = useEntity(1)
     // TODO: test client.addTransactListener()
     // TODO: test client.removeTransactListener()
+
+    const [entityResultState, setEntityResultState] = React.useState()
+    async function runEntity() {
+      const entityResult = await client.entity(7)
+      act(() => {
+        setEntityResultState(entityResult.get('name'))
+      })
+    }
+    const [queryResultState, setQueryResultState] = React.useState()
+    async function runQuery() {
+      const queryResult = await client.query({
+        $find: 'item',
+        $where: { item: { name: '$any' } },
+      })
+      act(() => {
+        setQueryResultState(queryResult[0].get('name'))
+      })
+    }
+    React.useEffect(() => {
+      runQuery()
+      runEntity()
+    }, [client])
+
     return (
       <>
         <div data-testid="client.dbToString()">{client.dbToString()}</div>
         <div data-testid="client.dbToDatoms()">{JSON.stringify(client.dbToDatoms())}</div>
         <button
           onClick={() =>
-            client.transactSilently([{ order: { id: order.get('id'), name: 'order1' } }])}
+            client.transactSilently([{ order: { id: order.get('id'), name: 'order1' } }])
+          }
         >
           update|order.name
         </button>
         <div data-testid="order.name">{order.get('name')}</div>
         <button onClick={() => client.dbFromString(initialDBString)}>client.dbFromString()</button>
+        <div data-testid="client.entity">{entityResultState}</div>
+        <div data-testid="client.query">{queryResultState}</div>
       </>
     )
   }
@@ -330,7 +357,7 @@ describe('client', () => {
   )
 
   it('useClient', async () => {
-    expect.assertions(4)
+    expect.assertions(7)
     render(<ClientApp />)
     expect(screen.getByTestId('client.dbToString()')).toHaveTextContent(initialDBString)
     expect(screen.getByTestId('client.dbToDatoms()')).toHaveTextContent(
@@ -340,6 +367,10 @@ describe('client', () => {
     expect(screen.getByTestId('order.name')).toHaveTextContent('order1')
     fireEvent.click(screen.getByText('client.dbFromString()'))
     expect(screen.getByTestId('order.name')).toBeEmptyDOMElement()
+    await waitFor(() => {
+      expect(screen.getByTestId('client.entity')).toHaveTextContent('name lookup')
+      expect(screen.getByTestId('client.query')).toHaveTextContent('id lookup')
+    })
   })
 })
 
