@@ -5,7 +5,11 @@
    [camel-snake-kebab.core :as csk]
    [datascript.core :as d]
    [inflections.core :refer [singular]]
+   [datalog-console.chrome.formatters :as dcf]
+   [devtools.protocols :as dtp :refer [IFormat]]
    [datascript.impl.entity :as de]))
+
+(dcf/install!)
 
 (def ^:dynamic *debug* false)
 
@@ -56,7 +60,7 @@
   (nil? (tx-part-colls (type v))))
 
 (defmulti js->tx-part "Returns a vector of datalog tx-parts"
-  (fn [schema temp-ids-atom key-path tx-part] 
+  (fn [schema temp-ids-atom key-path tx-part]
     (type tx-part)))
 (defmethod js->tx-part js/Array [_ _ _ [f e a v]]
   [[(get js-tx-fns f) e (keywordize a) v]])
@@ -98,7 +102,7 @@
       (when (vector? v)
         (throw (js/Error. (str "Unsupported JSON in transaction: nested array of arrays `" attr ": [" v "]`. If you need to transact unnamed JSON (tuples, lists) consider serializing it to a string first via `JSON.stringify(yourData)`. If you think homebase-react should have a first class JSON datatype let us know https://github.com/homebaseio/homebase-react/discussions"))))
       (let [id (swap! temp-ids-atom dec)]
-        (into 
+        (into
          [[:db/add parent-id (js->key nmspc attr) id]
           [:db/add id :homebase.array/order (+ 1 i)]]
          (if (scalar? v)
@@ -121,7 +125,7 @@
          (mapcat (partial js->tx-part schema temp-ids-atom [["db" nil true]]))
          (sort (fn [[_ e1] [_ e2]] (compare e2 e1))))))
 
-(defn js->object-lookup 
+(defn js->object-lookup
   ([lookup] (js->object-lookup lookup "db"))
   ([lookup nmspc]
    (reduce-kv
@@ -152,10 +156,10 @@
 (def str->schema-key
   {"unique" :db/unique
    "identity" :db.unique/identity
-   
+
    "type" :db/valueType
    "ref" :db.type/ref
-   
+
    "cardinality" :db/cardinality
    "one" :db.cardinality/one
    "many" :db.cardinality/many})
@@ -219,7 +223,7 @@
 ; E.g. :db/id 1, :todo/name "", :todo/email ""
 ; Not: :db/id 1, :todo/name "", :email/address ""
 (defn guess-entity-ns [entity]
-  (reduce 
+  (reduce
    (fn [_ k] (when (not= "db" (namespace k))
                (reduced (namespace k))))
    nil (keys entity)))
@@ -252,9 +256,9 @@
   (when d-entity
     (not (nil? (first (d/datoms (.-db d-entity) :eavt (:db/id d-entity)))))))
 
-(defmulti entity->js 
+(defmulti entity->js
   "If the entity is a set (cardinality/many) then put it in a JS array"
-  (fn [meta entity] 
+  (fn [meta entity]
     (type entity)))
 (defmethod entity->js :default [_ v] v)
 (defmethod entity->js de/Entity [meta ^de/Entity d-entity]
@@ -265,7 +269,7 @@
        (map (partial entity->js meta))
        to-array))
 
-(defn humanize-error 
+(defn humanize-error
   "Attempts to rewrite any errors to be more JS friendly"
   [error-humanize-f f]
   (if (and (number? *debug*) (>= *debug* 2))
@@ -309,11 +313,15 @@
 (extend-type de/Entity
   Object
   (get ^{:deprecated "0.5.1"
-         :superseded-by "homebase.js/Entity.prototype.get()"} 
-    [entity & attrs] 
+         :superseded-by "homebase.js/Entity.prototype.get()"}
+    [entity & attrs]
     (lookup-entity (Entity. entity nil nil nil nil) attrs)))
 
 (deftype Entity [^de/Entity _entity _meta id _ident type]
+  IFormat
+  (-header [_] (dtp/-header _entity))
+  (-has-body [_] (dtp/-has-body _entity))
+  (-body [_] (dtp/-body _entity))
   IMeta
   (-meta [_] _meta)
   IWithMeta
@@ -332,11 +340,11 @@
 
 (defn q-entity-array [query conn & args]
   (->> (apply d/q query conn args)
-       (map (fn id->entity [[id]] 
+       (map (fn id->entity [[id]]
               (new-entity (d/entity conn id) nil)))
        to-array))
 
-(defn transact! 
+(defn transact!
   ([conn tx] (transact! conn tx nil))
   ([conn tx tx-meta]
    (humanize-error
@@ -371,25 +379,25 @@
 (defn humanize-transact-error [error]
   (condp re-find (goog.object/get error "message")
     #"\[object Object\] is not ISeqable"
-    "Expected an array of transactions. 
+    "Expected an array of transactions.
 \nFor example:  transact([
-                {todo: {name: 1}}, 
+                {todo: {name: 1}},
                 {todo: {name: 2}}
               ])
 "
 
     #"Unknown operation at \[nil nil nil nil\], expected"
-    "Expected 'retractEntity'. 
+    "Expected 'retractEntity'.
 \nFor example:  transact([['retractEntity', id]])
 "
 
     #"Can't use tempid in '\[:db\.fn/retractEntity"
-    "Expected a numerical id. 
+    "Expected a numerical id.
 \nFor example:  transact([['retractEntity', 123]])
 "
 
     #"Expected number or lookup ref for entity id, got nil"
-    "Expected a numerical id. 
+    "Expected a numerical id.
 \nFor example:  transact([['retractEntity', 123]])
 "
     (goog.object/get error "message")))
@@ -405,7 +413,7 @@
 (defn example-js-query
   ([] (example-js-query "item"))
   ([nmsp] (str "\n
-For example:  query({ 
+For example:  query({
                 $find: '" nmsp "',
                 $where: { " nmsp ": { name: '$any' }}
               })
