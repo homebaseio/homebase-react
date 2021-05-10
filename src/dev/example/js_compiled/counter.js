@@ -33,7 +33,10 @@ const Counter = () => {
   const [counter] = useEntity({
     identity: 'counter'
   });
-  const [transact] = useTransact();
+  const [transact] = useTransact(); // Try opening the console in Chrome with custom formatters enabled
+  // https://homebase.io/docs/homebase-react/main/debugging#custom-chrome-formatters
+
+  console.log(counter);
   return /*#__PURE__*/_react.default.createElement("div", null, "Count: ", counter.get('count'), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
     onClick: () => transact([{
       counter: {

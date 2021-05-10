@@ -1,0 +1,10 @@
+{:paths ["src"]
+ :deps {thheller/shadow-cljs {:mvn/version "2.11.25"}
+        devcards/devcards {:mvn/version "0.2.7"}
+        datascript/datascript {:mvn/version "1.0.7"}
+        reagent/reagent {:mvn/version "1.0.0-alpha2"}
+        inflections/inflections {:mvn/version "0.13.2"}
+        binaryage/devtools {:mvn/version "1.0.2"}
+        homebaseio/datalog-console {:git/url "https://github.com/homebaseio/datalog-console" :sha "91d5b6009d66807ceec9807a1f8ed099a0a6f219"}
+       ;;  homebaseio/datalog-console {:local/root "../datalog-console"}
+        camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.2"}}}

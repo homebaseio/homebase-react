@@ -72,7 +72,10 @@ const Items = () => {
   const [store] = useEntity({
     identity: 'store 1'
   });
-  const [transact] = useTransact();
+  const [transact] = useTransact(); // Try opening the console in Chrome with custom formatters enabled
+  // https://homebase.io/docs/homebase-react/main/debugging#custom-chrome-formatters
+
+  console.log(store);
   let newI = null;
 
   const onDragOver = _react.default.useCallback(e => {

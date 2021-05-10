@@ -1,14 +1,5 @@
 ;; shadow-cljs configuration
-{:source-paths
- ["src"]
-
- :dependencies
- [[devcards "0.2.7"]
-  [datascript "1.0.1"]
-  [reagent "1.0.0-alpha2"]
-  [inflections "0.13.2"]
-  [camel-snake-kebab "0.4.2"]]
-
+{:deps true
  :dev-http {3000 "public"}
  :nrepl {:port 3333}
  :builds
@@ -16,6 +7,7 @@
         :output-dir "public/js"
         :asset-path "/js"
         :compiler-options {:devcards :true
+                           :externs ["datascript/externs.js"]
                            :output-feature-set :es6}
         :modules {:main {:init-fn dev.example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
@@ -28,9 +20,17 @@
                  :output-to "out/node-tests.js"
                  :ns-regexp "-test$"
                  :autorun true}
-  :npm {:target :npm-module
+  :npm {:target :node-library
+        :output-to "dist/js/homebase.react.js"
         :output-dir "dist/js"
-        :entries [homebase.react]
+        :exports {:HomebaseProvider homebase.react/HomebaseProvider
+                  :useClient homebase.react/useClient
+                  :useTransact homebase.react/useTransact
+                  :useEntity homebase.react/useEntity
+                  :useQuery homebase.react/useQuery}
         :compiler-options {:optimizations :advanced
+                           :externs ["datascript/externs.js"]
+                           :pseudo-names false
+                           :pretty-print false
                            :output-wrapper false
                            :source-map false}}}}
