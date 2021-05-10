@@ -145,6 +145,9 @@ const TodoList = () => {
 // or sibling Todos don't trigger unnecessary re-renders.
 const Todo = React.memo(({ id }) => {
   const [todo] = useEntity(id)
+  // Try opening the console in Chrome with custom formatters enabled
+  // https://homebase.io/docs/homebase-react/main/debugging#custom-chrome-formatters
+  console.log(todo)
   return (
     <div>
       <div
@@ -234,8 +237,7 @@ const TodoFilters = () => {
           type="checkbox"
           checked={filters.get('showCompleted')}
           onChange={(e) =>
-            transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked } }])
-          }
+            transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked } }])}
         />
       </label>
       &nbsp;·&nbsp;
