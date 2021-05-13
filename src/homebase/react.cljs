@@ -8,7 +8,7 @@
    [homebase.js :as hbjs]
    [datascript.core :as d]
    [datascript.impl.entity :as de]
-   [homebase.datalog-console :as console]))
+   [homebase.datalog-console :as datalog-console]))
 
 
 
@@ -137,7 +137,7 @@
         conn (d/create-conn (if schema
                               (merge (hbjs/js->schema schema) base-schema)
                               base-schema))]
-    (console/init-datalog-console {:conn conn}) ; initialise listener for datalog admin console
+    (datalog-console/init! {:conn conn})
     (when initial-tx (hbjs/transact! conn initial-tx))
     (react/createElement
      (goog.object/get homebase-context "Provider") 
