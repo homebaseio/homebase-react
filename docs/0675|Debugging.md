@@ -30,6 +30,14 @@ If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium brows
 
 **Remember**: for custom formatters to work `console.log(anEntity)` must be called *after* you open the chrome console. Anything logged out before you open the console will not have custom formatting applied because chrome processes those logs in the background.
 
+### Datalog Console Extension
+
+We also integrate with the [Datalog Console](https://github.com/homebaseio/datalog-console) extension.
+
+![image of datalog console extension](https://github.com/homebaseio/homebase-react/blob/master/public/images/datalog_console.png?raw=true)
+
+It's still in an early stage of development, but we seek to expose all common DB administration capabilities here and let you connect to any Datalog database that implements the console's interface.
+
 ### DEPRECATED `_recentlyTouchedAttributes`
 
 *Use [custom chrome formatters](#custom-chrome-formatters) instead.*
