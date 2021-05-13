@@ -228,7 +228,7 @@ If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium brows
 
 We also integrate with the [Datalog Console](https://github.com/homebaseio/datalog-console) extension.
 
-<img alt="image of datalog console extension" src="public/images/datalog_console.png" width="400">
+<img alt="image of datalog console extension" src="public/images/datalog_console.png">
 
 It's still in an early stage of development, but we seek to expose all common DB administration capabilities here and let you connect to any Datalog database that implements the console's interface.
 
