@@ -154,6 +154,8 @@
                                            (d/transact! conn [] ::silent))
                        "dbToDatoms" #(datoms->js (d/datoms @conn :eavt))
                       ;;  "dbToJSON" #(clj->js (datoms->json (d/datoms @conn :eavt)))
+                       "entity" (fn [lookup] (js/Promise.resolve (hbjs/entity conn lookup)))
+                       "query" (fn [query & args] (js/Promise.resolve (apply hbjs/q query conn args)))
                        "transactSilently" (fn [tx] (try-hook "useClient" #(hbjs/transact! conn tx ::silent)))
                        "addTransactListener" (fn [listener-fn] (d/listen! conn key #(when (not= ::silent (:tx-meta %))
                                                                                       (listener-fn (datoms->js (:tx-data %))))))
