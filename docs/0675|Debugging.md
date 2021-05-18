@@ -38,6 +38,11 @@ We also integrate with the [Datalog Console](https://github.com/homebaseio/datal
 
 It's still in an early stage of development, but we seek to expose all common DB administration capabilities here and let you connect to any Datalog database that implements the console's interface.
 
+#### Using the Datalog Console
+
+1. [Add the extension to Chrome](https://chrome.google.com/webstore/detail/datalog-console/cfgbajnnabfanfdkhpdhndegpmepnlmb)
+2. Vist a page built with homebase-react [like this one](https://homebaseio.github.io/homebase-react/#!/dev.example.todo), open the inspector, click the `Datalog DB` tab, and click `Load database` to try it out
+
 ### DEPRECATED `_recentlyTouchedAttributes`
 
 *Use [custom chrome formatters](#custom-chrome-formatters) instead.*
