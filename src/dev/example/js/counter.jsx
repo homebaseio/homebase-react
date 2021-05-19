@@ -19,6 +19,9 @@ export const App = () => (
 const Counter = () => {
   const [counter] = useEntity({ identity: 'counter' })
   const [transact] = useTransact()
+  // Try opening the console in Chrome with custom formatters enabled
+  // https://homebase.io/docs/homebase-react/main/debugging#custom-chrome-formatters
+  console.log(counter)
   return (
     <div>
       Count: {counter.get('count')}
