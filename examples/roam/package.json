@@ -17,7 +17,7 @@
     "homebase-react": "^0.7.0",
     "lodash": "^4.17.20",
     "nanoid": "^3.1.20",
-    "postcss": "^7",
+    "postcss": "^8",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-autosize-textarea": "^6.0.0",
