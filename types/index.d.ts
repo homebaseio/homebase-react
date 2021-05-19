@@ -95,7 +95,33 @@ export type homebaseClient = {
    * Transacts data without triggering any listeners. Typically used to sync data from your backend into the client.
    * @param transaction - A database transaction.
    */
-  transactSilently: (transaction: Transaction) => any
+  transactSilently: (transaction: Transaction) => any,
+
+  /**
+   * Returns a promise that contains a single entity by `lookup`.
+   * @param lookup - an entity id or lookup object.
+   * @returns Promise<Entity> - A promise wrapping an entity.
+   * @example const entity = await client.entity(10)
+   * @example const entity = await client.entity({ identity: "a unique lookup key" })
+   * @example 
+   * const project = await client.entity({ project: { name: "a unique name" }})
+   * project.get('name')
+   */
+  entity: (lookup: object | number) => Promise<Entity>,
+
+  /**
+   * Returns a promise that contains a collection of entities by `query`.
+   * @param query - a query object or datalog string.
+   * @param args - optional query arguments.
+   * @returns Promise<[Entity]> - A promise wrapping an array of entities.
+   * @example 
+   * const todos = await client.query({ 
+   *   $find: 'todo', 
+   *   $where: { todo: { name: '$any' } } 
+   * })
+   * todos.map(todo => todo.get('name'))
+   */
+  query: (query: object | string, ...args: any) => Promise<[Entity]>
 }
 
 /**

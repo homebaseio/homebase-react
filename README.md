@@ -173,17 +173,21 @@ todos
 
 This hook returns the current database client with some helpful functions for syncing data with a backend.
 
-- `client.dbToString()` serializes the whole db including the lookupHelpers to a string
-- `client.dbFromString('a serialized db string')` replaces the current db
-- `client.dbToDatoms()` returns an array of all the facts aka datoms saved in the db
-    - datoms are the smallest unit of data in the database, like a key value pair but better
-    - they are arrays of `[entityId, attribute, value, transactionId, isAddedBoolean]`
-- `client.addTransactListener((changedDatoms) => ...)` adds a listener function to all transactions
-    - use this to save data to your backend
-- `client.removeTransactListener()` removes the transaction listener
-    - please note that only 1 listener can be added per useClient scope
-- `client.transactSilently([{item: {name: ...}}])` like `transact()` only it will not trigger any listeners
-    - use this to sync data from your backend into the client
+- `client.dbToString()` serializes the whole db including the lookupHelpers to a string.
+- `client.dbFromString('a serialized db string')` replaces the current db.
+- `client.dbToDatoms()` returns an array of all the facts aka datoms saved in the db.
+    - Datoms are the smallest unit of data in the database, like a key value pair but better.
+    - Datoms are arrays of `[entityId, attribute, value, transactionId, isAddedBoolean]`.
+- `client.addTransactListener((changedDatoms) => ...)` adds a listener function to all transactions.
+    - Use this to save data to your backend.
+- `client.removeTransactListener()` removes the transaction listener.
+    - Please note that only 1 listener can be added per useClient scope.
+- `client.transactSilently([{item: {name: ...}}])` like `transact()` only it will not trigger any listeners.
+    - Use this to sync data from your backend into the client.
+- `client.entity(id or { thing: { attr: 'unique value' } })` like `useEntity`, but **returns a promise**. Get an entity in a callback or other places where a React hook does not make sense.
+    - The entity returned by this function **will NOT live update the parent React component** when its data changes. If you want reactive updates we recommend using `useEntity`.
+- `client.query({ $find: 'thing', $where: { thing: { name: '$any' } } })` like `useQuery`, but **returns a promise**. Perform a query in a callback or other places where a React hook does not make sense.
+    - The entities returned by this function **will NOT live update the parent React component** when their data changes. If you want reactive updates we recommend using `useQuery`.
 
 Check out the [Firebase example](https://homebaseio.github.io/homebase-react/#!/example.todo_firebase) for a demonstration of how you might integrate a backend.
 
@@ -219,6 +223,19 @@ If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium brows
 **Live demo:** open the console while on the [todo example](https://homebaseio.github.io/homebase-react/#!/dev.example.todo) page.
 
 **Remember**: for custom formatters to work `console.log(anEntity)` must be called *after* you open the chrome console. Anything logged out before you open the console will not have custom formatting applied because chrome processes those logs in the background.
+
+### Datalog Console Extension
+
+We also integrate with the [Datalog Console](https://github.com/homebaseio/datalog-console) extension.
+
+<img alt="image of datalog console extension" src="public/images/datalog_console.png">
+
+It's still in an early stage of development, but we seek to expose all common DB administration capabilities here and let you connect to any Datalog database that implements the console's interface.
+
+#### Using the Datalog Console
+
+1. [Add the extension to Chrome](https://chrome.google.com/webstore/detail/datalog-console/cfgbajnnabfanfdkhpdhndegpmepnlmb)
+2. Vist a page built with homebase-react [like this one](https://homebaseio.github.io/homebase-react/#!/dev.example.todo), open the inspector, click the `Datalog DB` tab, and click `Load database` to try it out
 
 ### *DEPRECATED* `_recentlyTouchedAttributes`
 
