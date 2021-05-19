@@ -7,7 +7,10 @@
    [clojure.set]
    [homebase.js :as hbjs]
    [datascript.core :as d]
-   [datascript.impl.entity :as de]))
+   [datascript.impl.entity :as de]
+   [homebase.datalog-console :as datalog-console]))
+
+
 
 (defn try-hook [hook-name f]
   (if hbjs/*debug*
@@ -134,6 +137,7 @@
         conn (d/create-conn (if schema
                               (merge (hbjs/js->schema schema) base-schema)
                               base-schema))]
+    (datalog-console/init! {:conn conn})
     (when initial-tx (hbjs/transact! conn initial-tx))
     (react/createElement
      (goog.object/get homebase-context "Provider") 
