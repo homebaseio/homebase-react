@@ -1,8 +1,8 @@
-(ns dev.example.todo
+(ns dev.example.react.todo
   (:require 
    [devcards.core :as dc]
    [homebase.react]
-   ["./js_compiled/todo" :as react-example])
+   ["../js_compiled/todo" :as react-example])
   (:require-macros
    [devcards.core :refer [defcard-rg defcard-doc]]
    [dev.macros :refer [inline-resource]]))

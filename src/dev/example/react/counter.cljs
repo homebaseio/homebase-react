@@ -1,8 +1,8 @@
-(ns dev.example.counter
+(ns dev.example.react.counter
   (:require 
    [devcards.core :as dc]
    [homebase.react]
-   ["./js_compiled/counter" :as react-example])
+   ["../js_compiled/counter" :as react-example])
   (:require-macros
    [devcards.core :refer [defcard-rg defcard-doc]]
    [dev.macros :refer [inline-resource]]))

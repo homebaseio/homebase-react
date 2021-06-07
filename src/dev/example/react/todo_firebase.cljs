@@ -1,8 +1,8 @@
-(ns dev.example.todo-firebase
+(ns dev.example.react.todo-firebase
   (:require 
    [devcards.core :as dc]
    [homebase.react]
-   ["./js_compiled/todo-firebase" :as react-example])
+   ["../js_compiled/todo-firebase" :as react-example])
   (:require-macros
    [devcards.core :refer [defcard-rg defcard-doc]]
    [dev.macros :refer [inline-resource]]))

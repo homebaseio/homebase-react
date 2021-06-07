@@ -1,8 +1,8 @@
-(ns dev.example.array
+(ns dev.example.react.array
   (:require 
    [devcards.core :as dc]
    [homebase.react]
-   ["./js_compiled/array" :as react-example])
+   ["../js_compiled/array" :as react-example])
   (:require-macros
    [devcards.core :refer [defcard-rg defcard-doc]]
    [dev.macros :refer [inline-resource]]))

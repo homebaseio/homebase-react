@@ -6,10 +6,12 @@
    [cljsjs.react.dom]
    [reagent.core]
    [devcards.core :as dc]
-   [dev.example.array]
-   [dev.example.counter]
-   [dev.example.todo]
-   [dev.example.todo-firebase]))
+   [dev.example.react.array]
+   [dev.example.react.counter]
+   [dev.example.react.todo]
+   [dev.example.react.todo-firebase]
+   [dev.example.reagent.counter]
+   [dev.example.reagent.todo]))
 
 (js/goog.exportSymbol "marked" marked)
 (js/goog.exportSymbol "DevcardsMarked" marked)
