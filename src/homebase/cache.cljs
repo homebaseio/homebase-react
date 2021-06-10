@@ -9,44 +9,48 @@
     :q {}}))
 
 (defn assoc-ea
-  [cache eid-attr-tuple component-uid change-handler]
-  (assoc-in cache [:ea eid-attr-tuple component-uid] change-handler))
+  [cache eid-attr-tuple reactive-lookup-uid change-handler]
+  (assoc-in cache [:ea eid-attr-tuple reactive-lookup-uid] change-handler))
 
 (defn dissoc-ea
-  [cache eid-attr-tuple component-uid]
-  (let [cache (update-in cache [:ea eid-attr-tuple] dissoc component-uid)]
+  [cache eid-attr-tuple reactive-lookup-uid]
+  (let [cache (update-in cache [:ea eid-attr-tuple] dissoc reactive-lookup-uid)]
     (if (empty? (get-in cache [:ea eid-attr-tuple]))
       (update cache :ea dissoc eid-attr-tuple)
       cache)))
 
 (defn assoc-q
-  [cache query component-uid change-handler]
-  (assoc-in cache [:q query component-uid] change-handler))
+  [cache query reactive-lookup-uid change-handler]
+  (assoc-in cache [:q query reactive-lookup-uid] change-handler))
 
 (defn dissoc-q
-  [cache query component-uid]
-  (let [cache (update-in cache [:q query] dissoc component-uid)]
+  [cache query reactive-lookup-uid]
+  (let [cache (update-in cache [:q query] dissoc reactive-lookup-uid)]
     (if (empty? (get-in cache [:q query]))
       (update cache :q dissoc query)
       cache)))
 
-(defn create-listener 
+(defn create-listener
   "Returns a listener function that invokes all subscribed change-handlers in the cache when a datom is transacted."
   [cache-conn]
   (fn [{:keys [tx-data]}]
-    (let [cache @cache-conn]
+    (let [cache @cache-conn
+          ;; The EA change-handler only needs to be triggered once for each reactive-lookup-uid.
+          triggered-ea-handlers (atom #{})]
       ;; EA handlers
       (doseq [[e a :as datom] tx-data]
         (let [subscriptions (get-in cache [:ea [e a]])]
-          (doseq [[component-uid change-handler] subscriptions]
-            (change-handler {:datom datom
-                             :component-uid component-uid}))))
+          (doseq [[reactive-lookup-uid change-handler] subscriptions]
+            (when (not (get @triggered-ea-handlers reactive-lookup-uid))
+              (swap! triggered-ea-handlers conj reactive-lookup-uid)
+              (change-handler {:datom datom
+                               :reactive-lookup-uid reactive-lookup-uid})))))
       ;; Query handlers
       ;; TODO: dispatch on change-handlers more judiciously instead of on every transaction. 
       ;;       See work on incremental view manintinence e.g. https://github.com/sixthnormal/clj-3df
-      (let [subscriptions (map (comp flatten seq) (vals (:q cache)))]
-        (doseq [[component-uid change-handler] subscriptions]
-          (change-handler {:component-uid component-uid}))))))
+      (let [subscriptions (mapcat seq (vals (:q cache)))]
+        (doseq [[reactive-lookup-uid change-handler] subscriptions]
+          (change-handler {:reactive-lookup-uid reactive-lookup-uid}))))))
 
 (defn db-conn-type [db-conn]
   (if (instance? cljs.core/Atom db-conn)

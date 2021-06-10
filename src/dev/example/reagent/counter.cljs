@@ -11,13 +11,13 @@
 (d/transact! db-conn [[:db/add 1 :count 0]])
 
 (defn counter []
-  (let [e (hbr/entity db-conn 1)]
-    ;; (fn [])
-    [:div
-     "Count: " (:count @e)
-     [:div
-      [:button {:on-click #(d/transact! db-conn [[:db/add 1 :count (inc (:count @e))]])}
-       "Increment"]]]))
+  (let [[e] (hbr/entity db-conn 1)]
+    (fn []
+      [:div
+       "Count: " (:count @e)
+       [:div
+        [:button {:on-click #(d/transact! db-conn [[:db/add 1 :count (inc (:count @e))]])}
+         "Increment"]]])))
 
 (defcard-rg counter-example
   counter)
