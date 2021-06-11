@@ -38,7 +38,7 @@
 
 ;; (defn datoms->json [datoms]
 ;;   (reduce
-;;    (fn [acc {:keys [e a v]}] 
+;;    (fn [acc {:keys [e a v]}]
 ;;      (assoc-in acc [e (namespace a) (name a)] v))
 ;;    {} datoms))
 
@@ -153,11 +153,60 @@
        #(swap! cache-conn hbc/dissoc-q query reactive-lookup-uid))
      #js [])
     #js [result]))
-  
+
+;; (defn ^:export useEntity [lookup]
+;;   (let [{:strs [db-conn]} (js->clj (react/useContext homebase-context))
+;;         cached-entities (react/useMemo #(atom {}) #js [])
+;;         run-lookup (react/useCallback
+;;                     (fn run-lookup []
+;;                       (touch-entity-cache
+;;                        (try-hook "useEntity" #(hbjs/entity db-conn lookup))
+;;                        cached-entities))
+;;                     #js [lookup])
+;;         [result setResult] (react/useState (run-lookup))
+;;         listener (react/useCallback
+;;                   (fn entity-listener []
+;;                     (let [result (run-lookup)]
+;;                       (when (changed? #js [result] @cached-entities false)
+;;                         (setResult result))))
+;;                   #js [run-lookup])]
+;;     (react/useEffect
+;;      (fn use-entity-effect []
+;;        (let [key (rand)]
+;;          (d/listen! db-conn key listener)
+;;          #(d/unlisten! db-conn key)))
+;;      #js [lookup])
+;;     #js [result]))
+
+;; (defn ^:export useQuery [query & args]
+;;   (let [{:strs [db-conn]} (js->clj (react/useContext homebase-context))
+;;         cached-entities (react/useMemo #(atom {}) #js [])
+;;         run-query (react/useCallback
+;;                    (fn run-query []
+;;                      (let [result (try-hook "useQuery" #(apply hbjs/q query db-conn args))]
+;;                        (when (and (not= (count result) (count @cached-entities))
+;;                                   (not= 0 (count result)))
+;;                          (reset! cached-entities {}))
+;;                        (.map result (fn [e] (touch-entity-cache e cached-entities)))))
+;;                    #js [query args])
+;;         [result setResult] (react/useState (run-query))
+;;         listener (react/useCallback
+;;                   (fn query-listener []
+;;                     (let [result (run-query)]
+;;                       (when (changed? result @cached-entities true)
+;;                         (setResult result))))
+;;                   #js [run-query])]
+;;     (react/useEffect
+;;      (fn use-query-effect []
+;;        (let [key (rand)]
+;;          (d/listen! db-conn key listener)
+;;          #(d/unlisten! db-conn key)))
+;;      #js [query args])
+;;     #js [result]))
+
 (defn ^:export useTransact []
   (let [{:strs [db-conn]} (js->clj (react/useContext homebase-context))
         transact (react/useCallback
                   (fn transact [tx] (try-hook "useTransact" #(hbjs/transact! db-conn tx)))
                   #js [])]
     #js [transact]))
-
