@@ -5,7 +5,8 @@
    [reagent.core :as r]   
    [homebase.reagent :as hbr])
   (:require-macros
-   [devcards.core :refer [defcard-rg]]))
+   [devcards.core :refer [defcard-rg defcard-doc]]
+   [dev.macros :refer [inline-resource]]))
 
 (def db-conn (d/create-conn {:todo/project {:db/type :db.type/ref
                                             :db/cardinality :db.cardinality/one}
@@ -180,3 +181,6 @@
 
 (defcard-rg todo-example
   todo-app)
+
+(defcard-doc
+  (str "```clojure\n" (inline-resource "src/dev/example/reagent/todo.cljs") "\n```"))

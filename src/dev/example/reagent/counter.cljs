@@ -4,7 +4,8 @@
    [datascript.core :as d]
    [homebase.reagent :as hbr])
   (:require-macros
-   [devcards.core :refer [defcard-rg]]))
+   [devcards.core :refer [defcard-rg defcard-doc]]
+   [dev.macros :refer [inline-resource]]))
 
 (def db-conn (d/create-conn {}))
 (hbr/connect! db-conn)
@@ -21,3 +22,6 @@
 
 (defcard-rg counter-example
   counter)
+
+(defcard-doc
+  (str "```clojure\n" (inline-resource "src/dev/example/reagent/counter.cljs") "\n```"))

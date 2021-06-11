@@ -171,7 +171,7 @@ const Todo = /*#__PURE__*/_react.default.memo(({
     style: {
       color: 'grey'
     }
-  }, todo.get('createdAt').toLocaleString()));
+  }, todo.get('createdAt')?.toLocaleString()));
 });
 
 const TodoCheck = ({

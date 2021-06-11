@@ -61,10 +61,10 @@
 (defn make-reactive-entity [{:keys [^de/Entity entity r-entity tracked-ea-pairs db-conn cache-conn reactive-lookup-uid] :as args}]
   (let [top-level-entity-id (:db/id entity)
         e (Entity. entity {::after-lookup
-                           (fn [{:keys [entity attr]}]
+                           (fn after-lookup [{:keys [^de/Entity entity attr]}]
                              (swap! tracked-ea-pairs conj [(:db/id entity) attr])
                              (swap! cache-conn hbc/assoc-ea [(:db/id entity) attr] reactive-lookup-uid
-                                    (fn []
+                                    (fn change-handler []
                                       (reset! r-entity
                                               (make-reactive-entity
                                                (merge args {:entity (d/entity @db-conn top-level-entity-id)})))))
