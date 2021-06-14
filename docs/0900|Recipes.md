@@ -3,7 +3,7 @@
 The example below shows a recipe for keeping Homebase React in sync with Firebase. `client.addTransactListener(callback)` lets you listen to every local transaction and send those updates to Firebase. We also need a way to sync Firebase with Homebase React. In this example we create a namespace on Firebase for each user based on their firebase uid and listen to all changes in that namespace. client.` transactSilently(tx)` allows us save changes received from Firebase without triggering our transactListener function and sending those changes back to Firebase endlessly.
 
 ```js
-import { HomebaseProvider, useClient, useEntity, useTransact } from 'homebase-react';
+import { useClient, useEntity, useTransact } from 'homebase-react';
 import firebase from 'firebase/app';
 import debounce from 'lodash/debounce';
 import React from 'react';
