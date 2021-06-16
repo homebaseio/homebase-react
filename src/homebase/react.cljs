@@ -146,7 +146,7 @@
     (react/useEffect
      (fn []
        (hbc/connect! cache-conn db-conn)
-       (datalog-console/init! {:db-conn db-conn})
+       (datalog-console/init! {:conn db-conn})
        (when initial-tx (hbjs/transact! db-conn initial-tx))
        (setInitializing? false)
        #(hbc/disconnect! db-conn))
