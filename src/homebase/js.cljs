@@ -352,12 +352,6 @@
       (when get-cb (get-cb [this attrs v]))
       v)))
 
-(defn q-entity-array [query conn & args]
-  (->> (apply d/q query conn args)
-       (map (fn id->entity [[id]]
-              (new-entity (d/entity conn id) nil)))
-       to-array))
-
 (defn transact!
   ([conn tx] (transact! conn tx nil))
   ([conn tx tx-meta]
@@ -373,7 +367,13 @@
 (defn q [query conn & args]
   (humanize-error
    humanize-q-error
-   #(apply q-entity-array (js->query query) @conn (keywordize args))))
+   #(apply d/q (js->query query) @conn (keywordize args))))
+
+(defn ids->entities [db ids]
+  (->> ids
+       (map (fn id->entity [[id]]
+              (new-entity (d/entity db id) nil)))
+       to-array))
 
 (defn humanize-get-error [error entity]
   (condp re-find (goog.object/get error "message")
