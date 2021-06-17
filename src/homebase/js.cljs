@@ -97,22 +97,22 @@
     (throw (js/Error. (str "The '" nmspc "." attr "' attribute should be a ref type of many."
                            "\n\nAdd this to your config:  lookupHelpers: { " nmspc ": { " attr ": { type: 'ref', cardinality: 'many' }}}\n"))))
   (reduce into
-   (map-indexed
-    (fn [i v]
-      (when (vector? v)
-        (throw (js/Error. (str "Unsupported JSON in transaction: nested array of arrays `" attr ": [" v "]`. If you need to transact unnamed JSON (tuples, lists) consider serializing it to a string first via `JSON.stringify(yourData)`. If you think homebase-react should have a first class JSON datatype let us know https://github.com/homebaseio/homebase-react/discussions"))))
-      (let [id (swap! temp-ids-atom dec)]
-        (into
-         [[:db/add parent-id (js->key nmspc attr) id]
-          [:db/add id :homebase.array/order (+ 1 i)]]
-         (if (scalar? v)
-           [[:db/add id :homebase.array/value v]]
-           (let [child-id (or (get v "id")
-                              (get (second (first v)) "id")
-                              (swap! temp-ids-atom dec))]
-             (into [[:db/add id :homebase.array/ref child-id]]
-                   (js->tx-part schema temp-ids-atom (cons [attr child-id true] key-path) v)))))))
-    tx-part)))
+          (map-indexed
+           (fn [i v]
+             (when (vector? v)
+               (throw (js/Error. (str "Unsupported JSON in transaction: nested array of arrays `" attr ": [" v "]`. If you need to transact unnamed JSON (tuples, lists) consider serializing it to a string first via `JSON.stringify(yourData)`. If you think homebase-react should have a first class JSON datatype let us know https://github.com/homebaseio/homebase-react/discussions"))))
+             (let [id (swap! temp-ids-atom dec)]
+               (into
+                [[:db/add parent-id (js->key nmspc attr) id]
+                 [:db/add id :homebase.array/order (+ 1 i)]]
+                (if (scalar? v)
+                  [[:db/add id :homebase.array/value v]]
+                  (let [child-id (or (get v "id")
+                                     (get (second (first v)) "id")
+                                     (swap! temp-ids-atom dec))]
+                    (into [[:db/add id :homebase.array/ref child-id]]
+                          (js->tx-part schema temp-ids-atom (cons [attr child-id true] key-path) v)))))))
+           tx-part)))
 (defmethod js->tx-part :default [_ _ [[attr id] [nmspc]] tx-part]
   [[(if (nil? tx-part) :db/retract :db/add)
     id
@@ -136,9 +136,8 @@
     {} (js->clj lookup))))
 
 (defmulti js->entity-lookup type)
-(defmethod js->entity-lookup js/Object [lookup] (first (js->object-lookup lookup)))
 (defmethod js->entity-lookup js/Number [lookup] lookup)
-(defmethod js->entity-lookup :default [lookup] lookup)
+(defmethod js->entity-lookup js/Object [lookup] (first (js->object-lookup lookup)))
 
 (comment
   (js->tx nil (clj->js [{:project {:array [[1] [2 {:k "v"}]]}}]))
@@ -229,21 +228,14 @@
                (reduced (namespace k))))
    nil (keys entity)))
 
-(defn js-guess-attr 
-  "Takes an entity and a js name string and trys to guess the 
-   ns and cljs name of the corresponding attribute in the given entity.
-   
-   Assumes that the entity was created by homebase.js and conforms to its conventions.
-   
-   Returns a keyword."
-  [^de/Entity entity name]
+(defn js-get [^de/Entity entity name]
   (case name
-    "id" :db/id
-    "ident" :db/ident
-    "identity" :db/ident
+    "id" (:db/id entity)
+    "ident" (:db/ident entity)
+    "identity" (:db/ident entity)
     (let [maybe-ns (guess-entity-ns entity)
           k (when maybe-ns (js->key maybe-ns name))]
-      k)))
+      (when k (get entity k)))))
 
 (declare
  Entity
@@ -292,10 +284,9 @@
 
 (defn lookup-entity
   "Takes a homebase.js/Entity and a seq of attributes. Looks up the attribute path on the entity. Returns a scalar or homebase.js/Entity or js/Array of scalars or Entities."
-  ([entity attrs] (lookup-entity entity attrs false nil nil))
-  ([entity attrs nil-attrs-if-not-in-db?] (lookup-entity entity attrs nil-attrs-if-not-in-db? nil nil))
-  ([entity attrs nil-attrs-if-not-in-db? get-cb] (lookup-entity entity attrs nil-attrs-if-not-in-db? get-cb nil))
-  ([entity attrs nil-attrs-if-not-in-db? get-cb after-lookup]
+  ([entity attrs] (lookup-entity entity attrs false))
+  ([entity attrs nil-attrs-if-not-in-db?] (lookup-entity entity attrs nil-attrs-if-not-in-db? nil))
+  ([entity attrs nil-attrs-if-not-in-db? get-cb]
    (humanize-error
     #(humanize-get-error % entity)
     (fn []
@@ -304,13 +295,8 @@
          (if-not acc
            nil
            (let [attr (keywordize attr)
-                 getter-fn (fn [entity attr]
-                             (let [attr (if (keyword? attr) attr (js-guess-attr entity attr))
-                                   result (when attr (get entity attr))]
-                               (when (and after-lookup attr) (after-lookup {:entity entity :attr attr :result result }))
-                               result))
-                 getter-fn (comp (partial entity->js {:Entity/get-cb get-cb 
-                                                      ::after-lookup after-lookup})
+                 getter-fn (if (keyword? attr) get js-get)
+                 getter-fn (comp (partial entity->js {:Entity/get-cb get-cb})
                                  getter-fn)
                  result (cond
                           (array? acc) (if (number? attr)
@@ -347,8 +333,8 @@
   (-contains-key? [this k] (not (nil? (lookup-entity this [k] true))))
   Object
   (get [this & attrs]
-    (let [{:keys [:Entity/get-cb ::after-lookup]} (meta this)
-          v (lookup-entity this attrs true get-cb after-lookup)]
+    (let [get-cb (:Entity/get-cb (meta this))
+          v (lookup-entity this attrs true get-cb)]
       (when get-cb (get-cb [this attrs v]))
       v)))
 
