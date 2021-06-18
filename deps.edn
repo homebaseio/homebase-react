@@ -5,7 +5,6 @@
         reagent/reagent {:mvn/version "1.0.0-alpha2"}
         inflections/inflections {:mvn/version "0.13.2"}
         binaryage/devtools {:mvn/version "1.0.2"}
-        homebaseio/datalog-console {:git/url "https://github.com/homebaseio/datalog-console" :sha "fc4cf9ba968e995a67aae1816670adb78a81451d"}
-       ;;  homebaseio/datalog-console {:local/root "../datalog-console"}
+        io.homebase/datalog-console {:mvn/version "0.2.2"}
         nano-id {:mvn/version "1.0.0"}
         camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.2"}}}

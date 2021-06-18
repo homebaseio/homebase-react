@@ -1,4 +1,5 @@
 (ns dev.example.react.counter
+  {:no-doc true}
   (:require 
    [devcards.core :as dc]
    [homebase.react]

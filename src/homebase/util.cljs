@@ -1,4 +1,5 @@
-(ns homebase.util)
+(ns homebase.util
+  {:no-doc true})
 
 (defn paths [m]
   (if (or (not (map? m)) (empty? m))

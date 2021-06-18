@@ -1,4 +1,5 @@
 (ns dev.example.core
+  {:no-doc true}
   (:require
    ["highlight.js" :as highlight]
    ["marked" :as marked]
@@ -9,9 +10,8 @@
    [dev.example.react.array]
    [dev.example.react.counter]
    [dev.example.react.todo]
-   [dev.example.react.todo-firebase]
-   [dev.example.reagent.counter]
-   [dev.example.reagent.todo]))
+   [dev.example.react.todo-firebase] 
+   [dev.example.reagent]))
 
 (js/goog.exportSymbol "marked" marked)
 (js/goog.exportSymbol "DevcardsMarked" marked)

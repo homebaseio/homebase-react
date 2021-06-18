@@ -1,4 +1,6 @@
 (ns homebase.reagent
+  ""
+  {}
   (:require
    [homebase.cache :as hbc]
    [datalog-console.chrome.formatters] ; Load the formatters ns to extend cljs-devtools to better render db entities in the chrome console if cljs-devtools is enabled.
@@ -63,11 +65,11 @@
         e (Entity. entity {::after-lookup
                            (fn after-lookup [{:keys [^de/Entity entity attr]}]
                              (swap! tracked-ea-pairs conj [(:db/id entity) attr])
-                             (swap! cache-conn hbc/assoc-ea [(:db/id entity) attr] reactive-lookup-uid
-                                    (fn change-handler []
+                             (swap! cache-conn hbc/assoc :ea [(:db/id entity) attr] reactive-lookup-uid
+                                    (fn change-handler [{:keys [db-after]}]
                                       (reset! r-entity
                                               (make-reactive-entity
-                                               (merge args {:entity (d/entity @db-conn top-level-entity-id)})))))
+                                               (merge args {:entity (d/entity db-after top-level-entity-id)})))))
                              #_(js/console.log top-level-entity-id (:db/id entity) attr @cache-conn))})]
    e))
 
@@ -92,7 +94,7 @@
               @r-entity
               (finally ; handle unmounting this component
                 (doseq [ea @tracked-ea-pairs]
-                  (swap! cache-conn hbc/dissoc-ea ea reactive-lookup-uid)
+                  (swap! cache-conn hbc/dissoc :ea ea reactive-lookup-uid)
                   #_(js/console.log ea @cache-conn)))))]
     [(r/track f)]))
 
@@ -107,13 +109,13 @@
         result (apply d/q query @db-conn inputs)
         r-result (r/atom result)
         reactive-lookup-uid (nano-id)
-        _ (swap! cache-conn hbc/assoc-q query reactive-lookup-uid
-                 (fn []
-                   (reset! r-result (apply d/q query @db-conn inputs))))        
+        _ (swap! cache-conn hbc/assoc :q query reactive-lookup-uid
+                 (fn [{:keys [db-after]}]
+                   (reset! r-result (apply d/q query db-after inputs))))        
         f (fn []
             (r/with-let []
               @r-result
               (finally ; handle unmounting this component
-                (swap! cache-conn hbc/dissoc-q query reactive-lookup-uid)
+                (swap! cache-conn hbc/dissoc :q query reactive-lookup-uid)
                 #_(js/console.log query @cache-conn))))]
     [(r/track f)]))

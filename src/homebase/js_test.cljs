@@ -1,4 +1,5 @@
 (ns homebase.js-test
+  {:no-doc true}
   (:require
    [clojure.test :refer [deftest testing is]]
    [datascript.core :as d]

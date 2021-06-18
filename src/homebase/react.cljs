@@ -1,4 +1,5 @@
 (ns homebase.react
+  {:no-doc true}
   (:require
    ["react" :as react]
    [clojure.string]
@@ -8,7 +9,7 @@
    [homebase.js :as hbjs]
    [datascript.core :as d]
    [datascript.impl.entity :as de]
-   [homebase.datalog-console :as datalog-console]))
+   [datalog-console.integrations.datascript :as datalog-console]))
 
 (defn try-hook [hook-name f]
   (if hbjs/*debug*
@@ -135,7 +136,7 @@
         conn (d/create-conn (if schema
                               (merge (hbjs/js->schema schema) base-schema)
                               base-schema))]
-    (datalog-console/init! {:conn conn})
+    (datalog-console/enable! {:conn conn})
     (when initial-tx (hbjs/transact! conn initial-tx))
     (react/createElement
      (goog.object/get homebase-context "Provider")

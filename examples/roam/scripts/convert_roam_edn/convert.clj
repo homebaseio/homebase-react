@@ -6,6 +6,7 @@
    to make Datalog feel more like SQL and tabular data.
    
    This script normalizes all attributes to the 'block' namespace."
+  {:no-doc true}
   (:require [clojure.pprint]))
 
 ;; (def input (read-string (slurp "scripts/convert_roam_edn/datasets/hn.edn")))

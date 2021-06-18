@@ -1,4 +1,5 @@
 (ns homebase.js
+  {:no-doc true}
   (:require
    [homebase.util :as u]
    [clojure.walk :as walk]
