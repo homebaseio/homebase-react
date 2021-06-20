@@ -10,7 +10,7 @@
 
 (hbr/connect! db-conn) ; Connect homebase.reagent to the database.
 
-(datalog-console/enable! {:conn db-conn}) ; Also connect the datalog-console extension for better debugging
+(datalog-console/enable! {:conn db-conn}) ; Also connect the datalog-console extension for better debugging.
 
 (defn counter []
   (let [[entity] (hbr/entity db-conn 1)] ; Get a homebase.reagent/Entity. Note the use of db-conn and not @db-conn, this makes it reactive.

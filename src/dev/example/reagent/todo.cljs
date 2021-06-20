@@ -54,30 +54,10 @@
                       {:value id}
                       value])]])))
 
-(defn test-rev-ref [id]
-  (let [[todo] (hbr/entity db-conn id)]
-    (fn []
-      [:div
-       [:button
-        {:on-click #(d/transact! db-conn [[:db/add (:db/id (:todo/owner @todo)) :user/name (str (rand-int 99))]])}
-        "change rev ref name"]
-       (:user/name (:todo/owner (first (:todo/_owner (:todo/owner @todo)))))])))
-
-(defn test-ref [id]
-  (let [[todo] (hbr/entity db-conn id)]
-    (fn []
-      [:div
-       [:button
-        {:on-click #(d/transact! db-conn [[:db/add (:db/id (:todo/owner @todo)) :user/name (str (rand-int 99))]])}
-        "change ref name"]
-       (:user/name (:todo/owner @todo))])))
-
 (defn todo [id]
   (let [[todo] (hbr/entity db-conn id)]
     (fn [id]
       [:div {:style {:padding-bottom 20}}
-       [test-ref id]
-       [test-rev-ref id]
        [:div 
         [:input
          {:type "checkbox"

@@ -3,7 +3,7 @@
    
    It ensures that as data changes the view is incremently updated to reflect the most recent state while maintaining consistency/transactionality, performing all updates for a transaction simultaneously.
    
-   The cache takes the form of a map where components (identified by reactive-lookup-uids) can subscribe to updates of specific data by associng change-handlers into the cache.
+   The cache takes the form of a map where components (identified by site-ids) can subscribe to updates of specific data by associng change-handlers into the cache.
 
    E.g.
    
@@ -14,22 +14,22 @@
      (fn on-entity-attr-change-handler-fn
        [{:db-after ; the db value that corresponds with this update. Should be used by the consuming component to update the view so it stays in sync because all change-handlers use the same DB snapshot for the same TX.
          :datom ; the updated datom
-         :reactive-lookup-id \"uuid-for-a-component-or-'hook'\"}]
+         :site-id \"uuid-for-a-component-or-'hook'\"}]
      ; INSERT code to update the view in this component with the newest state of this datom
        )}}
    :q
-   {'[:find ?e ?a ?v
-      :where [?e ?a ?v]]
+   {['[:find ?e ?a ?v
+       :where [?e ?a ?v]]
+     other-inputs]
     {\"uuid-for-a-component-or-'hook'\" ; multiple components may subscribe to changes in the same query so each gets their own change-handler
      (fn on-query-change-handler-fn
        [{:db-after ; the db value that corresponds with this update. Should be used by the consuming component to update the view so it stays in sync because all change-handlers use the same DB snapshot for the same TX.
-         :reactive-lookup-id \"uuid-for-a-component-or-'hook'\"}]
+         :site-id \"uuid-for-a-component-or-'hook'\"}]
      ; INSERT code to update the view with the latest results of the query
        )}}}
    ```
    
-   The cache takes care of appropriately invoking change-handlers after every transaction.
-   "
+   The cache takes care of appropriately invoking change-handlers after every transaction."
   (:refer-clojure :exclude [assoc dissoc])
   (:require
    [datascript.core]
@@ -72,25 +72,25 @@
   [cache-conn]
   (fn [{:keys [tx-data db-after] :as a}]
     (let [cache @cache-conn
-          ;; The EA change-handler only needs to be triggered once for each reactive-lookup-uid.
+          ;; The EA change-handler only needs to be triggered once for each site-id.
           ;; NOTE: this is complected with knowledge of how homebase.reagent currently handles updates and a clearer seperation of concerns should probably be drawn. But for now it's easier to just do this check here.
           triggered-ea-handlers (atom #{})]
       ;; EA handlers
       (doseq [[e a :as datom] tx-data]
         (let [subscriptions (get-in cache [:ea [e a]])]
-          (doseq [[reactive-lookup-uid change-handler] subscriptions]
-            (when (not (get @triggered-ea-handlers reactive-lookup-uid))
-              (swap! triggered-ea-handlers conj reactive-lookup-uid)
+          (doseq [[site-id change-handler] subscriptions]
+            (when (not (get @triggered-ea-handlers site-id))
+              (swap! triggered-ea-handlers conj site-id)
               (change-handler {:db-after db-after
                                :datom datom
-                               :reactive-lookup-uid reactive-lookup-uid})))))
+                               :site-id site-id})))))
       ;; Query handlers
       ;; TODO: dispatch on change-handlers more judiciously instead of on every transaction. 
       ;;       See work on incremental view manintinence e.g. https://github.com/sixthnormal/clj-3df
       (let [subscriptions (mapcat seq (vals (:q cache)))]
-        (doseq [[reactive-lookup-uid change-handler] subscriptions]
+        (doseq [[site-id change-handler] subscriptions]
           (change-handler {:db-after db-after
-                           :reactive-lookup-uid reactive-lookup-uid}))))))
+                           :site-id site-id}))))))
 
 (defn db-conn-type [db-conn]
   (if (instance? cljs.core/Atom db-conn)
