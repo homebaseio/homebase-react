@@ -70,7 +70,7 @@
    
    Query cache updates are NOT complete and all of them dispatch on every transaction regardless of whether the transaction can be infered to change the results of a query or not. This is tends to be fine for datasets with thousands of datoms, but could be expensive for applications with lots of datoms and lots of complex queries. Improvements via differential datalog need to be investigated."
   [cache-conn]
-  (fn [{:keys [tx-data db-after] :as a}]
+  (fn [{:keys [tx-data db-after]}]
     (let [cache @cache-conn
           ;; The EA change-handler only needs to be triggered once for each site-id.
           ;; NOTE: this is complected with knowledge of how homebase.reagent currently handles updates and a clearer seperation of concerns should probably be drawn. But for now it's easier to just do this check here.
