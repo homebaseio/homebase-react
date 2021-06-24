@@ -5,33 +5,37 @@
    [homebase.reagent :as hbr]
    [datalog-console.integrations.datascript :as datalog-console]))
 
-(def db-conn (d/create-conn {:db/ident {:db/unique :db.unique/identity}
-                             :todo/project {:db/type :db.type/ref
-                                            :db/cardinality :db.cardinality/one}
-                             :todo/owner {:db/type :db.type/ref
-                                          :db/cardinality :db.cardinality/one}}))
+(def schema {:db/ident {:db/unique :db.unique/identity}
+             :todo/project {:db/type :db.type/ref
+                            :db/cardinality :db.cardinality/one}
+             :todo/owner {:db/type :db.type/ref
+                          :db/cardinality :db.cardinality/one}})
 
-(d/transact! db-conn [{:db/ident :todo.filters
-                       :todo.filter/show-completed? true
-                       :todo.filter/owner 0
-                       :todo.filter/project 0}
-                      {:todo/name "Go home"
-                       :todo/created-at (js/Date.now)
-                       :todo/owner -2
-                       :todo/project -3}
-                      {:todo/name "Fix ship"
-                       :todo/completed? true
-                       :todo/created-at (js/Date.now)
-                       :todo/owner -1
-                       :todo/project -4}
-                      {:db/id -1
-                       :user/name "Stella"}
-                      {:db/id -2
-                       :user/name "Arpegius"}
-                      {:db/id -3
-                       :project/name "Do it"}
-                      {:db/id -4
-                       :project/name "Make it"}])
+(def db-conn (d/create-conn schema))
+
+(def initial-tx [{:db/ident :todo.filters
+                  :todo.filter/show-completed? true
+                  :todo.filter/owner 0
+                  :todo.filter/project 0}
+                 {:todo/name "Go home"
+                  :todo/created-at (js/Date.now)
+                  :todo/owner -2
+                  :todo/project -3}
+                 {:todo/name "Fix ship"
+                  :todo/completed? true
+                  :todo/created-at (js/Date.now)
+                  :todo/owner -1
+                  :todo/project -4}
+                 {:db/id -1
+                  :user/name "Stella"}
+                 {:db/id -2
+                  :user/name "Arpegius"}
+                 {:db/id -3
+                  :project/name "Do it"}
+                 {:db/id -4
+                  :project/name "Make it"}])
+
+(d/transact! db-conn initial-tx)
 
 (hbr/connect! db-conn)
 
