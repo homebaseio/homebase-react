@@ -80,6 +80,7 @@ const DataSaver = (user) => {
         });
       }
     });
+    client.addTransactListener(transactListener)
     const on = (action: any) => (ds: any) => client.transactSilently([[action, ...ds.val()]])
     subscription1 = supabase
       .from('entities')
