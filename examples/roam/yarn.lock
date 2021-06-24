@@ -6298,10 +6298,10 @@ hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.1.0:
   dependencies:
     react-is "^16.7.0"
 
-homebase-react@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/homebase-react/-/homebase-react-0.5.4.tgz#b6c31ebb2c8852503c752ed81a010b104b9cd751"
-  integrity sha512-7TRm3ofQVRjc94PuVpT8UtFTD42L3ULC5o7fPrnY/7pYOBupU2pgGmV6upYmTf/WWK8T5wlcDtKl6OnBhbJnfw==
+homebase-react@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/homebase-react/-/homebase-react-0.7.0.tgz#84b00ba9a81c9d13242672ba64c7579c7269ca7e"
+  integrity sha512-/UEpSFed4/opBx7eJ7DY+WjC4jWEcorSehjYooKntE+YMaQkzbM7fEnqOOPZCTGJtNVrfP1vyJ8URT+vG76a2g==
 
 hoopy@^0.1.4:
   version "0.1.4"
