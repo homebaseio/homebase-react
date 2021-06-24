@@ -1,4 +1,5 @@
 (ns homebase.reagent-test
+  {:no-doc true}
   (:require
    [homebase.test-polyfills]
    [reagent.core :as r]

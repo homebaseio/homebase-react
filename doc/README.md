@@ -6,7 +6,7 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/homebaseio/homebase-react?style=social)](https://github.com/homebaseio/homebase-react)
 [![Twitter Follow](https://img.shields.io/twitter/follow/homebase__io?label=Follow&style=social)](https://twitter.com/homebase__io)
 
-> Use a datalog db to manage react application state.
+> Use a datalog DB to manage react application state.
 
 Supported languages, frameworks and DBs:
 
