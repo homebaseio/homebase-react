@@ -71,12 +71,9 @@ const DataSaver = (user) => {
         console.log(res.data)
         res.data.forEach(function(d){
           let entity_name =  d[1].split('/')[0].slice(1)
-          console.log(entity_name)
-          if (entity_name !== "created_at"){
-            let attr = d[1].split('/')[1]
-            let transaction = [{[entity_name]: {id: d[0], [attr]: d[2]}} ]
-            client.transactSilently(transaction)
-          }
+          let attr = d[1].split('/')[1]
+          let transaction = [{[entity_name]: {id: d[0], [attr]: d[2]}} ]
+          client.transactSilently(transaction)
         });
       }
     });
