@@ -14,7 +14,6 @@ export default function Todos(user) {
   return(
   <div>
     <DataSaver user={user}/>
-    <SignOut />
     <NewTodo />
     <hr/>
     <TodoFilters />
@@ -81,9 +80,6 @@ const DataSaver = (user) => {
         });
       }
     });
-    //TK
-    console.log(client.transactSilently)
-    client.addTransactListener(transactListener)
     const on = (action: any) => (ds: any) => client.transactSilently([[action, ...ds.val()]])
     subscription1 = supabase
       .from('entities')
@@ -91,29 +87,13 @@ const DataSaver = (user) => {
       .on('INSERT', (v) => on('add'))
       .on('DELETE', (v) => on('retract') )
       .subscribe((change) => console.log('todos changed', change))
-    /*
+
     return () => {
       client.removeTransactListener()
-      ref.off('child_added', on('add'))
-      ref.off('child_removed', on('retract'))
-      ref.off('child_changed', on('add'))
-    }*/
+      supabase.removeSubscription(subscription1)
+    }
   }, [userId])
   return null
-}
-
-const SignOut = () => {
-  const [client] = useClient()
-  return (
-    <button
-      style={{float: 'right'}}
-      onClick={() => {
-
-        client.dbFromString(window.emptyDB)
-        firebase.auth().signOut()
-      }}
-    >Sign Out</button>
-  )
 }
 
 const NewTodo = () => {
