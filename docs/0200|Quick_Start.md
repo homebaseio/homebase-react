@@ -11,8 +11,10 @@ Adding `HomebaseProvider` automatically creates the database.
 ```js
 import { HomebaseProvider } from 'homebase-react'
 
+const config = { initialData: [{ counter: { id: 1, count: 0 }}] }
+
 const RootComponent = () => (
-  <HomebaseProvider>
+  <HomebaseProvider config={config}>
     <App/>
   </HomebaseProvider>
 )
