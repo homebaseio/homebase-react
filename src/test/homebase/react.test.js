@@ -11,7 +11,7 @@ import {
   useEntity,
   useQuery,
   useTransact
-} from '../../dist/js/homebase.react'
+} from '../../../dist/js/homebase.react'
 
 const config = {
   lookupHelpers: {
@@ -337,8 +337,7 @@ describe('client', () => {
         <div data-testid="client.dbToDatoms()">{JSON.stringify(client.dbToDatoms())}</div>
         <button
           onClick={() =>
-            client.transactSilently([{ order: { id: order.get('id'), name: 'order1' } }])
-          }
+            client.transactSilently([{ order: { id: order.get('id'), name: 'order1' } }])}
         >
           update|order.name
         </button>

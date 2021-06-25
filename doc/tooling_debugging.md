@@ -19,7 +19,7 @@ If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium brows
 
 ![image of custom entity chrome console logs](https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_3.png?raw=true)
 
-**Live demo:** open the console while on the [todo example](https://homebaseio.github.io/homebase-react/#!/dev.example.todo) page.
+**Live demo:** open the console while on the [todo example](https://homebaseio.github.io/homebase-react/#!/homebase.dev.example.todo) page.
 
 **Remember**: for custom formatters to work `(js/console.log an-entity)` must be called *after* you open the chrome console. Anything logged out before you open the console will not have custom formatting applied because chrome processes those logs in the background.
 

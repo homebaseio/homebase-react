@@ -31,7 +31,7 @@ Optionally add `datalog-console` and its corresponding [chrome extension](https:
 ## Quick Start
 
 ```clojure
-(ns dev.example.reagent.counter
+(ns homebase.dev.example.reagent.counter
   (:require
    [datascript.core :as d]
    [homebase.reagent :as hbr]
@@ -52,7 +52,7 @@ Optionally add `datalog-console` and its corresponding [chrome extension](https:
          "Increment"]]])))
 ```
 
-[Live demo](https://homebaseio.github.io/homebase-react/index.html#!/dev.example.reagent)
+[Live demo](https://homebaseio.github.io/homebase-react/index.html#!/homebase.dev.example.reagent)
 
 ## API
 

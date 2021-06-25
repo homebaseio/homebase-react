@@ -13,7 +13,6 @@ dist/
 
 package-lock.json
 report.html
-pom.xml
 pom.xml.asc
 *.iml
 *.jar

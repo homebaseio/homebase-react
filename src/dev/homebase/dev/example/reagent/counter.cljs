@@ -1,4 +1,4 @@
-(ns dev.example.reagent.counter
+(ns homebase.dev.example.reagent.counter
   (:require
    [datascript.core :as d]
    [homebase.reagent :as hbr]

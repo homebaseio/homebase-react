@@ -6,8 +6,8 @@
    [datascript.core :as d]
    [homebase.reagent :as hbr]
    [clojure.test :refer [deftest testing is use-fixtures]]
-   [dev.example.reagent.counter :as counter]
-   [dev.example.reagent.todo :as todo]
+   [homebase.dev.example.reagent.counter :as counter]
+   [homebase.dev.example.reagent.todo :as todo]
    ["@testing-library/react" :as rt]))
 
 (set! *warn-on-infer* false)

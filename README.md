@@ -82,7 +82,7 @@ const App = () => {
 }
 ```
 
-[Live demo](https://homebaseio.github.io/homebase-react/#!/dev.example.counter)
+[Live demo](https://homebaseio.github.io/homebase-react/#!/homebase.dev.example.counter)
 
 # ClojureScript + Reagent
 
@@ -97,7 +97,7 @@ Optionally add `datalog-console` and its corresponding [chrome extension](https:
 ⭐️ 📖 **[Read the CLJS docs](https://cljdoc.org/d/io.homebase/homebase-react/CURRENT)** ƛ ⭐️
 
 ```clojure
-(ns dev.example.reagent.counter
+(ns homebase.dev.example.reagent.counter
   (:require
    [datascript.core :as d]
    [homebase.reagent :as hbr]
@@ -118,7 +118,7 @@ Optionally add `datalog-console` and its corresponding [chrome extension](https:
          "Increment"]]])))
 ```
 
-[Live demo](https://homebaseio.github.io/homebase-react/index.html#!/dev.example.reagent)
+[Live demo](https://homebaseio.github.io/homebase-react/index.html#!/homebase.dev.example.reagent)
 
 ## Roadmap
 
@@ -138,7 +138,7 @@ Homebase React is currently not a good choice for read-heavy applications (e.g. 
 
 ## Alternatives
 
-There isn't much in the way of React friendly datalog DB based state management for Javascript, but there's at least one alternative if you're a Clojure dev.
+There isn't much in the way of React friendly datalog DB based state management for Javascript, but there's at least one alternative if you're a Clojure homebase.dev.
 
 - If your prefer `d/pull` over `d/entity` take a look at [Posh](https://github.com/denistakeda/posh). It supports less of the `d/q` API, but provides more tools for tuning performance.
 

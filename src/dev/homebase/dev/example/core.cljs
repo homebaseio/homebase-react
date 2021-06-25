@@ -1,4 +1,4 @@
-(ns dev.example.core
+(ns homebase.dev.example.core
   {:no-doc true}
   (:require
    ["highlight.js" :as highlight]
@@ -7,11 +7,11 @@
    [cljsjs.react.dom]
    [reagent.core]
    [devcards.core :as dc]
-   [dev.example.react.array]
-   [dev.example.react.counter]
-   [dev.example.react.todo]
-   [dev.example.react.todo-firebase] 
-   [dev.example.reagent]))
+   [homebase.dev.example.react.array]
+   [homebase.dev.example.react.counter]
+   [homebase.dev.example.react.todo]
+   [homebase.dev.example.react.todo-firebase] 
+   [homebase.dev.example.reagent]))
 
 (js/goog.exportSymbol "marked" marked)
 (js/goog.exportSymbol "DevcardsMarked" marked)

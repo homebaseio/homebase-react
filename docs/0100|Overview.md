@@ -63,7 +63,7 @@ const App = () => {
 }
 ```
 
-[Live demo](https://homebaseio.github.io/homebase-react/#!/dev.example.counter)
+[Live demo](https://homebaseio.github.io/homebase-react/#!/homebase.dev.example.counter)
 
 ## What and Why
 
