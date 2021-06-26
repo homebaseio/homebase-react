@@ -1,5 +1,5 @@
 ;; shadow-cljs configuration
-{:deps true
+{:deps {:aliases [:dev]}
  :dev-http {3000 "public"}
  :nrepl {:port 3333}
  :builds

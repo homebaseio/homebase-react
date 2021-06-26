@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>io.homebase</groupId>
   <artifactId>homebase-react</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.1.3-SNAPSHOT</version>
   <name>homebase-react</name>
   <description>Use a datalog DB to manage react application state</description>
   <url>https://github.com/homebaseio/homebase-react</url>
@@ -24,6 +24,9 @@
     <developerConnection>scm:git:ssh://git@github.com:homebaseio/homebase-react.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
+  <build>
+    <sourceDirectory>src/main</sourceDirectory>
+  </build>
   <dependencies>
     <dependency>
       <groupId>org.clojure</groupId>
@@ -31,29 +34,9 @@
       <version>1.10.3</version>
     </dependency>
     <dependency>
-      <groupId>io.homebase</groupId>
-      <artifactId>datalog-console</artifactId>
-      <version>0.2.2</version>
-    </dependency>
-    <dependency>
-      <groupId>thheller</groupId>
-      <artifactId>shadow-cljs</artifactId>
-      <version>2.11.25</version>
-    </dependency>
-    <dependency>
-      <groupId>inflections</groupId>
-      <artifactId>inflections</artifactId>
-      <version>0.13.2</version>
-    </dependency>
-    <dependency>
-      <groupId>binaryage</groupId>
-      <artifactId>devtools</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>devcards</groupId>
-      <artifactId>devcards</artifactId>
-      <version>0.2.7</version>
+      <groupId>datascript</groupId>
+      <artifactId>datascript</artifactId>
+      <version>1.0.7</version>
     </dependency>
     <dependency>
       <groupId>reagent</groupId>
@@ -61,14 +44,19 @@
       <version>1.0.0-alpha2</version>
     </dependency>
     <dependency>
+      <groupId>inflections</groupId>
+      <artifactId>inflections</artifactId>
+      <version>0.13.2</version>
+    </dependency>
+    <dependency>
+      <groupId>io.homebase</groupId>
+      <artifactId>datalog-console</artifactId>
+      <version>0.2.2</version>
+    </dependency>
+    <dependency>
       <groupId>nano-id</groupId>
       <artifactId>nano-id</artifactId>
       <version>1.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>datascript</groupId>
-      <artifactId>datascript</artifactId>
-      <version>1.0.7</version>
     </dependency>
     <dependency>
       <groupId>camel-snake-kebab</groupId>
@@ -76,9 +64,6 @@
       <version>0.4.2</version>
     </dependency>
   </dependencies>
-  <build>
-    <sourceDirectory>src/dev</sourceDirectory>
-  </build>
   <repositories>
     <repository>
       <id>clojars</id>
