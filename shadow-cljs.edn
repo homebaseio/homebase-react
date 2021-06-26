@@ -9,7 +9,7 @@
         :compiler-options {:devcards :true
                            :externs ["datascript/externs.js"]
                            :output-feature-set :es6}
-        :modules {:main {:init-fn dev.example.core/init}}
+        :modules {:main {:init-fn homebase.dev.example.core/init}}
         :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
                                "devcards-syntax-highlighter" {:target :npm :require "highlight.js"}}}}
   :test {:target :node-test

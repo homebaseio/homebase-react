@@ -1,4 +1,5 @@
 (ns homebase.react
+  {:no-doc true}
   (:require
    ["react" :as react]
    [clojure.string]
@@ -8,9 +9,7 @@
    [homebase.js :as hbjs]
    [datascript.core :as d]
    [datascript.impl.entity :as de]
-   [homebase.datalog-console :as datalog-console]))
-
-
+   [datalog-console.integrations.datascript :as datalog-console]))
 
 (defn try-hook [hook-name f]
   (if hbjs/*debug*
@@ -29,13 +28,13 @@
                              (clojure.string/trim))))))))))
 
 (defn debug-msg [return-value & msgs]
-  (when (and (number? hbjs/*debug*) (>= hbjs/*debug* 2)) 
+  (when (and (number? hbjs/*debug*) (>= hbjs/*debug* 2))
     (apply js/console.log "%c homebase-react " "background: yellow" msgs))
   return-value)
 
 (defn changed? [entities cached-entities track-count?]
   (cond
-    (and track-count? 
+    (and track-count?
          (not= (count entities) (count cached-entities)))
     (debug-msg true "cache:miss" "count of entities != cache"
                #js {:entities (clj->js entities)
@@ -137,10 +136,10 @@
         conn (d/create-conn (if schema
                               (merge (hbjs/js->schema schema) base-schema)
                               base-schema))]
-    (datalog-console/init! {:conn conn})
+    (datalog-console/enable! {:conn conn})
     (when initial-tx (hbjs/transact! conn initial-tx))
     (react/createElement
-     (goog.object/get homebase-context "Provider") 
+     (goog.object/get homebase-context "Provider")
      #js {:value conn}
      (goog.object/get props "children"))))
 
@@ -162,7 +161,7 @@
                        "removeTransactListener" #(d/unlisten! conn key)})
                 #js [])]
     [client]))
-  
+
 (defn ^:export useEntity [lookup]
   (let [conn (react/useContext homebase-context)
         cached-entities (react/useMemo #(atom {}) #js [])
@@ -190,7 +189,7 @@
 (defn ^:export useQuery [query & args]
   (let [conn (react/useContext homebase-context)
         cached-entities (react/useMemo #(atom {}) #js [])
-        run-query (react/useCallback 
+        run-query (react/useCallback
                    (fn run-query []
                      (let [result (try-hook "useQuery" #(apply hbjs/q query conn args))]
                        (when (and (not= (count result) (count @cached-entities))
@@ -215,7 +214,7 @@
 
 (defn ^:export useTransact []
   (let [conn (react/useContext homebase-context)
-        transact (react/useCallback 
+        transact (react/useCallback
                   (fn transact [tx] (try-hook "useTransact" #(hbjs/transact! conn tx)))
                   #js [])]
     [transact]))

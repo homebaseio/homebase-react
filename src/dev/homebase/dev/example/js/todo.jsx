@@ -163,7 +163,7 @@ const Todo = React.memo(({ id }) => {
         &nbsp;·&nbsp;
         <TodoDelete todo={todo} />
       </div>
-      <small style={{ color: 'grey' }}>{todo.get('createdAt').toLocaleString()}</small>
+      <small style={{ color: 'grey' }}>{todo.get('createdAt')?.toLocaleString()}</small>
     </div>
   )
 })
@@ -237,7 +237,8 @@ const TodoFilters = () => {
           type="checkbox"
           checked={filters.get('showCompleted')}
           onChange={(e) =>
-            transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked } }])}
+            transact([{ todoFilter: { id: filters.get('id'), showCompleted: e.target.checked } }])
+          }
         />
       </label>
       &nbsp;·&nbsp;

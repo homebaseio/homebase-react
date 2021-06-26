@@ -7,7 +7,7 @@ import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import React from 'react'
 import Benchmark from 'react-component-benchmark'
-import { HomebaseProvider, useEntity, useTransact } from '../../dist/js/homebase.react'
+import { HomebaseProvider, useEntity, useTransact } from '../../../dist/js/homebase.react'
 
 const config = {
   initialData: [
@@ -36,7 +36,8 @@ const Counter = () => {
                   count: counter.get('count') + 1,
                 },
               },
-            ])}
+            ])
+          }
         >
           Increment
         </button>

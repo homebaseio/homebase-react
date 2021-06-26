@@ -1,10 +1,21 @@
-{:paths ["src"]
+{:paths ["src/dev"
+         "src/main"
+         "src/test"]
  :deps {thheller/shadow-cljs {:mvn/version "2.11.25"}
         devcards/devcards {:mvn/version "0.2.7"}
         datascript/datascript {:mvn/version "1.0.7"}
         reagent/reagent {:mvn/version "1.0.0-alpha2"}
         inflections/inflections {:mvn/version "0.13.2"}
         binaryage/devtools {:mvn/version "1.0.2"}
-        homebaseio/datalog-console {:git/url "https://github.com/homebaseio/datalog-console" :sha "97d5e5eb8994124ec8dc0029b33f2e88257b39b2"}
-       ;;  homebaseio/datalog-console {:local/root "../datalog-console"}
-        camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.2"}}}
+        io.homebase/datalog-console {:mvn/version "0.2.2"}
+        nano-id/nano-id {:mvn/version "1.0.0"}
+        camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.2"}}
+ :aliases {:jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.216"}}
+                 :exec-fn hf.depstar/jar
+                 :exec-args {:jar "homebase-react.jar" :sync-pom true}}
+           :install {:replace-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
+                     :exec-fn deps-deploy.deps-deploy/deploy
+                     :exec-args {:installer :local :artifact "homebase-react.jar"}}
+           :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
+                    :exec-fn deps-deploy.deps-deploy/deploy
+                    :exec-args {:installer :remote :artifact "homebase-react.jar"}}}}

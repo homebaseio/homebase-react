@@ -1,4 +1,5 @@
 (ns homebase.js
+  {:no-doc true}
   (:require
    [homebase.util :as u]
    [clojure.walk :as walk]
@@ -97,22 +98,22 @@
     (throw (js/Error. (str "The '" nmspc "." attr "' attribute should be a ref type of many."
                            "\n\nAdd this to your config:  lookupHelpers: { " nmspc ": { " attr ": { type: 'ref', cardinality: 'many' }}}\n"))))
   (reduce into
-   (map-indexed
-    (fn [i v]
-      (when (vector? v)
-        (throw (js/Error. (str "Unsupported JSON in transaction: nested array of arrays `" attr ": [" v "]`. If you need to transact unnamed JSON (tuples, lists) consider serializing it to a string first via `JSON.stringify(yourData)`. If you think homebase-react should have a first class JSON datatype let us know https://github.com/homebaseio/homebase-react/discussions"))))
-      (let [id (swap! temp-ids-atom dec)]
-        (into
-         [[:db/add parent-id (js->key nmspc attr) id]
-          [:db/add id :homebase.array/order (+ 1 i)]]
-         (if (scalar? v)
-           [[:db/add id :homebase.array/value v]]
-           (let [child-id (or (get v "id")
-                              (get (second (first v)) "id")
-                              (swap! temp-ids-atom dec))]
-             (into [[:db/add id :homebase.array/ref child-id]]
-                   (js->tx-part schema temp-ids-atom (cons [attr child-id true] key-path) v)))))))
-    tx-part)))
+          (map-indexed
+           (fn [i v]
+             (when (vector? v)
+               (throw (js/Error. (str "Unsupported JSON in transaction: nested array of arrays `" attr ": [" v "]`. If you need to transact unnamed JSON (tuples, lists) consider serializing it to a string first via `JSON.stringify(yourData)`. If you think homebase-react should have a first class JSON datatype let us know https://github.com/homebaseio/homebase-react/discussions"))))
+             (let [id (swap! temp-ids-atom dec)]
+               (into
+                [[:db/add parent-id (js->key nmspc attr) id]
+                 [:db/add id :homebase.array/order (+ 1 i)]]
+                (if (scalar? v)
+                  [[:db/add id :homebase.array/value v]]
+                  (let [child-id (or (get v "id")
+                                     (get (second (first v)) "id")
+                                     (swap! temp-ids-atom dec))]
+                    (into [[:db/add id :homebase.array/ref child-id]]
+                          (js->tx-part schema temp-ids-atom (cons [attr child-id true] key-path) v)))))))
+           tx-part)))
 (defmethod js->tx-part :default [_ _ [[attr id] [nmspc]] tx-part]
   [[(if (nil? tx-part) :db/retract :db/add)
     id
