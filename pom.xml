@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>io.homebase</groupId>
   <artifactId>homebase-react</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1-SNAPSHOT</version>
   <name>homebase-react</name>
   <description>Use a datalog DB to manage react application state</description>
   <url>https://github.com/homebaseio/homebase-react</url>

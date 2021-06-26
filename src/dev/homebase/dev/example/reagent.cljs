@@ -11,7 +11,7 @@
 (defcard-doc
   "# [Homebase React](https://github.com/homebaseio/homebase-react) | Reagent Examples
    
-  [![cljdoc badge](https://cljdoc.org/badge/io.homebase/homebase-react)](https://cljdoc.org/d/io.homebase/homebase-react/CURRENT)
+  **[cljdoc](https://cljdoc.org/d/io.homebase/homebase-react/CURRENT)**
 
    Examples
 
