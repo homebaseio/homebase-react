@@ -1,7 +1,8 @@
-(ns homebase.dev.example.reagent.todo 
+(ns homebase.dev.example.reagent.todo
+  {:no-doc true}
   (:require
    [datascript.core :as d]
-   [reagent.core :as r]   
+   [reagent.core :as r]
    [homebase.reagent :as hbr]
    [datalog-console.integrations.datascript :as datalog-console]))
 

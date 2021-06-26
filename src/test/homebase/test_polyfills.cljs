@@ -1,4 +1,5 @@
 (ns homebase.test-polyfills
+  {:no-doc true}
   (:require 
    ["@peculiar/webcrypto" :refer [Crypto]]
    ["jsdom" :refer [JSDOM]]))

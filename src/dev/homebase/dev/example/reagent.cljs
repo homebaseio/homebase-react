@@ -1,4 +1,5 @@
 (ns homebase.dev.example.reagent
+  {:no-doc true}
   (:require
    [devcards.core :as dc]
    [homebase.dev.example.reagent.counter :as counter]

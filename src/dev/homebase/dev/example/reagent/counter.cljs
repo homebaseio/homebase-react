@@ -1,4 +1,5 @@
 (ns homebase.dev.example.reagent.counter
+  {:no-doc true}
   (:require
    [datascript.core :as d]
    [homebase.reagent :as hbr]
