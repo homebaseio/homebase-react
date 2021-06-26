@@ -42,7 +42,7 @@
       :else result)))
 
 (defn connect!
-  "Connects a db-conn to a homebase.cache. This is a prerequisite for any of the db read functions in this namespace to be reactive. Returns a homebase.cache connection.
+  "Connects a db-conn to a homebase.cache. This is a prerequisite for any of the db read functions in this namespace ([[entity]], [[q]]) to be reactive. Returns a homebase.cache connection.
    
    ```clojure
    (def db-conn (datascript/create-conn))
