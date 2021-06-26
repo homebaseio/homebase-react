@@ -7,15 +7,17 @@ If you develop with [Chrome](https://www.google.com/chrome/) or a Chromium brows
 
 **To enable custom chrome formatters**
 
-**1.** Open the preferences panel in chrome devtools by clicking the cog.
+**1.** Add **[binaryage/cljs-devtools](https://github.com/binaryage/cljs-devtools)** to your app. Our entity formatters implement protocols defined in cljs-devtools and need cljs-devtools to work. Plus, if you've never used cljs-devtools you're in for a treat.
+
+**2.** Open the preferences panel in chrome devtools by clicking the cog.
 
 ![image of chrome devtools preferences button](https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_1.png?raw=true)
 
-**2.** Toggle `Enabled custom formatters` on.
+**3.** Toggle `Enabled custom formatters` on.
 
 ![image of chrome devtools custom formatters toggle](https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_2.png?raw=true)
 
-**3.** Keep the chrome console open and refresh the page. Any logged out entities should now have the custom formatting.
+**4.** Keep the chrome console open and refresh the page. Any logged out entities should now have the custom formatting.
 
 ![image of custom entity chrome console logs](https://github.com/homebaseio/homebase-react/blob/master/public/images/enable_chrome_formatters_3.png?raw=true)
 
