@@ -138,7 +138,7 @@ Homebase React is currently not a good choice for read-heavy applications (e.g. 
 
 ## Alternatives
 
-There isn't much in the way of React friendly datalog DB based state management for Javascript, but there's at least one alternative if you're a Clojure homebase.dev.
+There isn't much in the way of React friendly datalog DB based state management for Javascript, but there's at least one alternative if you're a Clojure dev.
 
 - If your prefer `d/pull` over `d/entity` take a look at [Posh](https://github.com/denistakeda/posh). It supports less of the `d/q` API, but provides more tools for tuning performance.
 
