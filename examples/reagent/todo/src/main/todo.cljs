@@ -1,8 +1,8 @@
-(ns homebase.dev.example.reagent.todo
-  {:no-doc true}
+(ns todo
   (:require
-   [datascript.core :as d]
    [reagent.core :as r]
+   [reagent.dom :as rdom]
+   [datascript.core :as d]
    [homebase.reagent :as hbr]
    [datalog-console.integrations.datascript :as datalog-console]))
 
@@ -131,12 +131,12 @@
                          ; Filter completed todos if not :todo.filter/show-completed?
                          (or [?filters :todo.filter/show-completed? true]
                              (not [?todo :todo/completed? true]))
-                         
+
                          ; Filter by owner if :todo.filter/owner is not 0
                          [?filter :todo.filter/owner ?owner]
                          (or [(= 0 ?owner)]
                              [?todo :todo/owner ?owner])
-                         
+
                          ; Filter by project if :todo.filter/project is not 0
                          [?filter :todo.filter/project ?project]
                          (or [(= 0 ?project)]
@@ -176,3 +176,6 @@
   [:div
    [new-todo]
    [todos]])
+
+(defn init! []
+  (rdom/render [todo-app] (.-body js/document)))

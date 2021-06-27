@@ -1,0 +1,12 @@
+;; shadow-cljs configuration
+{:source-paths ["src/main"]
+ :dev-http {3000 "public"}
+ :dependencies [[datascript "1.0.7"]
+                [reagent "1.0.0-alpha2"]
+                [io.homebase/homebase-react "0.1.1"]
+                [io.homebase/datalog-console "0.2.2"]]
+ :builds {:dev {:target :browser
+                :output-dir "public/js"
+                :asset-path "/js"
+                :compiler-options {:externs ["datascript/externs.js"]}
+                :modules {:main {:init-fn counter/init!}}}}}
