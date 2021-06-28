@@ -68,4 +68,4 @@ In the case of `hbr/entity` we track which attributes get consumed `(:attr @enti
 
 ## Alternatives
 
-- If your prefer `d/pull` over `d/entity` take a look at [Posh](https://github.com/denistakeda/posh). It supports less of the `d/q` API, but provides more tools for tuning performance.
+- If you prefer `d/pull` over `d/entity` take a look at [Posh](https://github.com/denistakeda/posh). It supports less of the `d/q` API, but provides more tools for tuning performance.
