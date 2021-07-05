@@ -2,7 +2,7 @@
  :deps {datascript/datascript {:mvn/version "1.0.7"}
         reagent/reagent {:mvn/version "1.0.0-alpha2"}
         inflections/inflections {:mvn/version "0.13.2"}
-        io.homebase/datalog-console {:mvn/version "0.2.2"}
+        io.homebase/datalog-console {:mvn/version "0.3.2"}
         nano-id/nano-id {:mvn/version "1.0.0"}
         camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.2"}}
  :aliases {:dev {:extra-paths ["src/dev" "src/test"]
