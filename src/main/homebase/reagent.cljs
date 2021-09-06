@@ -154,3 +154,38 @@
                 (swap! cache-conn hbc/dissoc :q [query inputs] site-id)
                 #_(js/console.log query @cache-conn))))]
     [(r/track f)]))
+
+(defn pull
+  "Returns a reactive pull result wrapped in a vector. 
+   
+   It will trigger a re-render when its result changes. 
+   
+   Usage:
+   
+   ```clojure
+   (defn your-component []
+     (let [[pull-result] (hbr/pull db-conn [:db/id, :name, :likes, {:friends [:db/id :name]}] 1)]
+       (fn []
+         [:div
+          (:name @pull-result)])))
+   ```
+   
+   Gotchas:
+   
+   - **This takes a conn, not a db.**
+   - At the moment it's only possible to [[connect!]] to one DB at a time, so reactive query results are only supported on one DB. If you pass more DBs as args the query will only be rerun if the first DB changes."
+  [db-conn selector eid]
+  (let [cache-conn (get-cache-conn-from-db @db-conn)
+        result (d/pull @db-conn selector eid)
+        r-result (r/atom result)
+        site-id (nano-id)
+        _ (swap! cache-conn hbc/assoc :q [selector eid] site-id
+                 (fn [{:keys [db-after]}]
+                   (reset! r-result (d/pull db-after selector eid))))
+        f (fn []
+            (r/with-let []
+              @r-result
+              (finally ; handle unmounting this component
+                (swap! cache-conn hbc/dissoc :q [selector eid] site-id)
+                #_(js/console.log selector @cache-conn))))]
+    [(r/track f)]))
