@@ -1,7 +1,7 @@
 (ns homebase.reagent
   (:require
    [homebase.cache :as hbc]
-   [datalog-console.chrome.formatters] ; Load the formatters ns to extend cljs-devtools to better render db entities in the chrome console if cljs-devtools is enabled.
+  ;;  [datalog-console.chrome.formatters] ; Load the formatters ns to extend cljs-devtools to better render db entities in the chrome console if cljs-devtools is enabled.
    [devtools.protocols :as dtp :refer [IFormat]]
    [datascript.impl.entity :as de]
    [reagent.core :as r]
